@@ -2,7 +2,7 @@
 # Wird von launchd jeden Montag um 10:15 aufgerufen. Laedt nur hoch, wenn ein neuer Artikel wartet.
 DIR="$HOME/greenwoodcreek-www/_blog-agent"
 LOG="$DIR/deploy.log"
-[ -f "$DIR/PENDING_DEPLOY" ] || { echo "$(date '+%F %T') nichts zu tun" >> "$LOG"; exit 0; }
+[ -s "$DIR/PENDING_DEPLOY" ] || { echo "$(date '+%F %T') nichts zu tun" >> "$LOG"; exit 0; }
 SLUG=$(awk '{print $2}' "$DIR/PENDING_DEPLOY")
 if bash "$HOME/greenwoodcreek-www/deploy.sh" >> "$LOG" 2>&1; then
   CODE=$(curl -s -o /dev/null -w '%{http_code}' "https://greenwoodcreek.de/aktuelles/$SLUG/")
