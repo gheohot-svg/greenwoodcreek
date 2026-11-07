@@ -48,6 +48,11 @@ if [ -s /tmp/gwc-files.txt ]; then
 fi
 PULL
 chmod +x ~/bin/gwc-pull.sh
+if [ ! -f ~/.gwc-initial-sync ]; then
+  cd ~/greenwoodcreek-repo && sudo -n rsync -rlt aktuelles sitemap.xml /srv/greenwoodcreek/www/ \
+    && sudo -n chmod -R a+rX /srv/greenwoodcreek/www && touch ~/.gwc-initial-sync \
+    && echo "Blogbereich und Sitemap einmalig live gestellt"
+fi
 ( crontab -l 2>/dev/null | grep -v gwc-pull.sh; echo '*/15 * * * * $HOME/bin/gwc-pull.sh >> $HOME/gwc-pull.log 2>&1' ) | crontab -
 sudo -n true 2>/dev/null && echo "sudo ohne Passwort: OK" || echo "ACHTUNG: sudo fragt nach Passwort, bitte Claude Bescheid geben"
 EOF
