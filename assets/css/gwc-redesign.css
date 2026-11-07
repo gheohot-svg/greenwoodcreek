@@ -1,0 +1,1438 @@
+/* ==========================================================================
+   GREENWOODCREEK — "Waldlicht" redesign layer
+   Loaded after finalversion.webflow.shared*.css and only re-tints /
+   refines the existing design-token system (CSS custom properties) plus
+   adds a handful of new decorative details. Structure, layout, grid and
+   all JS-driven interaction classes from the base stylesheet are untouched.
+   ========================================================================== */
+
+:root {
+  /* ---- repointed base tokens (same light/dark relationships, warmer hue) ---- */
+  --_primitives---color--white: #f6f0e1;
+  --_primitives---color--neutral-darkest: #141a10;
+  --_primitives---color--neutral-lightest: #f3ede0;
+  --_primitives---color--outer-space: #141a10;
+  --_primitives---opacity--neutral-darkest-5: rgba(20, 26, 16, .05);
+  --_primitives---opacity--neutral-darkest-15: rgba(20, 26, 16, .13);
+
+  --_color-schemes---color-scheme-3--background: #10140c;
+  --_color-schemes---color-scheme-3--text: #ece3cd;
+
+  --_color-schemes---color-scheme-5--background: #f3ede0;
+  --_color-schemes---color-scheme-5--text: #171d11;
+  --_color-schemes---color-scheme-5--border: rgba(23, 29, 17, .13);
+
+  --_ui-styles---radius--large: 3px;
+  --_ui-styles---radius--medium: 3px;
+
+  /* ---- fluid editorial type scale (supersedes the shared file's fixed
+     breakpoint values below, since this stylesheet loads last) ---- */
+  --_typography---text-sizes--heading-1: clamp(2.75rem, 2vw + 2.35rem, 7.25rem);
+  --_typography---text-sizes--heading-2: clamp(2.1rem, 1.4vw + 1.7rem, 4rem);
+  --_typography---text-sizes--heading-3: clamp(1.65rem, 1vw + 1.35rem, 3rem);
+  --_typography---text-sizes--heading-4: clamp(1.45rem, .8vw + 1.2rem, 2.5rem);
+  --_typography---text-sizes--heading-5: clamp(1.25rem, .5vw + 1.1rem, 2rem);
+  --_typography---text-sizes--text-medium: clamp(1.05rem, .2vw + 1rem, 1.3rem);
+  --_typography---text-sizes--text-regular: clamp(1rem, .15vw + .95rem, 1.1rem);
+  --_typography---text-sizes--text-small: clamp(.85rem, .1vw + .82rem, .95rem);
+
+  /* ---- new accent palette ---- */
+  --gwc-ink: #10140c;
+  --gwc-paper: #f3ede0;
+  --gwc-ivory: #ece3cd;
+  --gwc-accent: #bd8a3f;
+  --gwc-accent-soft: #e0b26a;
+  --gwc-moss: #6f8763;
+  --gwc-rust: #a94a34;
+  --gwc-border-dark: rgba(236, 227, 205, .16);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--_color-schemes---color-scheme-3--background);
+}
+
+::selection {
+  background: var(--gwc-accent);
+  color: var(--gwc-ink);
+}
+
+/* Modern Chrome/Edge/Firefox honour `scrollbar-color` and then ignore the
+   ::-webkit-scrollbar rules below. A transparent track let the near-black
+   body show through as a dark bar along the right edge on desktop, so the
+   track gets the same paper tone as the WebKit fallback. */
+html {
+  scrollbar-color: var(--gwc-accent) var(--gwc-paper);
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--gwc-paper);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--gwc-accent);
+  border-radius: 8px;
+  border: 2px solid var(--gwc-paper);
+}
+
+a, button, input, textarea {
+  outline-color: var(--gwc-accent);
+}
+
+/* Film-grain atmosphere, fixed above every section but never blocking clicks. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: .05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
+
+.gwc-navbar-glass {
+  background-color: rgba(16, 20, 12, .62);
+  border: 1px solid rgba(236, 227, 205, .14);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+@media screen and (max-width: 767px) {
+  .gwc-navbar-glass .column {
+    background-color: rgba(16, 20, 12, .88);
+    border: 1px solid rgba(236, 227, 205, .14);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, .4);
+  }
+}
+.gwc-navbar-glass .link-text-3 {
+  color: var(--gwc-ivory);
+  position: relative;
+}
+.gwc-navbar-glass .link-style {
+  position: relative;
+}
+.gwc-navbar-glass .link-style::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -4px;
+  height: 1px;
+  background: var(--gwc-accent);
+  transition: right .3s cubic-bezier(.22, 1, .36, 1);
+}
+.gwc-navbar-glass .link-style:hover::after {
+  right: 0;
+}
+/* Logo (navbar + footer): high-res file (3x) with the ivory baked in, so no
+   colour filter is needed; shown 28px high in its true proportions. */
+.gwc-logo {
+  display: block;
+  width: auto;
+  height: 28px;
+  max-width: none;
+}
+
+.button-style-30 {
+  background-color: transparent;
+  border: 1px solid var(--gwc-accent);
+  box-shadow: none;
+  transition: background-color .25s ease, color .25s ease;
+}
+.button-style-30 .gwc-btn-label {
+  color: var(--gwc-ivory);
+  transition: color .25s ease;
+}
+.button-style-30:hover {
+  background-color: var(--gwc-accent);
+}
+.button-style-30:hover .gwc-btn-label {
+  color: var(--gwc-ink);
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+
+.header-65-3::before {
+  background: linear-gradient(180deg, rgba(16, 20, 12, .55) 0%, rgba(16, 20, 12, .3) 45%, rgba(16, 20, 12, .75) 100%);
+}
+.header-65-3::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, var(--gwc-accent) 20%, var(--gwc-accent) 80%, transparent);
+  opacity: .8;
+}
+.header-65-3::after {
+  bottom: 0;
+}
+.geschichten-in-bildern-2,
+.geschichten-die-berhren-2,
+.uber-uns-hero-text .ber-uns-9 {
+  letter-spacing: -.02em;
+}
+.geschichten-in-bildern-2 em,
+.geschichten-die-berhren-2 em,
+.heading-9 em,
+.uber-uns-hero-text em {
+  font-style: normal;
+  color: var(--gwc-accent-soft);
+}
+
+/* ==========================================================================
+   Kickers / eyebrow labels
+   ========================================================================== */
+
+.tagline-4,
+.tagline-6,
+.tagline-7,
+.tagline-8 {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gwc-accent);
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: 13px;
+  font-weight: 600;
+}
+.tagline-4::before,
+.tagline-6::before,
+.tagline-7::before,
+.tagline-8::before {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: var(--gwc-accent);
+  flex: 0 0 auto;
+}
+
+/* Step numerals (01 / 02 / 03) as oversized ghost marks. */
+.section-info-2 p {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2.5rem, 4vw, 4.5rem);
+  color: var(--gwc-accent);
+  opacity: .35;
+  line-height: 1;
+}
+
+/* ==========================================================================
+   Headings / body copy already inherit the retinted scheme variables above;
+   a couple of composite classes need a direct nudge.
+   ========================================================================== */
+
+.heading-9, .heading-10, .heading-11, .heading-16, .heading-17, .heading-18,
+.heading-19, .heading-20, .heading-21, .heading-22, .heading-23, .heading-24,
+.heading-27, .heading-28 {
+  letter-spacing: -.02em;
+}
+
+/* ==========================================================================
+   Buttons, links & form controls
+   ========================================================================== */
+
+[class*="button-style-"] {
+  border-radius: 3px !important;
+  transition: background-color .25s ease, color .25s ease, opacity .25s ease, border-color .25s ease;
+}
+
+.gwc-input,
+.gwc-textarea {
+  background-color: #fbf8f1;
+  border-color: var(--_color-schemes---color-scheme-5--border);
+}
+.gwc-input:focus,
+.gwc-textarea:focus {
+  border-color: var(--gwc-accent);
+  box-shadow: 0 0 0 3px rgba(189, 138, 63, .18);
+}
+.gwc-label {
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .8rem;
+  opacity: .75;
+}
+.gwc-submit {
+  background-color: var(--gwc-accent);
+  color: var(--gwc-ink);
+  border-radius: 3px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  transition: background-color .25s ease, transform .2s ease;
+}
+.gwc-submit:hover {
+  background-color: var(--gwc-accent-soft);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* Services: request CTA mirrors the contact form's submit button. */
+.leistungen-desktop [data-figma-id="10202:71552"] .button-style-30 {
+  background-color: var(--gwc-accent);
+  border-color: var(--gwc-accent);
+  border-radius: 3px !important;
+}
+.leistungen-desktop [data-figma-id="10202:71552"] .button-style-30 .gwc-btn-label {
+  color: var(--gwc-ink);
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+.leistungen-desktop [data-figma-id="10202:71552"] .button-style-30:hover {
+  background-color: var(--gwc-accent-soft);
+  border-color: var(--gwc-accent-soft);
+  transform: translateY(-1px);
+}
+
+/* Center the services contact form like the homepage form. */
+.leistungen-desktop .cta-33-2 .gwc-form {
+  margin-right: auto;
+  margin-left: auto;
+  align-items: center;
+}
+.gwc-status.is-success {
+  color: var(--gwc-moss);
+}
+.gwc-status.is-error {
+  color: var(--gwc-rust);
+}
+
+.link-style-3 {
+  transition: color .2s ease;
+}
+.link-style-3:hover .startseite-3,
+.link-style-3:hover .portfolio-3,
+.link-style-3:hover .leistungen-3,
+.link-style-3:hover .ber-uns-3,
+.link-style-3:hover .fotografie-3,
+.link-style-3:hover .videografie-3,
+.link-style-3:hover .anfrage-3 {
+  color: var(--gwc-accent);
+}
+
+/* ==========================================================================
+   Imagery — camera-frame hover treatment
+   ========================================================================== */
+
+.placeholder-image-3,
+.placeholder-image-10,
+[class*="placeholder-image-"],
+.header-44-2 img,
+.header-64-2 img {
+  border-radius: 16px;
+  transition: box-shadow .35s ease, filter .35s ease;
+}
+.placeholder-image-3:hover,
+.placeholder-image-10:hover,
+[class*="placeholder-image-"]:hover {
+  box-shadow: inset 0 0 0 2px var(--gwc-accent);
+  filter: saturate(1.08) contrast(1.03);
+}
+
+/* Homepage: video replacing the Concept & Strategy image */
+.gwc-concept-video {
+  width: 600px;
+  max-width: calc(50% - 40px);
+  aspect-ratio: 1;
+  border-radius: 16px;
+  object-fit: cover;
+  display: block;
+}
+
+.gwc-concept-section {
+  display: block;
+  height: 320vh;
+  overflow: clip;
+}
+
+/* Bring the concept scene closer to the introductory copy above it. */
+.layout-501-2 .container-13 {
+  grid-row-gap: 24px;
+}
+
+/* Allow the sticky scroll scene to remain fixed while its animation plays. */
+.layout-501-2 {
+  overflow: visible;
+}
+
+.gwc-concept-scene {
+  position: sticky;
+  top: 88px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 600px);
+  grid-template-rows: auto;
+  column-gap: 80px;
+  /* Sit the pinned scene in the middle of the visible area below the fixed
+     navigation, instead of hugging its top edge. */
+  align-items: center;
+  align-content: center;
+  min-height: calc(100vh - 88px);
+  min-height: calc(100dvh - 88px);
+  padding-top: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.gwc-concept-video {
+  grid-column: 2;
+  grid-row: 1;
+  width: 600px;
+  max-width: 100%;
+  will-change: transform;
+}
+
+.gwc-concept-copy {
+  grid-row: 1;
+  transition: opacity .1s linear, transform .1s linear;
+}
+
+.gwc-concept-copy .heading-10 {
+  margin-bottom: 20px;
+}
+
+.gwc-preproduction-image,
+.gwc-postproduction-image {
+  width: 600px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+}
+
+.gwc-portfolio-video-frame {
+  position: relative;
+  width: var(--_spacing-sizing---container--container-large);
+  max-width: calc(100% - 2 * var(--_spacing-sizing---page-padding--padding-global));
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.gwc-portfolio-video {
+  width: 100%;
+  aspect-ratio: 1289 / 725;
+  border-radius: 16px;
+  object-fit: cover;
+  display: block;
+}
+
+.gwc-portfolio-sound {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  border: 1px solid var(--gwc-accent);
+  border-radius: 999px;
+  background: rgba(24, 24, 20, .78);
+  color: #fff;
+  min-height: 44px;
+  padding: 12px 16px;
+  font: 600 14px/1 'Instrument Sans', sans-serif;
+  cursor: pointer;
+}
+
+/* Portfolio "Nachtleben": six single photos instead of one collage image
+   with baked-in cream gutters. Same look and lightbox as the first photo
+   block (.gwc-pf-grid); on wide screens it keeps the collage layout
+   (column/row proportions measured from the old collage). */
+.gwc-night-grid {
+  width: 100%;
+  max-width: 1280px;
+  display: grid;
+  grid-template-columns: 635fr 532fr 804fr;
+  grid-template-rows: 752fr 95fr 338fr 413fr;
+  aspect-ratio: 5 / 4;
+  gap: clamp(12px, 2vw, 32px);
+}
+.gwc-ng-item { margin: 0; min-width: 0; min-height: 0; }
+.gwc-ng-l1 { grid-column: 1; grid-row: 1 / 3; }
+.gwc-ng-l2 { grid-column: 1; grid-row: 3 / 5; }
+.gwc-ng-m  { grid-column: 2; grid-row: 1 / 5; }
+.gwc-ng-r1 { grid-column: 3; grid-row: 1 / 2; }
+.gwc-ng-r2 { grid-column: 3; grid-row: 2 / 4; }
+.gwc-ng-r3 { grid-column: 3; grid-row: 4 / 5; }
+@media (max-width: 767px) {
+  .gwc-night-grid {
+    aspect-ratio: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    gap: 12px;
+  }
+  .gwc-ng-l1 { grid-column: 1; grid-row: 1; aspect-ratio: 4 / 5; }
+  .gwc-ng-r1 { grid-column: 2; grid-row: 1; aspect-ratio: 4 / 5; }
+  /* sized by the two tiles next to it, not by its tall picture */
+  .gwc-ng-m  { grid-column: 1; grid-row: 2 / 4; contain: size; }
+  .gwc-ng-l2 { grid-column: 2; grid-row: 2; aspect-ratio: 4 / 5; }
+  .gwc-ng-r3 { grid-column: 2; grid-row: 3; aspect-ratio: 4 / 5; }
+  .gwc-ng-r2 { grid-column: 1 / 3; grid-row: 4; aspect-ratio: 3 / 2; }
+}
+
+.gwc-italy-video-frame {
+  position: relative;
+  width: var(--_spacing-sizing---container--container-large);
+  max-width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.gwc-italy-video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.gwc-services-video {
+  width: 100%;
+  border-radius: 16px;
+  display: block;
+}
+
+/* Portfolio: remove the two side-by-side images below “Weniger Worte. Mehr Wirkung.” */
+.gallery-17-2 .content-style-23 {
+  display: none;
+}
+
+.gallery-17-2 {
+  padding-bottom: 24px;
+}
+
+.layout-164-2 {
+  padding-top: 24px;
+}
+
+/* Alternate the production step: image left, copy right. */
+@media screen and (min-width: 768px) {
+  .feature-two-2 .content-style-5 {
+    flex-direction: row-reverse;
+  }
+
+  .feature-two-2 .section-info-2 {
+    justify-content: flex-end;
+  }
+}
+
+.gwc-concept-copy-first {
+  grid-column: 1;
+}
+
+.gwc-concept-copy-second {
+  grid-column: 2;
+  opacity: 0;
+}
+
+/* Phones run the same two-up animation as desktop (video right, copy left;
+   the video slides across and "…zur Strategie." takes its place), just in a
+   narrower grid with a smaller gap and type scaled to fit the half column. */
+@media screen and (max-width: 767px) {
+  .gwc-concept-section {
+    height: 250vh;
+  }
+  .gwc-concept-scene {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 16px;
+    align-items: center;
+    align-content: center;
+    padding: 0 4vw;
+  }
+  .gwc-concept-video {
+    width: 100%;
+    max-width: none;
+  }
+  .gwc-concept-copy .heading-10 {
+    font-size: 1.35rem;
+    margin-bottom: 10px;
+  }
+  .gwc-concept-copy .text-9 {
+    font-size: .85rem;
+    line-height: 1.45;
+  }
+}
+
+/* ==========================================================================
+   Tabs
+   ========================================================================== */
+
+.tab-one-2 {
+  border-color: var(--_color-schemes---color-scheme-5--border);
+  transition: border-color .25s ease;
+}
+.tab-one-2.w--current {
+  border-color: var(--gwc-accent);
+}
+.tab-one-2.w--current .am-set-2,
+.tab-one-2.w--current .zur-auslieferung-2 {
+  color: var(--gwc-accent);
+}
+
+/* ==========================================================================
+   FAQ accordion
+   ========================================================================== */
+
+.faq-toggle-icon {
+  color: var(--gwc-accent);
+}
+.question-3 {
+  transition: opacity .2s ease;
+}
+.question-3:hover {
+  opacity: .75;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.footer-3-3,
+.footer-3-5,
+.footer-3-6,
+.footer-3-8 {
+  border-top: 1px solid var(--gwc-border-dark);
+  position: relative;
+}
+.footer-3-3::before,
+.footer-3-5::before,
+.footer-3-6::before,
+.footer-3-8::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 120px;
+  height: 1px;
+  background: var(--gwc-accent);
+}
+.credits {
+  border-top: 1px solid var(--gwc-border-dark);
+  padding-top: 24px;
+}
+._49-151-55828308-3, .neumeyerjanwebde-3,
+._49-151-55828308-5, .neumeyerjanwebde-5,
+._49-151-55828308-6, .neumeyerjanwebde-6,
+._49-151-55828308-8, .neumeyerjanwebde-8 {
+  text-decoration-color: var(--gwc-border-dark);
+  transition: color .2s ease, text-decoration-color .2s ease;
+}
+._49-151-55828308-3:hover, .neumeyerjanwebde-3:hover,
+._49-151-55828308-5:hover, .neumeyerjanwebde-5:hover,
+._49-151-55828308-6:hover, .neumeyerjanwebde-6:hover,
+._49-151-55828308-8:hover, .neumeyerjanwebde-8:hover {
+  color: var(--gwc-accent);
+  text-decoration-color: var(--gwc-accent);
+}
+.footer-links a {
+  transition: color .2s ease;
+}
+.footer-links a:hover p {
+  color: var(--gwc-accent);
+}
+
+/* ==========================================================================
+   Legal pages
+   ========================================================================== */
+
+.legal-text a {
+  text-decoration-color: var(--gwc-border-dark);
+  transition: color .2s ease;
+}
+.legal-text a:hover {
+  color: var(--gwc-accent);
+}
+
+/* ==========================================================================
+   Portfolio — mobile spacing
+   The Webflow export sizes this page for a desktop canvas: 80px row gaps
+   inside every section and 56px padding top and bottom (so 112px at each
+   section boundary). On a 375px screen that reads as large empty bands
+   between the images. Scoped to main.gwc-portfolio (wraps the page wrapper
+   and the sections that sit after it), so other pages keep their own
+   spacing.
+   ========================================================================== */
+@media screen and (max-width: 767px) {
+  .gwc-portfolio .portfolio-header-4-2,
+  .gwc-portfolio .container-21,
+  .gwc-portfolio .container-22,
+  .gwc-portfolio .container-23,
+  .gwc-portfolio .container-24,
+  .gwc-portfolio .gallery-10-2,
+  .gwc-portfolio .gallery-17-2,
+  .gwc-portfolio .gallery-16-2,
+  .gwc-portfolio .gallery-8-2,
+  .gwc-portfolio .gallery-2-2,
+  .gwc-portfolio .frame-15,
+  .gwc-portfolio .layout-164-2,
+  .gwc-portfolio .layout-22-2,
+  .gwc-portfolio .layout-166-3,
+  .gwc-portfolio .header-44-2 {
+    grid-row-gap: 32px;
+    row-gap: 32px;
+  }
+
+  /* A fixed 900px hero is taller than the phone viewport, which pushed the
+     intro copy into a cramped block with dead space above and below it. */
+  .gwc-portfolio .portfolio-header-4-2 {
+    height: auto;
+    min-height: 0;
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .gwc-portfolio .gallery-10-2,
+  .gwc-portfolio .gallery-17-2,
+  .gwc-portfolio .gallery-8-2,
+  .gwc-portfolio .gallery-2-2,
+  .gwc-portfolio .layout-164-2,
+  .gwc-portfolio .layout-22-2,
+  .gwc-portfolio .layout-166-3,
+  .gwc-portfolio .header-44-2 {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+}
+
+/* ==========================================================================
+   Full-width page wrapper
+   The Webflow export caps each page wrapper at 1440px without centering it,
+   so on screens wider than 1440px the page stuck to the left and the dark
+   body background showed as a bar on the right. Let the wrapper span the
+   viewport; the inner containers keep their own max-widths and centering.
+   ========================================================================== */
+.greenwoodcreek-desktop,
+.leistungen-desktop,
+.portfolio-desktop,
+.ber-uns-desktop {
+  max-width: none;
+  width: 100%;
+}
+
+/* ==========================================================================
+   Homepage hero: headline + subline centred on every screen width
+   The Webflow export pins the text block at a fixed `left: 79.5px`, which is
+   only centred on a 1440px canvas. Centre it on the viewport instead and sit
+   it a little lower in the picture.
+   ========================================================================== */
+@media screen and (min-width: 992px) {
+  .header-65-3 .container-12 {
+    top: 545px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: calc(100% - 2 * var(--_spacing-sizing---page-padding--padding-global, 64px));
+    align-items: center;
+  }
+  .header-65-3 .component-4 {
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+  }
+}
+@media screen and (max-width: 991px) {
+  .header-65-3 .container-12 {
+    align-items: center;
+    margin-top: 16px;
+  }
+  .header-65-3 .component-4 {
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+  }
+}
+/* The hero text is the first thing on the page, so it must never wait for the
+   scroll-reveal trigger (which, with the text sitting lower, would not fire on
+   short laptop screens until the visitor scrolls). */
+.header-65-3 .geschichten-in-bildern-2,
+.header-65-3 .wir-verwandeln-visionen-in-kraftvolle-visuelle-erzhlungen-die-bleiben-2 {
+  opacity: 1 !important;
+  transform: none !important;
+  clip-path: none !important;
+  filter: none !important;
+}
+
+
+/* ==========================================================================
+   Startseite: "Aktuelles" teaser (die drei neuesten Blogbeiträge)
+   ========================================================================== */
+.gwc-news {
+  width: 100%;
+  background-color: var(--gwc-ink);
+  color: var(--gwc-ivory);
+  padding: clamp(80px, 10vw, 128px) var(--_spacing-sizing---page-padding--padding-global, 64px);
+  border-top: 1px solid var(--gwc-border-dark);
+}
+.gwc-news-inner { width: 100%; max-width: 1280px; margin: 0 auto; }
+.gwc-news-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  column-gap: 64px; row-gap: 20px;
+  align-items: end;
+  margin-bottom: clamp(40px, 5vw, 64px);
+}
+.gwc-news-kicker {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin: 0 0 16px;
+  color: var(--gwc-accent);
+  text-transform: uppercase; letter-spacing: .14em;
+  font-size: 13px; font-weight: 600;
+}
+.gwc-news-kicker::before { content: ""; width: 22px; height: 1px; background: var(--gwc-accent); }
+.gwc-news-title {
+  margin: 0;
+  font-family: 'Anton', sans-serif; font-weight: 400;
+  font-size: clamp(2.6rem, 5vw, 5rem);
+  line-height: 1; letter-spacing: -.02em;
+  color: var(--gwc-ivory);
+}
+.gwc-news-intro p {
+  margin: 0 0 18px;
+  font-size: clamp(1rem, .2vw + .95rem, 1.15rem);
+  line-height: 1.6;
+  color: rgba(236, 227, 205, .78);
+}
+.gwc-news-all {
+  display: inline-block;
+  color: var(--gwc-accent-soft);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  transition: color .25s ease;
+}
+.gwc-news-all:hover, .gwc-news-all:focus-visible { color: var(--gwc-ivory); }
+.gwc-news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 2.5vw, 32px);
+}
+.gwc-news-card { display: block; color: inherit; text-decoration: none; }
+.gwc-news-img {
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: rgba(236, 227, 205, .06);
+}
+.gwc-news-img img {
+  display: block; width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s cubic-bezier(.22, 1, .36, 1);
+}
+.gwc-news-card:hover .gwc-news-img img,
+.gwc-news-card:focus-visible .gwc-news-img img { transform: scale(1.04); }
+.gwc-news-card:focus-visible { outline: 2px solid var(--gwc-accent); outline-offset: 6px; border-radius: 16px; }
+.gwc-news-date {
+  display: block;
+  margin: 20px 0 6px;
+  color: var(--gwc-accent);
+  text-transform: uppercase; letter-spacing: .14em;
+  font-size: .8rem; font-weight: 600;
+}
+.gwc-news-name {
+  margin: 0;
+  font-family: 'Anton', sans-serif; font-weight: 400;
+  font-size: clamp(1.5rem, 1.2vw + 1.1rem, 2.1rem);
+  line-height: 1.1; letter-spacing: -.01em;
+  color: var(--gwc-ivory);
+}
+@media (max-width: 991px) {
+  .gwc-news-head { grid-template-columns: minmax(0, 1fr); align-items: start; }
+  .gwc-news-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gwc-news-card:nth-child(3) { display: none; }
+}
+@media (max-width: 600px) {
+  .gwc-news { padding-left: 20px; padding-right: 20px; }
+  .gwc-news-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .gwc-news-card:nth-child(3) { display: block; }
+}
+@media (prefers-reduced-motion: reduce) { .gwc-news-img img { transition: none; } }
+
+
+/* ==========================================================================
+   Portfolio: erster Bildblock (6 Fotos, per Klick groß ansehen)
+   ========================================================================== */
+.gwc-pf-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: clamp(110px, 12.5vw, 190px);
+  gap: clamp(12px, 2vw, 32px);
+}
+.gwc-pf-item { margin: 0; min-width: 0; }
+.gwc-pf-a { grid-column: span 7; grid-row: span 2; }
+.gwc-pf-b { grid-column: span 5; grid-row: span 4; }
+.gwc-pf-c { grid-column: span 7; grid-row: span 2; }
+.gwc-pf-d, .gwc-pf-e, .gwc-pf-f { grid-column: span 4; grid-row: span 2; }
+.gwc-pf-link {
+  display: block; width: 100%; height: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  cursor: zoom-in;
+  background-color: rgba(236, 227, 205, .06);
+  position: relative;
+}
+.gwc-pf-link img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  transition: filter .4s ease;
+}
+.gwc-pf-link::after {
+  content: ""; position: absolute; inset: 0; border-radius: 16px;
+  box-shadow: inset 0 0 0 0 var(--gwc-accent);
+  transition: box-shadow .3s ease; pointer-events: none;
+}
+.gwc-pf-link:hover img, .gwc-pf-link:focus-visible img { filter: brightness(1.08) saturate(1.05); }
+.gwc-pf-link:hover::after, .gwc-pf-link:focus-visible::after { box-shadow: inset 0 0 0 2px var(--gwc-accent); }
+.gwc-pf-link:focus-visible { outline: none; }
+/* caption only shown inside the lightbox */
+.gwc-pf-cap {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+@media (max-width: 767px) {
+  .gwc-pf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; gap: 12px; }
+  .gwc-pf-item { grid-row: auto !important; grid-column: span 1 !important; aspect-ratio: 4 / 5; }
+  .gwc-pf-a, .gwc-pf-d { grid-column: span 2 !important; aspect-ratio: 3 / 2; }
+  .gwc-pf-link, .gwc-pf-link img, .gwc-pf-link::after { border-radius: 16px; }
+}
+
+/* SEO: keyword line inside the H1. Visually a small kicker under the display
+   headline, so the design stays the same while the H1 names service + city. */
+.gwc-h1-sub {
+  display: block;
+  margin-top: .6em;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: clamp(.95rem, .4vw + .85rem, 1.15rem);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gwc-accent-soft);
+}
+
+/* Performance: the Leistungen and Portfolio heroes were CSS backgrounds, which
+   the browser discovers late and cannot size per device (mobile LCP 10-13 s).
+   They are now a real <img fetchpriority="high" srcset> behind the content. */
+.header-65-4,
+.portfolio-header-4-2 {
+  position: relative;
+  isolation: isolate;
+  background-image: none !important;
+}
+.gwc-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+.header-65-4::after,
+.portfolio-header-4-2::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(0, 0, 0, .4);
+  pointer-events: none;
+}
+
+/* Mobile menu icon used the dark scheme text colour on the dark glass navbar,
+   so it was practically invisible. */
+.gwc-nav-toggle span {
+  background-color: var(--gwc-paper);
+}
+
+/* Webflow injects a "Made in Webflow" badge; the site is self-hosted, so hide it. */
+.w-webflow-badge {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Portfolio — streaming/social icons under the "Magic Hoffmann" gallery
+   The Webflow export pinned this row at `top: 1623px` inside a fixed-height
+   section, so it floated in an empty band far below the images. Put it back
+   in the flow, centred under the image group like the "Just Us" row, and
+   let the section size to its content. (These sections sit outside
+   .portfolio-desktop in the export, so the selectors aren't scoped to it.)
+   ========================================================================== */
+.gallery-8-2,
+.container-24 {
+  height: auto;
+}
+
+.gallery-8-2 .spotify-icon-logowine-1 {
+  position: static;
+  top: auto;
+  left: auto;
+  align-self: center;
+  margin-top: 22px;
+}
+
+/* "Just Us" row already sits in the flow but touched the images. */
+.gallery-2-2 .spotify-icon-logowine-2 {
+  margin-top: 32px;
+}
+
+.gwc-stream-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.gwc-stream-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 3px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.gwc-stream-links a:hover {
+  opacity: 0.75;
+  transform: translateY(-2px);
+}
+
+.gwc-stream-links a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Homepage — closing image with scroll zoom (see scroll-reveal.js)
+   The frame clips the image so it can scale up without growing the layout.
+   ========================================================================== */
+.gwc-zoom-frame {
+  width: 100%;
+  overflow: hidden;
+}
+.gwc-zoom-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+/* ==========================================================================
+   Portfolio — scroll-scrubbed video (see gwc-scroll-scrub.js)
+   The section is ~2.5 screens tall; the sticky frame keeps the video in
+   view while scrolling through it drives playback.
+   ========================================================================== */
+.gwc-scrub {
+  position: relative;
+  width: 100%;
+  height: 250vh;
+  background-color: var(--_color-schemes---color-scheme-5--background);
+}
+.gwc-scrub-sticky {
+  container-type: inline-size;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 88px var(--_spacing-sizing---page-padding--padding-global, 64px) 32px;
+  box-sizing: border-box;
+}
+.gwc-scrub-video {
+  display: block;
+  /* Same width and proportions as the full-width image further down
+     ("Jedes Projekt ein Original", 1440x830), so the two line up. The 4:3
+     clip is cropped to fit; on very flat screens the frame gets shorter
+     rather than narrower so it stays fully in view under the navbar
+     (100cqw = the sticky frame's content width, see container-type above). */
+  width: min(100%, var(--_spacing-sizing---container--container-large, 1280px));
+  height: min(
+    min(100cqw, var(--_spacing-sizing---container--container-large, 1280px)) * 830 / 1440,
+    100svh - 120px
+  );
+  border-radius: 16px;
+  background-color: #0b0d14;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+.gwc-scrub.is-static { height: auto; }
+.gwc-scrub.is-static .gwc-scrub-sticky { position: static; height: auto; padding-top: 56px; padding-bottom: 56px; }
+@media screen and (max-width: 767px) {
+  .gwc-scrub { height: 200vh; }
+  .gwc-scrub-sticky { padding-top: 80px; padding-bottom: 24px; }
+}
+
+/* ==========================================================================
+   Portfolio — keep .container-21 inside the page padding
+   The export gives it a fixed width of 1280px; the max-width:991px fix in
+   the Webflow CSS only resets that below 992px, so between ~992 and ~1408px
+   the container (e.g. the "Jedes Projekt ein Original" image) overflowed
+   the page edge. Fluid width, same 1280px cap.
+   ========================================================================== */
+.container-21 {
+  width: 100%;
+}
+
+/* Rounded variant for zoom frames around rounded images (Portfolio). */
+.gwc-zoom-frame--rounded {
+  border-radius: var(--_ui-styles---radius--large, 16px);
+}
+.gwc-zoom-frame--rounded img {
+  border-radius: 0;
+}
+
+/* The pinned zoom image ("Jedes Projekt ein Original") adds scroll room via
+   GSAP's pin spacer. The export's fixed 1148px height clipped that room, so
+   the rest of the page slid up into the pinned image. Let the section grow. */
+.layout-164-2 {
+  height: auto;
+}
+
+/* ==========================================================================
+   Mobile fixes (2026-10-12)
+   ========================================================================== */
+
+/* Hamburger bars in the blood-orange accent */
+.gwc-nav-toggle span {
+  background-color: var(--alt-accent-light, var(--gwc-accent));
+}
+
+/* Portfolio header: the background photo slowly zooms out on load.
+   Uses the individual `scale` property so it doesn't fight any inline
+   transform set by scroll-reveal.js. */
+.portfolio-header-4-2 .gwc-hero-bg {
+  animation: gwc-hero-zoom-out 4.5s cubic-bezier(.22, 1, .36, 1) both;
+}
+@keyframes gwc-hero-zoom-out {
+  from { scale: 1.22; }
+  to   { scale: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-header-4-2 .gwc-hero-bg { animation: none; }
+}
+
+/* Leistungen: the section had a fixed 922px height from the export, which
+   cut the photo below "Anfragen" in half on phones. */
+.layout-16-2 {
+  height: auto;
+}
+
+@media screen and (max-width: 767px) {
+  /* Text block and image stack on phones but had no gap between them:
+     Leistungen ("Anfragen" button → photo), Portfolio ("Image-Content für
+     Unternehmen" → night photo). */
+  .component-3 {
+    row-gap: 32px;
+  }
+
+  /* Magic Hoffmann / Just Us: the image columns stack on phones; give the
+     gap between the columns the same 32px as inside a column. */
+  .gallery-8-2 .content-style-21,
+  .gallery-2-2 .content-style-21 {
+    flex-direction: column;
+    row-gap: 32px;
+  }
+
+  /* Leistungen "Das unterscheidet uns": heading→text was 16px but the
+     points themselves touched each other. */
+  .layout-298-2 .content-style-12 {
+    margin-bottom: 36px;
+  }
+
+  /* Friedensengel scroll video: the frame is only as tall as the clip and
+     is kept centred by gwc-scroll-scrub.js, instead of a full-screen frame
+     with big empty bands above and below. */
+  .gwc-scrub-sticky {
+    height: auto;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+}
+
+/* ==========================================================================
+   Accessibility + consistency pass (2026-10-12)
+   Radius scale: 3px buttons / inputs / small controls, 16px images, cards
+   and panels, 999px only for floating round controls over media.
+   ========================================================================== */
+
+/* Skip link: hidden until it receives keyboard focus */
+.gwc-skip {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 10001;
+  padding: 12px 18px;
+  border-radius: 3px;
+  background: var(--gwc-ivory);
+  color: var(--gwc-ink);
+  font: 600 16px/1 'Instrument Sans', sans-serif;
+  text-decoration: none;
+  transform: translateY(-160%);
+}
+.gwc-skip:focus,
+.gwc-skip:focus-visible {
+  transform: none;
+  outline: 2px solid var(--gwc-accent);
+  outline-offset: 2px;
+}
+
+/* <main> wraps the content between navbar and footer without changing the
+   flex layout of the Webflow page wrapper */
+.gwc-main {
+  display: contents;
+}
+
+/* Headlines: no single orphaned word on the last line */
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+/* Long body copy: keep lines readable (~65-75 characters) */
+.text-17,
+.text-24 {
+  max-width: 68ch;
+}
+
+/* Footer links: 44px touch targets on phones */
+@media screen and (max-width: 767px) {
+  [class*="footer-3"] a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+/* Lenis smooth scroll (rules from lenis 1.3.26 lenis.css, inlined to save a
+   render-blocking request). Lenis drives scrolling, so native smooth scroll
+   must be off or the two fight. */
+html.lenis,
+html.lenis body {
+  height: auto;
+  scroll-behavior: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel],
+.lenis [data-lenis-prevent-touch],
+.lenis [data-lenis-prevent-vertical],
+.lenis [data-lenis-prevent-horizontal] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+.lenis.lenis-autoToggle {
+  transition-property: overflow;
+  transition-duration: 1ms;
+  transition-behavior: allow-discrete;
+}
+
+/* Reduced motion (no Lenis then): anchor jumps without animation */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* ==========================================================================
+   Über uns
+   ========================================================================== */
+/* Header photo full-bleed like the other page heroes, without the dark scrim
+   (which also stopped short of the photo's bottom edge). The text keeps a
+   soft shadow so it stays readable on the bright meadow. */
+.header-64-2 {
+  padding-right: 0;
+  padding-left: 0;
+}
+.header-64-2 .container-34 {
+  max-width: none;
+}
+.header-64-2 .container-34 > img {
+  border-radius: 0 !important;
+}
+.uber-uns-hero-text {
+  background-image: none !important;
+  border-radius: 0 !important;
+}
+.uber-uns-hero-text .ber-uns-9,
+.uber-uns-hero-text .geschichten-die-berhren-2 {
+  text-shadow: 0 2px 20px rgba(0, 0, 0, .55), 0 1px 3px rgba(0, 0, 0, .45);
+}
+/* phones: the photo zooms out on scroll until it spans the screen width
+   (see scroll-reveal.js); contain keeps the whole picture in the frame */
+@media (max-width: 767px) {
+  .header-64-2 .container-34 > img.is-zoom-out {
+    object-fit: contain;
+    /* anchored at the top: the finished picture sits right under the
+       navigation and the heading ends up below it, on black */
+    object-position: 50% 0%;
+    transform-origin: 50% 0%;
+    background-color: transparent;   /* the section's own black shows */
+    will-change: transform;
+    height: 580px;
+  }
+  /* heading right below the finished picture (photo is 1440 x 909, so at
+     full width it is 63.125vw high) instead of floating mid-frame */
+  /* the spacer GSAP adds while the header is held: same black as the
+     sections, so there is no visible seam below the header */
+  .pin-spacer:has(> .header-64-2) {
+    background-color: var(--alt-surface, #0b0b0b);
+  }
+  .header-64-2 .container-34:has(> img.is-zoom-out) .uber-uns-hero-text {
+    justify-content: flex-start;
+    padding-top: calc(63.125vw + 28px);
+  }
+}
+
+/* Portfolio header, phones: the same zoom-out as Über uns (scroll-reveal.js).
+   The photo covers the whole header at first; the copy starts on it and
+   ends up right below the finished, top-anchored picture (1920 x 1280, so at full
+   width it is 66.667vw high), on black. */
+@media (max-width: 767px) {
+  .portfolio-header-4-2 > .gwc-hero-bg.is-zoom-out {
+    animation: none;
+    object-fit: contain;
+    object-position: 50% 0%;
+    transform-origin: 50% 0%;
+    will-change: transform;
+  }
+  .gwc-portfolio .portfolio-header-4-2:has(> .gwc-hero-bg.is-zoom-out) {
+    background-color: var(--alt-surface, #0b0b0b);
+    padding-top: calc(66.667vw + 28px);
+  }
+  .portfolio-header-4-2:has(> .gwc-hero-bg.is-zoom-out)::after {
+    opacity: var(--gwc-scrim, 1);
+  }
+  .pin-spacer:has(> .portfolio-header-4-2) {
+    background-color: var(--alt-surface, #0b0b0b);
+  }
+}
+
+/* Body copy split around the surf photo: first half before it, second half
+   after it; both centred on the page. */
+.gwc-uu-copy {
+  align-self: center;
+  width: 100%;
+  max-width: 680px;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1em;
+  text-align: center;
+}
+.gwc-uu-copy .text-24 {
+  max-width: none;
+  margin: 0;
+}
+/* surf photo + its heading (overlaid on wide screens, above it on phones) */
+.gwc-uu-surf {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.gwc-uu-surf > img {
+  display: block;
+  width: 100%;
+}
+/* the heading comes first in the markup (so it reads above the photo on
+   phones); on wide screens it is overlaid, and the photo's reveal animation
+   gives the photo its own layer — keep the heading above it */
+.gwc-uu-surf > .column-10 {
+  z-index: 2;
+}
+
+/* "Mit Leidenschaft fürs Detail": studio photo right after the header,
+   heading centred above it ("Detail" in the accent, like "Wahrheit"). */
+.gwc-uu-detail {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.gwc-uu-detail > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.gwc-uu-detail-title {
+  text-align: center;
+  margin: 0;
+}
+.gwc-uu-detail-title em {
+  font-style: normal;
+  color: var(--alt-accent-light, #e4442a);
+}
+
+/* "Unsere Arbeit ist das Handwerk der Wahrheit": "Wahrheit" in the accent.
+   On wide screens the line sits on the bright surf photo: black text there,
+   the darker accent tone for contrast. */
+.column-10 .heading-27 em {
+  font-style: normal;
+  color: var(--alt-accent-light, #e4442a);
+}
+@media screen and (min-width: 992px) {
+  .column-10 .heading-27 {
+    color: #0a0a0a;
+    text-shadow: none;
+  }
+  .column-10 .heading-27 em {
+    color: var(--alt-accent, #a5220f);
+  }
+}
+
+/* ==========================================================================
+   Portfolio, phones: Magic Hoffmann / Just Us
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* streaming links left-aligned right under the last picture */
+  .gallery-8-2 .spotify-icon-logowine-1,
+  .gallery-2-2 .spotify-icon-logowine-2 {
+    justify-content: flex-start;
+    align-self: stretch;
+    margin-top: -20px;   /* the column's 32px row gap minus this = 12px */
+    gap: 4px;
+  }
+  /* icon flush with the picture's left edge (tap area stays 44px) */
+  .gallery-8-2 .spotify-icon-logowine-1 a,
+  .gallery-2-2 .spotify-icon-logowine-2 a {
+    justify-content: flex-start;
+  }
+  /* pictures fly in from the sides (scroll-reveal.js): never let them
+     widen the page while they are outside */
+  .gallery-8-2,
+  .gallery-2-2 {
+    overflow-x: clip;
+  }
+}
+
+/* Phones: on the pages whose logo and menu button share a wrapper
+   (.content-style-18: Über uns, Aktuelles, legal pages, 404) the button sat
+   in the middle of the bar; push it to the right edge like everywhere else. */
+@media screen and (max-width: 767px) {
+  .gwc-navbar-glass .content-style-18 {
+    flex: 1 1 auto;
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,175 @@
+/* ==========================================================================
+   GREENWOODCREEK – Apple-Design-Ebene (Testversion, 2026-11-07)
+   Liegt über allen bestehenden Styles. Farben bleiben unverändert;
+   geändert werden Typografie, Materialien, Formen, Abstände und Bewegung.
+   ========================================================================== */
+:root {
+  --a-surface: #0b0b0b;
+  --a-surface-2: #141414;
+  --a-surface-3: #1c1c1c;
+  --a-hair: rgba(241, 236, 230, .08);
+  --a-hair-strong: rgba(241, 236, 230, .16);
+  --a-text: #f1ece6;
+  --a-muted: rgba(241, 236, 230, .68);
+  --a-accent: #a5220f;
+  --a-accent-light: #e4442a;
+  --a-r-xl: 28px;
+  --a-r-lg: 22px;
+  --a-r-md: 14px;
+  --a-pill: 980px;
+  /* kritisch gedämpfte Feder (damping 1.0, response ~0.4 s) als CSS-Kurve */
+  --a-spring: linear(0, .009, .035 2.1%, .141 4.4%, .723 16.4%, .938 23.3%, .992 29.2%, 1.016 35.9%, 1.005 45.9%, 1);
+  --a-ease-out: cubic-bezier(.22, 1, .36, 1);
+  --a-press: 100ms ease-out;
+}
+
+/* ---------- Typografie: größenabhängiges Tracking, ruhige Zeilenhöhen ---------- */
+body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+.gwc-blog-title, h1, .heading-16 { letter-spacing: -.012em; line-height: 1.02; font-optical-sizing: auto; text-wrap: balance; }
+.gwc-post-title, h2 { letter-spacing: -.008em; line-height: 1.06; text-wrap: balance; }
+h3 { letter-spacing: -.005em; line-height: 1.2; }
+.gwc-blog-lead, .text-15 { font-size: clamp(1.0625rem, .35vw + .98rem, 1.3125rem); line-height: 1.5; letter-spacing: -.003em; color: var(--a-muted); text-wrap: pretty; max-width: 40em; }
+.gwc-svc-prose p, .gwc-post-text, .gwc-svc-grid p, .gwc-svc-steps p, .gwc-faq p, .gwc-svc-final p {
+  font-size: 1.0625rem; line-height: 1.55; letter-spacing: -.002em; color: var(--a-muted); text-wrap: pretty;
+}
+.gwc-svc-grid h3, .gwc-svc-steps h3 { font-family: "Instrument Sans", system-ui, sans-serif; font-size: 1.25rem; font-weight: 600; letter-spacing: -.012em; color: var(--a-text); margin-bottom: .45em; }
+.gwc-blog-kicker { letter-spacing: .14em; font-size: .75rem; }
+p a:not([class]) { color: var(--a-text); text-decoration: underline; text-decoration-color: var(--a-accent-light); text-underline-offset: .2em; text-decoration-thickness: 1px; transition: text-decoration-color 200ms var(--a-ease-out); }
+p a:not([class]):hover { text-decoration-color: currentColor; }
+
+/* ---------- Material: Navigation ---------- */
+.gwc-navbar-glass {
+  background: rgba(14, 14, 14, .62) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important; backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 1px solid var(--a-hair) !important;
+  border-top-color: rgba(241, 236, 230, .14) !important;      /* helle Oberkante = Licht auf dem Material */
+  border-radius: var(--a-pill) !important;
+  box-shadow: 0 10px 40px -12px rgba(0, 0, 0, .65);
+  transition: background-color 320ms var(--a-ease-out), box-shadow 320ms var(--a-ease-out), transform 420ms var(--a-spring);
+}
+html.a-scrolled .gwc-navbar-glass { background: rgba(14, 14, 14, .78) !important; box-shadow: 0 14px 50px -14px rgba(0, 0, 0, .8); }
+.nav-links .link-style { border-radius: var(--a-pill); padding: 6px 10px; white-space: nowrap; transition: background-color 200ms var(--a-ease-out), color 200ms var(--a-ease-out); }
+.nav-links .link-style:hover { background: rgba(241, 236, 230, .08); color: var(--a-text); }
+.nav-links .link-style[aria-current="page"], .nav-links .link-style.w--current { background: rgba(241, 236, 230, .1); color: var(--a-text); }
+
+/* ---------- Buttons: Kapselform, Feedback beim Drücken ---------- */
+.gwc-svc-btn, [class*="button-style"], .gwc-news-all, input[type="submit"], button[type="submit"], .gwc-web-visit {
+  border-radius: var(--a-pill) !important;
+  font-weight: 600; letter-spacing: -.005em;
+  transition: transform var(--a-press), background-color 220ms var(--a-ease-out), border-color 220ms var(--a-ease-out), box-shadow 220ms var(--a-ease-out), filter 220ms var(--a-ease-out);
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
+.gwc-svc-btn, input[type="submit"], button[type="submit"] { padding: 13px 26px !important; box-shadow: 0 1px 0 rgba(255,255,255,.12) inset, 0 8px 24px -10px rgba(165, 34, 15, .7); }
+.gwc-svc-btn:hover, input[type="submit"]:hover, button[type="submit"]:hover { filter: brightness(1.12); }
+.gwc-svc-btn:active, [class*="button-style"]:active, .gwc-news-all:active, input[type="submit"]:active, button[type="submit"]:active, .gwc-web-visit:active,
+.gwc-svc-link:active, .nav-links .link-style:active { transform: scale(.97); }
+[class*="button-style"]:hover { background-color: rgba(228, 68, 42, .12); }
+
+/* Textlinks im Apple-Stil: „Mehr erfahren ›" */
+.gwc-svc-link { display: inline-flex; align-items: center; gap: .25em; border-bottom: 0 !important; color: var(--a-accent-light) !important; transition: transform var(--a-press), opacity 200ms; }
+.gwc-svc-link::after { content: "›"; font-size: 1.25em; line-height: 1; transform: translateY(-.04em); transition: transform 260ms var(--a-spring); }
+.gwc-svc-link:hover { opacity: .85; }
+.gwc-svc-link:hover::after { transform: translate(3px, -.04em); }
+.gwc-svc-grid h3 .gwc-svc-link { display: inline; color: var(--a-text) !important; }
+.gwc-svc-grid h3 .gwc-svc-link::after { margin-left: .2em; display: inline-block; }
+/* ganze Kachel klickbar, wenn die Überschrift ein Link ist */
+.gwc-svc-grid li { position: relative; }
+.gwc-svc-grid h3 .gwc-svc-link::before { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.gwc-svc-grid li:has(h3 .gwc-svc-link):active { transform: scale(.985); transition-duration: 120ms; }
+
+/* ---------- Kacheln: Leistungen, Ablauf ---------- */
+.gwc-svc-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 16px !important; list-style: none; padding: 0; }
+.gwc-svc-grid li {
+  background: linear-gradient(180deg, var(--a-surface-2), var(--a-surface)) !important;
+  border: 1px solid var(--a-hair) !important; border-radius: var(--a-r-lg) !important;
+  padding: 28px 28px 30px !important;
+  transition: transform 420ms var(--a-spring), border-color 260ms var(--a-ease-out), box-shadow 420ms var(--a-ease-out);
+}
+.gwc-svc-grid li:hover { transform: translateY(-3px); border-color: var(--a-hair-strong) !important; box-shadow: 0 24px 50px -28px rgba(0,0,0,.9); }
+
+.gwc-svc-steps { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 16px !important; list-style: none; padding: 0; counter-reset: a-step; }
+.gwc-svc-steps li {
+  counter-increment: a-step; position: relative;
+  background: var(--a-surface-2); border: 1px solid var(--a-hair); border-radius: var(--a-r-lg);
+  padding: 64px 26px 28px !important;
+}
+.gwc-svc-steps li::before {
+  content: counter(a-step, decimal-leading-zero) !important; position: absolute; top: 24px; left: 26px;
+  font: 600 .8125rem/1 "Instrument Sans", system-ui, sans-serif; letter-spacing: .08em; color: var(--a-accent-light);
+  background: none !important; width: auto !important; height: auto !important; border: 0 !important;
+}
+
+/* Ablauf: auf großen Bildschirmen alle Schritte in einer Reihe */
+@media (min-width: 1000px) {
+  .gwc-svc-steps { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+  .gwc-svc-steps:has(li:nth-child(5)) { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; }
+  .gwc-svc-steps:has(li:nth-child(3):last-child) { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 600px) { .gwc-svc-grid, .gwc-svc-steps { grid-template-columns: 1fr !important; } }
+
+/* ---------- FAQ: gruppierte Liste wie in den Systemeinstellungen ---------- */
+.gwc-faq { background: var(--a-surface-2); border: 1px solid var(--a-hair); border-radius: var(--a-r-lg); overflow: hidden; }
+.gwc-faq details { border: 0 !important; border-bottom: 1px solid var(--a-hair) !important; margin: 0 !important; }
+.gwc-faq details:last-child { border-bottom: 0 !important; }
+.gwc-faq summary {
+  list-style: none; cursor: pointer; position: relative;
+  padding: 20px 56px 20px 24px !important; font-size: 1.0625rem !important; font-weight: 600; letter-spacing: -.01em; line-height: 1.35;
+  transition: background-color 200ms var(--a-ease-out);
+}
+.gwc-faq summary::-webkit-details-marker { display: none; }
+.gwc-faq summary::after {
+  content: "" !important; position: absolute; right: 24px; top: 50%; width: 9px; height: 9px; margin-top: -6px;
+  border-right: 1.75px solid var(--a-muted); border-bottom: 1.75px solid var(--a-muted); transform: rotate(45deg);
+  transition: transform 380ms var(--a-spring); background: none !important;
+}
+.gwc-faq details[open] > summary::after { transform: translateY(4px) rotate(225deg); }
+.gwc-faq summary:hover { background: rgba(241, 236, 230, .035); }
+.gwc-faq summary:active { background: rgba(241, 236, 230, .06); }
+.gwc-faq details p { padding: 0 24px 22px !important; margin: 0 !important; }
+.gwc-faq details[open] p { animation: a-faq-in 380ms var(--a-ease-out); }
+@keyframes a-faq-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Bilder ---------- */
+.gwc-gallery-item img, .gwc-pf-item img, .gwc-post-card img { border-radius: var(--a-r-md) !important; transition: transform 700ms var(--a-ease-out), filter 400ms; }
+.gwc-gallery-link, .gwc-pf-link { display: block; border-radius: var(--a-r-md); overflow: hidden; -webkit-tap-highlight-color: transparent; }
+.gwc-gallery-link:hover img, .gwc-pf-link:hover img { transform: scale(1.025); }
+.gwc-gallery-link:active img, .gwc-pf-link:active img { transform: scale(.985); transition-duration: 120ms; }
+figcaption, .gwc-pf-cap { font-size: .875rem !important; line-height: 1.45; color: var(--a-muted) !important; margin-top: .7em; letter-spacing: -.002em; }
+
+/* ---------- Abschlussbox & Formular ---------- */
+.gwc-svc-final { background: radial-gradient(120% 140% at 0% 0%, rgba(165, 34, 15, .16), transparent 55%), var(--a-surface-2); border: 1px solid var(--a-hair); border-radius: var(--a-r-xl); padding: clamp(28px, 5vw, 56px) !important; }
+input[type="text"], input[type="email"], input[type="tel"], textarea, select {
+  border-radius: var(--a-r-md) !important; background: rgba(241, 236, 230, .045) !important; border: 1px solid var(--a-hair-strong) !important;
+  color: var(--a-text) !important; font-size: 1.0625rem !important; padding: 14px 16px !important;
+  transition: border-color 200ms var(--a-ease-out), background-color 200ms var(--a-ease-out), box-shadow 200ms var(--a-ease-out);
+}
+input:focus, textarea:focus, select:focus { outline: 0 !important; border-color: var(--a-accent-light) !important; background: rgba(241, 236, 230, .07) !important; box-shadow: 0 0 0 4px rgba(228, 68, 42, .2) !important; }
+
+/* Fokus für Tastatur gut sichtbar */
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible { outline: 2px solid var(--a-accent-light) !important; outline-offset: 3px; border-radius: 10px; }
+
+/* ---------- Abstände ---------- */
+.gwc-svc-section { margin-top: clamp(56px, 8vw, 112px) !important; }
+.gwc-post-header { margin-bottom: clamp(20px, 3vw, 32px); }
+
+/* ---------- Sanftes Einblenden beim Scrollen ---------- */
+.a-reveal { opacity: 0; transform: translateY(18px); transition: opacity 700ms var(--a-ease-out), transform 900ms var(--a-ease-out); }
+.a-reveal.a-in { opacity: 1; transform: none; }
+
+/* ---------- Barrierefreiheit ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; }
+  .a-reveal { opacity: 1; transform: none; }
+  .gwc-svc-grid li:hover, .gwc-gallery-link:hover img, .gwc-pf-link:hover img { transform: none; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .gwc-navbar-glass { background: #0e0e0e !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}
+@media (prefers-contrast: more) {
+  :root { --a-hair: rgba(241, 236, 230, .4); --a-hair-strong: rgba(241, 236, 230, .6); --a-muted: rgba(241, 236, 230, .9); }
+}
+@media (max-width: 767px) {
+  .gwc-svc-grid li, .gwc-svc-steps li { padding: 22px 20px 24px !important; }
+  .gwc-svc-steps li { padding-top: 56px !important; }
+  .gwc-svc-grid li:hover { transform: none; }
+}

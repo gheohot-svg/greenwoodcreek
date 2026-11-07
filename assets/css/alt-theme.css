@@ -1,0 +1,171 @@
+/* ==========================================================================
+   Alternative Version — colour theme: black + dark red-orange
+   Loaded last on every page of the alternative version. It repoints the
+   design tokens of the Webflow export and of gwc-redesign.css, so the
+   existing components pick up the new palette without touching layout.
+   Light sections become black / near-black, text becomes warm off-white,
+   the gold accent becomes a blood orange that is almost red.
+   ========================================================================== */
+
+:root {
+  /* palette */
+  --alt-black: #000;
+  --alt-surface: #0b0b0b;
+  --alt-surface-2: #141414;
+  --alt-text: #f1ece6;
+  --alt-text-muted: rgba(241, 236, 230, .72);
+  --alt-line: rgba(241, 236, 230, .14);
+  --alt-accent: #a5220f;        /* blutiges Orange, fast rot */
+  --alt-accent-light: #e4442a;  /* same hue, WCAG AA (≥4.5:1) as text on black */
+
+  /* gwc-redesign tokens */
+  --gwc-ink: var(--alt-black);
+  --gwc-paper: var(--alt-surface);
+  --gwc-ivory: var(--alt-text);
+  --gwc-accent: var(--alt-accent-light);
+  --gwc-accent-soft: var(--alt-accent-light);
+  --gwc-moss: var(--alt-accent);
+  --gwc-rust: var(--alt-accent);
+  --gwc-border-dark: var(--alt-line);
+
+  /* Webflow tokens */
+  /* "white" is used for text over header photos → keep it light */
+  --_primitives---color--white: var(--alt-text);
+  --_primitives---color--neutral-darkest: var(--alt-text);
+  --_primitives---color--neutral-lightest: var(--alt-surface);
+  --_primitives---color--outer-space: var(--alt-black);
+  --_primitives---opacity--neutral-darkest-5: rgba(241, 236, 230, .05);
+  --_primitives---opacity--neutral-darkest-15: var(--alt-line);
+
+  --_color-schemes---color-scheme-3--background: var(--alt-black);
+  --_color-schemes---color-scheme-3--text: var(--alt-text);
+  --_color-schemes---color-scheme-5--background: var(--alt-surface);
+  --_color-schemes---color-scheme-5--text: var(--alt-text);
+  --_color-schemes---color-scheme-5--border: var(--alt-line);
+}
+
+html,
+body {
+  background-color: var(--alt-black);
+  color: var(--alt-text);
+}
+
+::selection {
+  background: var(--alt-accent);
+  color: var(--alt-text);
+}
+
+/* ---- Hard-coded colours from gwc-redesign.css / gwc-blog.css ---------- */
+
+/* Navbar glass: neutral black instead of the old green-black */
+.gwc-navbar-glass {
+  background-color: rgba(0, 0, 0, .58);
+  border-color: var(--alt-line);
+}
+@media screen and (max-width: 991px) {
+  .gwc-navbar-glass .column {
+    background-color: rgba(0, 0, 0, .9);
+    border-color: var(--alt-line);
+  }
+}
+
+/* Contact form fields */
+.gwc-input,
+.gwc-textarea {
+  background-color: var(--alt-surface-2);
+  border-color: var(--alt-line);
+  color: var(--alt-text);
+}
+.gwc-input:focus,
+.gwc-textarea:focus {
+  border-color: var(--alt-accent-light);
+  box-shadow: 0 0 0 3px rgba(228, 68, 42, .24);
+}
+.gwc-submit {
+  background-color: var(--alt-accent);
+  border-color: var(--alt-accent);
+  color: var(--alt-text);
+}
+.gwc-submit:hover,
+.gwc-submit:focus-visible {
+  background-color: var(--alt-accent-light);
+  border-color: var(--alt-accent-light);
+  color: var(--alt-text);
+}
+
+/* Plain links (footer phone / e-mail) inherit instead of browser blue */
+a {
+  color: inherit;
+}
+a:hover {
+  color: var(--alt-accent-light);
+}
+
+/* Muted copy on dark */
+.gwc-news-intro p,
+.gwc-blog-lead,
+.gwc-post-text {
+  color: var(--alt-text-muted);
+}
+.gwc-gallery-item figcaption,
+.gwc-post-feature figcaption {
+  color: rgba(241, 236, 230, .66);
+}
+.gwc-news-img,
+.gwc-pf-link,
+.gwc-gallery-link {
+  background-color: var(--alt-surface-2);
+}
+
+/* Overlays */
+.portfolio-header-4-2::after {
+  background: rgba(0, 0, 0, .45);
+}
+.gwc-lightbox {
+  background-color: rgba(0, 0, 0, .95);
+}
+.gwc-lightbox-btn {
+  background: rgba(0, 0, 0, .6);
+}
+
+/* Text that was hard-coded black in the export / redesign */
+.gwc-post-title,
+.weniger-worte-mehr-wirkung-2 {
+  color: var(--alt-text);
+}
+.button-style-30 .gwc-btn-label,
+.leistungen-desktop [data-figma-id="10202:71552"] .button-style-30 .gwc-btn-label {
+  color: var(--alt-text);
+}
+
+/* Leistungen: "Anfragen" — light label needs the darker red underneath */
+.leistungen-desktop [data-figma-id="10202:71552"] .button-style-30 {
+  background-color: var(--alt-accent);
+  border-color: var(--alt-accent);
+}
+.leistungen-desktop [data-figma-id="10202:71552"] .button-style-30:hover {
+  background-color: #c22a12;
+  border-color: #c22a12;
+}
+.gwc-submit:hover,
+.gwc-submit:focus-visible {
+  background-color: #c22a12;
+  border-color: #c22a12;
+}
+
+/* Form status: the dark red failed contrast on black (2.84:1) and success
+   looked identical to error. Success = light text, error = light red
+   (5.16:1); a glyph marks the meaning so it never relies on colour alone. */
+.gwc-status.is-success {
+  color: var(--alt-text);
+}
+.gwc-status.is-error {
+  color: var(--alt-accent-light);
+}
+.gwc-status.is-success::before {
+  content: "✓ " / "";
+}
+.gwc-status.is-error::before {
+  content: "! " / "";
+  font-weight: 700;
+}
