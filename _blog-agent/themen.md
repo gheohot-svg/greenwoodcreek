@@ -1,7 +1,7 @@
 # Themenliste (oberstes offenes Thema wird als Nächstes geschrieben)
 # Der Agent darf neue Themen unten anhängen, wenn weniger als 5 offen sind.
 
-- [ ] Die schönsten Fotolocations für Hochzeitsfotos in München
+- [x] 2026-11-07 /aktuelles/fotolocations-hochzeit-muenchen/ Die schönsten Fotolocations für Hochzeitsfotos in München
 - [ ] Was kostet ein Imagefilm? Faktoren, die den Preis bestimmen
 - [ ] Produktfotos für den Onlineshop: Checkliste für bessere Verkaufsbilder
 - [ ] Eventfotografie: Wie Sie Ihre Firmenfeier richtig dokumentieren lassen
