@@ -19,3 +19,4 @@
 - [ ] Standesamt München: Tipps für Fotos am Hochzeitstag
 - [ ] Instagram Reels für lokale Unternehmen: Ideen und Ablauf
 - [ ] Hochzeitsvideo oder Hochzeitsfotos: Lohnt sich beides?
+- [x] 2026-11-07 /aktuelles/portraet-bei-nacht-lichtspuren/ Porträt bei Nacht: Tipps für Fotos mit Lichtspuren in der Stadt (aus Foto)
