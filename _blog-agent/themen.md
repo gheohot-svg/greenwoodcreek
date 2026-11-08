@@ -22,3 +22,4 @@
 - [x] 2026-11-07 /aktuelles/portraet-bei-nacht-lichtspuren/ Porträt bei Nacht: Tipps für Fotos mit Lichtspuren in der Stadt (aus Foto)
 - [x] 2026-11-08 /aktuelles/sonnenuntergang-fotografieren-moment-geniessen/ Sonnenuntergang fotografieren oder einfach den Moment genießen? (aus Foto)
 - [x] 2026-11-01 /aktuelles/bokeh-portraet-nacht/ Bokeh-Porträt bei Nacht: Wenn die Stadt zu Licht wird (aus Foto)
+- [x] 2026-11-08 /aktuelles/riesenrad-langzeitbelichtung-theresienwiese/ Riesenrad mit Langzeitbelichtung: Die Wiesn bei Nacht fotografieren (aus Foto)
