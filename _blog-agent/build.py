@@ -138,8 +138,42 @@ def main(path):
     sm_p.write_text(sm, encoding="utf-8")
     # Upload-Signal fuer den Mac
     (ROOT/"_blog-agent"/"PENDING_DEPLOY").write_text(f"{a['date']} {slug}\n", encoding="utf-8")
+    update_home()
     print("OK:", url)
 
+def update_home():
+    """Startseite: Bereich 'Aktuelles' zeigt die neuesten Artikel mit Bild,
+    aufgefuellt mit den urspruenglichen Fotostrecken (max. 3 Karten)."""
+    home_p = ROOT/"index.html"; s = home_p.read_text(encoding="utf-8")
+    open_tag = '<div class="gwc-news-grid">'
+    if open_tag not in s: fail("News-Grid auf der Startseite nicht gefunden")
+    start = s.index(open_tag) + len(open_tag)
+    end = s.index("</div>", s.rindex("</a>", start, s.index("</section>", start)))
+    grid = s[start:end]
+    static_p = ROOT/"_blog-agent"/"home-static.html"
+    if not static_p.exists():
+        static_p.write_text(re.sub(r"<!--gwc-home:[^>]*-->.*?<!--/gwc-home-->", "", grid, flags=re.S), encoding="utf-8")
+    static_cards = re.findall(r'<a class="gwc-news-card".*?</a>', static_p.read_text(encoding="utf-8"), flags=re.S)
+    log = (ROOT/"_blog-agent"/"log.md").read_text(encoding="utf-8")
+    arts = []
+    for f in (ROOT/"_blog-agent"/"artikel").glob("*.json"):
+        a = json.load(open(f, encoding="utf-8"))
+        if a.get("image"):
+            pos = log.find("/aktuelles/%s/" % a["slug"])
+            arts.append((a["date"], pos if pos >= 0 else 10**9, a))
+    arts.sort(key=lambda t: (t[0], t[1]), reverse=True)
+    esc = lambda x: html.escape(x, quote=True)
+    cards = []
+    for _, _, a in arts[:3]:
+        cards.append(f'<!--gwc-home:{a["slug"]}--><a class="gwc-news-card" href="/aktuelles/{a["slug"]}/">'
+            f'<span class="gwc-news-img"><img src="{esc(a["image"].lstrip("/"))}" alt="{esc(a.get("image_alt", a["title"]))}" '
+            f'loading="lazy" decoding="async"/></span><time class="gwc-news-date" datetime="{a["date"]}">{de_date(a["date"])}</time>'
+            f'<h3 class="gwc-news-name">{esc(a["title"])}</h3></a><!--/gwc-home-->')
+    cards += static_cards[:max(0, 3-len(cards))]
+    home_p.write_text(s[:start] + "".join(cards) + s[end:], encoding="utf-8")
+    print("Startseite aktualisiert:", len(arts[:3]), "neue Artikel")
+
 if __name__ == "__main__":
+    if sys.argv[1:] == ["--home"]: update_home(); sys.exit(0)
     if len(sys.argv) != 2: fail("Pfad zur Artikel-JSON angeben")
     main(sys.argv[1])
