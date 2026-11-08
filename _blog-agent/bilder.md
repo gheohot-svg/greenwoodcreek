@@ -4,3 +4,15 @@
 - 2026-11-08 Bildschirmfoto 2016-02-08 um 20.46.18.jpg -> /aktuelles/sonnenuntergang-fotografieren-moment-geniessen/ (ersetzt das PNG-Bild)
 - 2026-11-08 Unsplash-Foto EceDQC-mU0c -> /aktuelles/bokeh-portraet-nacht/
 - 2026-11-08 1glajptztszh1.jpeg -> /aktuelles/riesenrad-langzeitbelichtung-theresienwiese/
+- 2026-11-08 Blog-Foto -> /aktuelles/kamera-am-strand-schuetzen/
+- 2026-11-08 Blog-Foto -> /aktuelles/fotoshooting-im-urlaub/
+- 2026-11-08 Blog-Foto -> /aktuelles/fotoshooting-mittagssonne/
+- 2026-11-08 Blog-Foto -> /aktuelles/blaue-stunde-fotografieren/
+- 2026-11-08 Blog-Foto -> /aktuelles/posing-tipps-fotoshooting/
+- 2026-11-08 Blog-Foto -> /aktuelles/firmengebaeude-fotografieren/
+- 2026-11-08 Blog-Foto -> /aktuelles/fotospots-muenchen-altstadt-nacht/
+- 2026-11-08 Blog-Foto -> /aktuelles/spiegelung-pfuetze-fotografieren/
+- 2026-11-08 Blog-Foto -> /aktuelles/fotoshooting-winter-schnee-muenchen/
+- 2026-11-08 Blog-Foto -> /aktuelles/paarshooting-sonnenuntergang/
+- 2026-11-08 Blog-Foto -> /aktuelles/winterfotos-walchensee/
+- 2026-11-08 Blog-Foto -> /aktuelles/seelandschaft-gegenlicht-vordergrund/

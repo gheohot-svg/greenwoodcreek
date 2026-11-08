@@ -6,3 +6,15 @@
 - 2026-11-08: Sonnenuntergang-Artikel nach Dynamic-AI-Kritik überarbeitet (Kritiker z-ai/glm-5.3, Qualität 88, 0,0014 USD)
 - 2026-11-08: /aktuelles/bokeh-portraet-nacht/ veröffentlicht, auf 01.11.2026 datiert (Hauptkeyword: Bokeh-Porträt, Foto: Unsplash-Foto EceDQC-mU0c, Unsplash, mit Bildnachweis)
 - 2026-11-08: /aktuelles/riesenrad-langzeitbelichtung-theresienwiese/ veröffentlicht (Hauptkeyword: Riesenrad Langzeitbelichtung, Foto: 1glajptztszh1.jpeg, keine EXIF-Daten); Dynamic-AI-Kritiker nicht erreichbar (403 OpenRouter), Lektorat direkt
+- 2026-11-08: /aktuelles/kamera-am-strand-schuetzen/ veröffentlicht, rückdatiert auf 2026-07-14 (Hauptkeyword: kamera am strand schützen); Dynamic AI nicht erreichbar (403 OpenRouter), Text direkt verfasst
+- 2026-11-08: /aktuelles/fotoshooting-im-urlaub/ veröffentlicht, rückdatiert auf 2026-07-24 (Hauptkeyword: fotoshooting im urlaub); Dynamic AI nicht erreichbar (403 OpenRouter), Text direkt verfasst
+- 2026-11-08: /aktuelles/fotoshooting-mittagssonne/ veröffentlicht, rückdatiert auf 2026-08-03 (Hauptkeyword: fotoshooting mittagssonne); Dynamic AI nicht erreichbar (403 OpenRouter), Text direkt verfasst
+- 2026-11-08: /aktuelles/blaue-stunde-fotografieren/ veröffentlicht, rückdatiert auf 2026-08-13 (Hauptkeyword: blaue stunde fotografieren); Dynamic AI nicht erreichbar (403 OpenRouter), Text direkt verfasst
+- 2026-11-08: /aktuelles/posing-tipps-fotoshooting/ veröffentlicht, rückdatiert auf 2026-08-22 (Hauptkeyword: posing tipps fotoshooting); Dynamic AI nicht erreichbar (403 OpenRouter), Text direkt verfasst
+- 2026-11-08: /aktuelles/firmengebaeude-fotografieren/ veröffentlicht, rückdatiert auf 2026-09-01 (Hauptkeyword: firmengebäude fotografieren); Dynamic AI nicht erreichbar (403 OpenRouter), Text direkt verfasst
+- 2026-11-08: /aktuelles/fotospots-muenchen-altstadt-nacht/ veröffentlicht, rückdatiert auf 2026-09-11 (Hauptkeyword: fotospots münchen altstadt); Dynamic AI nicht erreichbar (403 OpenRouter), Text direkt verfasst
+- 2026-11-08: /aktuelles/spiegelung-pfuetze-fotografieren/ veröffentlicht, rückdatiert auf 2026-09-21 (Hauptkeyword: spiegelung pfütze fotografieren); Dynamic AI nicht erreichbar (403 OpenRouter), Text direkt verfasst
+- 2026-11-08: /aktuelles/fotoshooting-winter-schnee-muenchen/ veröffentlicht, rückdatiert auf 2026-10-01 (Hauptkeyword: fotoshooting winter münchen); Dynamic AI nicht erreichbar (403 OpenRouter), Text direkt verfasst
+- 2026-11-08: /aktuelles/paarshooting-sonnenuntergang/ veröffentlicht, rückdatiert auf 2026-10-11 (Hauptkeyword: paarshooting sonnenuntergang); Dynamic AI nicht erreichbar (403 OpenRouter), Text direkt verfasst
+- 2026-11-08: /aktuelles/winterfotos-walchensee/ veröffentlicht, rückdatiert auf 2026-10-20 (Hauptkeyword: winterfotos walchensee); Dynamic AI nicht erreichbar (403 OpenRouter), Text direkt verfasst
+- 2026-11-08: /aktuelles/seelandschaft-gegenlicht-vordergrund/ veröffentlicht, rückdatiert auf 2026-10-29 (Hauptkeyword: seelandschaft fotografieren); Dynamic AI nicht erreichbar (403 OpenRouter), Text direkt verfasst
