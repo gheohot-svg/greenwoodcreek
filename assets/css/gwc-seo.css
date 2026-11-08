@@ -536,3 +536,49 @@
 .gwc-svc-prose li { margin-bottom: .5em; }
 .gwc-svc-prose li strong { color: var(--gwc-ivory); }
 .gwc-svc-section .gwc-post-title { overflow-wrap: break-word; }
+
+/* Werbevideo auf /leistungen/ direkt unter dem Header (YouTube, 16:9) */
+.gwc-promo-video {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 96px var(--_spacing-sizing---page-padding--padding-global, 64px) 24px;
+}
+.gwc-promo-video .gwc-svc-video {
+  width: 100%;
+  max-width: var(--_spacing-sizing---container--container-large, 1280px);
+  margin: 0 auto;
+}
+.gwc-svc-embed--wide {
+  width: 100%;
+  max-width: none;
+  aspect-ratio: 16 / 9;
+  container-type: inline-size;
+}
+/* Vor dem Klick: Vorschaubild 16:9, Datenschutzhinweis als Leiste darunter */
+.gwc-svc-embed--wide:not(.is-loaded) { aspect-ratio: auto; }
+.gwc-svc-embed--wide:not(.is-loaded) img {
+  position: relative;
+  inset: auto;
+  display: block;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  opacity: .9;
+}
+.gwc-svc-embed--wide .gwc-embed-play {
+  top: calc(56.25cqw - 3cqw);
+  transform: translate(-50%, -100%);
+}
+.gwc-svc-embed--wide .gwc-embed-note {
+  position: static;
+  border-radius: 0;
+  background: #111;
+  padding: 12px 18px;
+}
+@media (max-width: 767px) {
+  .gwc-promo-video { padding: 56px 20px 8px; }
+}
+@media (max-width: 479px) {
+  .gwc-svc-embed--wide .gwc-embed-play { top: calc(56.25cqw - 2cqw); padding: 8px 14px; gap: 8px; font-size: 13px; }
+  .gwc-svc-embed--wide .gwc-embed-icon { border-left-width: 9px; border-top-width: 6px; border-bottom-width: 6px; }
+}

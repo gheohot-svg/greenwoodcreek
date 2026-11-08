@@ -13,7 +13,7 @@
       if (!btn) return;
       btn.addEventListener("click", function () {
         var src = box.getAttribute("data-embed-src");
-        if (!/^https:\/\/(player|iframe)\.mediadelivery\.net\//.test(src)) return;
+        if (!/^https:\/\/((player|iframe)\.mediadelivery\.net|www\.youtube-nocookie\.com\/embed)\//.test(src)) return;
         var iframe = document.createElement("iframe");
         iframe.src = src;
         iframe.title = box.getAttribute("data-embed-title") || "Video";
