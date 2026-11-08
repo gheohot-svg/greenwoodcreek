@@ -35,7 +35,8 @@ def vorschau(slug, image):
 
 def teaser_media(src, size, full=None, caption=""):
     wh = f' width="{size[0]}" height="{size[1]}"' if size else ""
-    img = (f'<img src="{html.escape(src, quote=True)}" alt=""{wh} '
+    alt = html.escape(caption, quote=True)  # beschreibender Alt-Text statt leer (Bildersuche/SEO)
+    img = (f'<img src="{html.escape(src, quote=True)}" alt="{alt}"{wh} '
            'loading="lazy" decoding="async"/>')
     if full:
         c = html.escape(caption, quote=True)
