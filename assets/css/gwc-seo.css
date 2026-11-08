@@ -529,3 +529,10 @@
   .gwc-vinyl-label { animation: none; }
   .gwc-vinyl-disc { transition: none; }
 }
+
+/* Leistungsseiten: Abschnitte über die volle Breite (nicht im 2-Spalten-Raster der Blogliste) */
+.gwc-blog-list .gwc-blog-inner > .gwc-svc-section { grid-column: 1 / -1; }
+.gwc-svc-prose ul, .gwc-svc-prose ol { margin: 0 0 1em; padding-left: 1.2em; }
+.gwc-svc-prose li { margin-bottom: .5em; }
+.gwc-svc-prose li strong { color: var(--gwc-ivory); }
+.gwc-svc-section .gwc-post-title { overflow-wrap: break-word; }
