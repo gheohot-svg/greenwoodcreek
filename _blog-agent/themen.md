@@ -20,3 +20,4 @@
 - [ ] Instagram Reels für lokale Unternehmen: Ideen und Ablauf
 - [ ] Hochzeitsvideo oder Hochzeitsfotos: Lohnt sich beides?
 - [x] 2026-11-07 /aktuelles/portraet-bei-nacht-lichtspuren/ Porträt bei Nacht: Tipps für Fotos mit Lichtspuren in der Stadt (aus Foto)
+- [x] 2026-11-08 /aktuelles/sonnenuntergang-fotografieren-moment-geniessen/ Sonnenuntergang fotografieren oder einfach den Moment genießen? (aus Foto)
