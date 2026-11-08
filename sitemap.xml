@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://greenwoodcreek.de/aktuelles/</loc>
-    <lastmod>2026-11-08</lastmod>
+    <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -141,6 +141,12 @@
   <url>
     <loc>https://greenwoodcreek.de/aktuelles/sonnenuntergang-fotografieren-moment-geniessen/</loc>
     <lastmod>2026-11-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://greenwoodcreek.de/aktuelles/bokeh-portraet-nacht/</loc>
+    <lastmod>2026-11-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>

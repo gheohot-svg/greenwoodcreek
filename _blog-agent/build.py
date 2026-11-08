@@ -106,7 +106,9 @@ def main(path):
     hero_img = ""
     if a.get("image"):
         hero_img = (f'<figure class="gwc-article-figure"><img src="{esc(image)}" alt="{esc(a.get("image_alt",a["title"]))}" '
-                    f'loading="eager" decoding="async"/></figure>')
+                    f'loading="eager" decoding="async"/>'
+                    + (f'<figcaption>{a["image_credit"]}</figcaption>' if a.get("image_credit") else "")
+                    + '</figure>')
     cta = ('<aside class="gwc-article-cta"><p>Sie planen ein Projekt in München, Heidelberg oder Umgebung?</p>'
            '<a class="gwc-article-btn" href="/leistungen/#kontakt">Unverbindlich anfragen</a></aside>')
     main_html = (
@@ -136,6 +138,15 @@ def main(path):
     anchor = '<section class="gwc-blog-list"><div class="gwc-blog-inner">'
     if anchor not in src: fail("Teaser-Anker auf /aktuelles/ nicht gefunden")
     src = src.replace(anchor, anchor + teaser, 1)
+    # Teaser nach Datum sortieren (neueste zuerst), damit nachdatierte Beitraege richtig einsortiert werden
+    blocks = re.findall(r"<!--gwc-teaser:([a-z0-9-]+)-->.*?<!--/gwc-teaser:\1-->", src, flags=re.S)
+    full = [re.search(r"<!--gwc-teaser:%s-->.*?<!--/gwc-teaser:%s-->" % (b, b), src, flags=re.S).group(0) for b in blocks]
+    start = src.index(full[0]); end = src.index(full[-1]) + len(full[-1])
+    if "".join(full) == src[start:end]:
+        def datum(t):
+            m = re.search(r'datetime="([^"]+)"', t)
+            return m.group(1) if m else ""
+        src = src[:start] + "".join(sorted(full, key=datum, reverse=True)) + src[end:]
     # JSON-LD der Uebersicht
     m = re.search(r'<script type="application/ld\+json">(.*?)</script>', src, flags=re.S)
     data = json.loads(m.group(1))
@@ -146,6 +157,7 @@ def main(path):
                 "url":url,"datePublished":a["date"],"image":image_abs,"description":a["meta_description"],
                 "inLanguage":"de-DE","author":{"@id":BASE+"/uber-uns/#jan-neumeyer","@type":"Person","name":"Jan Neumeyer"},
                 "publisher":{"@id":BASE+"/#business"}})
+            node["blogPost"].sort(key=lambda p: p.get("datePublished",""), reverse=True)
     src = src[:m.start(1)] + json.dumps(data, ensure_ascii=False) + src[m.end(1):]
     listing_p.write_text(src, encoding="utf-8")
 
