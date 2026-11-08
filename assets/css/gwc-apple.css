@@ -173,3 +173,32 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   .gwc-svc-steps li { padding-top: 56px !important; }
   .gwc-svc-grid li:hover { transform: none; }
 }
+
+/* ---------- Aktuelles: Beitragskarten mit Vorschaubild ---------- */
+.gwc-blog-list .gwc-blog-inner { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(48px, 6vw, 80px) clamp(24px, 3vw, 40px); }
+.gwc-blog-list .gwc-post.gwc-card + .gwc-post.gwc-card { margin-top: 0; padding-top: 0; border-top: 0; }
+.gwc-card { position: relative; display: flex; flex-direction: column; gap: 22px; }
+.gwc-card-media { position: relative; aspect-ratio: 3 / 2; overflow: hidden; border-radius: var(--a-r-lg); background: var(--a-surface-2); box-shadow: 0 28px 56px -32px rgba(0, 0, 0, .85); isolation: isolate; }
+.gwc-card-media::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px var(--a-hair); pointer-events: none; }
+.gwc-card-media img { display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(1.001); transition: transform 900ms var(--a-ease-out); }
+.gwc-card .gwc-post-header { display: block; margin: 0; }
+.gwc-card .gwc-post-meta { margin: 0 0 10px; font-size: 12px; }
+.gwc-card .gwc-post-title { font-size: clamp(1.6rem, 1.4vw + 1rem, 2.25rem); line-height: 1.08; letter-spacing: -.01em; margin: 0 0 12px; }
+.gwc-card .gwc-post-title a { color: inherit; text-decoration: none; transition: color 200ms var(--a-ease-out); }
+.gwc-card .gwc-post-title a::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: var(--a-r-lg); }
+.gwc-card .gwc-post-text { color: var(--a-muted); }
+.gwc-card .gwc-post-more { position: relative; z-index: 2; }
+@media (hover: hover) {
+  .gwc-card:hover .gwc-card-media img { transform: scale(1.035); }
+  .gwc-card:hover .gwc-post-title a { color: var(--a-accent-light); }
+}
+.gwc-card:active .gwc-card-media img { transform: scale(.99); transition-duration: 120ms; }
+/* Neuester Beitrag groß über die ganze Breite */
+.gwc-blog-list .gwc-card:first-child { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); align-items: center; gap: clamp(24px, 4vw, 56px); }
+.gwc-blog-list .gwc-card:first-child .gwc-card-media { aspect-ratio: 16 / 10; border-radius: var(--a-r-xl); }
+.gwc-blog-list .gwc-card:first-child .gwc-post-title { font-size: clamp(2rem, 2.6vw + 1rem, 3.4rem); line-height: 1.04; }
+@media (max-width: 767px) {
+  .gwc-blog-list .gwc-blog-inner { grid-template-columns: minmax(0, 1fr); }
+  .gwc-blog-list .gwc-card:first-child { display: flex; }
+}
+@media (prefers-reduced-motion: reduce) { .gwc-card-media img { transition: none; transform: none !important; } }

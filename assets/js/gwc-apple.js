@@ -4,7 +4,7 @@
   var onScroll = function () { root.classList.toggle("a-scrolled", window.scrollY > 8); };
   window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
-  var els = document.querySelectorAll(".gwc-svc-section, .gwc-svc-grid li, .gwc-svc-steps li, .gwc-gallery-item, .gwc-pf-item");
+  var els = document.querySelectorAll(".gwc-svc-section, .gwc-svc-grid li, .gwc-svc-steps li, .gwc-gallery-item, .gwc-pf-item, .gwc-card");
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (!e.isIntersecting) return;

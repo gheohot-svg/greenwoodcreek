@@ -55,6 +55,8 @@
         if (PHONE && (img.matches(ARTIST_IMGS) || img.matches(PF_HERO))) return false;
         // Scroll-zoom images get their own animation below.
         if (img.closest("[data-gwc-scroll-zoom]")) return false;
+        // Beitragskarten auf /aktuelles/ blenden als Ganzes ein (gwc-apple.js).
+        if (img.closest(".gwc-card-media")) return false;
         if (SKIP_IMG_RE.test(img.getAttribute("src") || "")) return false;
         return img.getBoundingClientRect().width > 120;
       }

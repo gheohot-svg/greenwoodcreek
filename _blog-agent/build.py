@@ -18,6 +18,26 @@ def de_date(iso):
     d = datetime.date.fromisoformat(iso)
     return f"{d.day}. {MONATE[d.month-1]} {d.year}"
 
+def vorschau(slug, image):
+    """Vorschaubild fuer die Karte auf /aktuelles/ (max. 1200 px, WebP).
+    Ohne Pillow wird das Originalbild verwendet."""
+    if image.startswith("http"): return image, None
+    ziel = ROOT/"assets"/"images"/"blog"/"vorschau"/f"{slug}.webp"
+    try:
+        from PIL import Image
+        im = Image.open(ROOT/image.lstrip("/")).convert("RGB")
+        im.thumbnail((1200, 1200), Image.LANCZOS)
+        ziel.parent.mkdir(parents=True, exist_ok=True)
+        im.save(ziel, "WEBP", quality=78)
+        return "/" + ziel.relative_to(ROOT).as_posix(), im.size
+    except Exception:
+        return image, None
+
+def teaser_media(src, size):
+    wh = f' width="{size[0]}" height="{size[1]}"' if size else ""
+    return (f'<div class="gwc-card-media"><img src="{html.escape(src, quote=True)}" alt=""{wh} '
+            'loading="lazy" decoding="async"/></div>')
+
 def main(path):
     a = json.load(open(path, encoding="utf-8"))
     for k in ["title","slug","date","category","meta_title","meta_description","lead","body_html"]:
@@ -107,7 +127,8 @@ def main(path):
     # ---- Teaser auf /aktuelles/ ---------------------------------------
     marker_s, marker_e = f"<!--gwc-teaser:{slug}-->", f"<!--/gwc-teaser:{slug}-->"
     src = re.sub(re.escape(marker_s)+r".*?"+re.escape(marker_e), "", src, flags=re.S)
-    teaser = (f'{marker_s}<article class="gwc-post gwc-post-teaser" id="{slug}"><header class="gwc-post-header"><div>'
+    v_src, v_size = vorschau(slug, image)
+    teaser = (f'{marker_s}<article class="gwc-post gwc-post-teaser gwc-card" id="{slug}">{teaser_media(v_src, v_size)}<header class="gwc-post-header"><div>'
               f'<p class="gwc-post-meta"><time datetime="{a["date"]}">{de_date(a["date"])}</time> · {esc(a["category"])}</p>'
               f'<h2 class="gwc-post-title"><a href="/aktuelles/{slug}/">{esc(a["title"])}</a></h2></div>'
               f'<p class="gwc-post-text">{esc(a["meta_description"])} <a class="gwc-post-more" href="/aktuelles/{slug}/">Weiterlesen</a></p>'
