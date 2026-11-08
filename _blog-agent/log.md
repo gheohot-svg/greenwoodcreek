@@ -18,3 +18,4 @@
 - 2026-11-08: /aktuelles/paarshooting-sonnenuntergang/ veröffentlicht, rückdatiert auf 2026-10-11 (Hauptkeyword: paarshooting sonnenuntergang); Dynamic AI nicht erreichbar (403 OpenRouter), Text direkt verfasst
 - 2026-11-08: /aktuelles/winterfotos-walchensee/ veröffentlicht, rückdatiert auf 2026-10-20 (Hauptkeyword: winterfotos walchensee); Dynamic AI nicht erreichbar (403 OpenRouter), Text direkt verfasst
 - 2026-11-08: /aktuelles/seelandschaft-gegenlicht-vordergrund/ veröffentlicht, rückdatiert auf 2026-10-29 (Hauptkeyword: seelandschaft fotografieren); Dynamic AI nicht erreichbar (403 OpenRouter), Text direkt verfasst
+- 2026-11-08: Bokeh-Artikel nach Dynamic-AI-Kritik überarbeitet (Kritiker z-ai/glm-5.3, 3 Läufe, zuletzt 0,098 USD / 34.214 Tokens)
