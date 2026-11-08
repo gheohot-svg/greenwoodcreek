@@ -2,7 +2,7 @@
 # Der Agent darf neue Themen unten anhängen, wenn weniger als 5 offen sind.
 
 - [x] 2026-11-07 /aktuelles/fotolocations-hochzeit-muenchen/ Die schönsten Fotolocations für Hochzeitsfotos in München
-- [ ] Was kostet ein Imagefilm? Faktoren, die den Preis bestimmen
+- [x] 2026-11-07 /aktuelles/imagefilm-kosten/ Was kostet ein Imagefilm? Faktoren, die den Preis bestimmen
 - [ ] Produktfotos für den Onlineshop: Checkliste für bessere Verkaufsbilder
 - [ ] Eventfotografie: Wie Sie Ihre Firmenfeier richtig dokumentieren lassen
 - [ ] Hochzeitsfotos in Heidelberg: Schloss, Altstadt und Neckarwiese

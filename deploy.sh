@@ -1,12 +1,21 @@
 #!/bin/bash
 # GREENWOODCREEK – Website hochladen. Aufruf: bash ~/greenwoodcreek-www/deploy.sh
 set -e
+cd "$HOME/greenwoodcreek-www"
+if [ -d .git ]; then
+  git fetch -q origin main
+  if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
+    echo "STOPP: Der Ordner ist nicht auf dem aktuellen Stand von GitHub."
+    echo "Erst aktualisieren: bash ~/greenwoodcreek-www/_blog-agent/mac-sync.sh"
+    exit 1
+  fi
+fi
 SRC="$HOME/greenwoodcreek-www/"
 SSH="ssh -p 2230"
 HOST="jan@152.53.94.158"
 echo "1/3 Lade Dateien hoch ..."
 rsync -rltvz --no-perms --no-owner --no-group \
-  --exclude 'deploy.sh' --exclude '_apple-preview' --exclude '_blog-agent' --exclude '.DS_Store' \
+  --exclude 'deploy.sh' --exclude '_apple-preview' --exclude '_blog-agent' --exclude '_seo-autopilot' --exclude '_server' --exclude '.git' --exclude '.gitignore' --exclude '.DS_Store' \
   --exclude 'aktuelles/' --exclude 'sitemap.xml' \
   --rsync-path="sudo rsync" -e "$SSH" "$SRC" "$HOST:/srv/greenwoodcreek/www/"
 echo "2/3 Setze Leserechte ..."

@@ -1,3 +1,8 @@
 .DS_Store
 _blog-agent/transfer.tar
 _blog-agent/deploy.log
+_blog-agent/mac.sha
+_blog-agent/PENDING_DEPLOY
+_blog-agent/mac-sync.log
+_server/
+*.alt
