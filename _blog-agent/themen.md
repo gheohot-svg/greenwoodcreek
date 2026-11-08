@@ -35,3 +35,4 @@
 - [x] 2026-10-11 /aktuelles/paarshooting-sonnenuntergang/ Paarshooting zum Sonnenuntergang: Natürliche Bilder ohne Posen (aus Foto)
 - [x] 2026-10-20 /aktuelles/winterfotos-walchensee/ Winterfotos am Walchensee: Eiszapfen, Gegenlicht und Handyfotos (aus Foto)
 - [x] 2026-10-29 /aktuelles/seelandschaft-gegenlicht-vordergrund/ Seelandschaft bei Gegenlicht: Wolken, Felsen und ein starker Vordergrund (aus Foto)
+- [x] 2026-10-06 /aktuelles/paarfoto-von-hinten-herbstlicht/ Paarfoto von hinten: Nähe zeigen, ohne Gesichter zu sehen (aus Foto)
