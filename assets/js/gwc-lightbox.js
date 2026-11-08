@@ -44,7 +44,9 @@
       img.src = link.getAttribute("href");
       img.alt = thumb ? thumb.alt : "";
       countEl.textContent = (index + 1) + " / " + items.length;
-      textEl.textContent = cap ? cap.textContent : "";
+      textEl.textContent = link.getAttribute("data-caption") || (cap ? cap.textContent : "");
+      box.classList.toggle("is-single", items.length < 2);
+      countEl.style.display = items.length < 2 ? "none" : "";
       // Preload the neighbours so paging feels instant.
       [index + 1, index - 1].forEach(function (n) {
         var l = items[(n + items.length) % items.length];

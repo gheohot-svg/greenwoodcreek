@@ -371,3 +371,6 @@ html.gwc-lightbox-lock body {
   .gwc-lightbox,
   .gwc-lightbox-img { transition: none; }
 }
+
+.gwc-lightbox.is-single .gwc-lightbox-prev,
+.gwc-lightbox.is-single .gwc-lightbox-next { display: none; }

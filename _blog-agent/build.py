@@ -33,10 +33,40 @@ def vorschau(slug, image):
     except Exception:
         return image, None
 
-def teaser_media(src, size):
+def teaser_media(src, size, full=None, caption=""):
     wh = f' width="{size[0]}" height="{size[1]}"' if size else ""
-    return (f'<div class="gwc-card-media"><img src="{html.escape(src, quote=True)}" alt=""{wh} '
-            'loading="lazy" decoding="async"/></div>')
+    img = (f'<img src="{html.escape(src, quote=True)}" alt=""{wh} '
+           'loading="lazy" decoding="async"/>')
+    if full:
+        c = html.escape(caption, quote=True)
+        img = (f'<a class="gwc-card-zoom" href="{html.escape(full, quote=True)}" data-gwc-lightbox '
+               f'data-caption="{c}" aria-label="Bild vergrößern: {c}">{img}</a>')
+    return f'<div class="gwc-card-media">{img}</div>'
+
+def retrofit_cards(src):
+    """Aeltere Karten ohne Zoom-Link (Fotostrecken) bekommen ebenfalls die Grossansicht."""
+    def fix(m):
+        art = m.group(0)
+        if "gwc-card-zoom" in art: return art
+        mm = re.search(r'<div class="gwc-card-media">(<img src="([^"]+)"[^>]*/>)</div>', art)
+        if not mm: return art
+        t = re.search(r'<h2 class="gwc-post-title"><a [^>]*>(.*?)</a>', art, flags=re.S)
+        cap = html.unescape(t.group(1)) if t else ""
+        c = html.escape(cap, quote=True)
+        link = (f'<a class="gwc-card-zoom" href="{mm.group(2)}" data-gwc-lightbox data-caption="{c}" '
+                f'aria-label="Bild vergrößern: {c}">{mm.group(1)}</a>')
+        return art.replace(mm.group(0), f'<div class="gwc-card-media">{link}</div>', 1)
+    return re.sub(r'<article class="gwc-post gwc-post-teaser gwc-card".*?</article>', fix, src, flags=re.S)
+
+def is_portrait(image):
+    """Hochformat-Fotos werden im festen Rahmen komplett gezeigt (contain + Unschaerfe-Hintergrund)."""
+    if image.startswith("http"): return False
+    try:
+        from PIL import Image
+        w, h = Image.open(ROOT/image.lstrip("/")).size
+        return w / h < 1.2
+    except Exception:
+        return False
 
 def main(path):
     a = json.load(open(path, encoding="utf-8"))
@@ -94,7 +124,7 @@ def main(path):
             {"@type":"Question","name":q["q"],"acceptedAnswer":{"@type":"Answer","text":q["a"]}} for q in faq]})
     ld = json.dumps({"@context":"https://schema.org","@graph":graph}, ensure_ascii=False)
     head += f'<script type="application/ld+json">{ld}</script>'
-    head += '<link href="../../assets/css/gwc-article.css?v=1" rel="stylesheet" type="text/css"/>'
+    head += '<link href="../../assets/css/gwc-article.css?v=3" rel="stylesheet" type="text/css"/>'
 
     # ---- Body ----------------------------------------------------------
     pre_main = src[body_open:main_start].replace('href="../','href="../../').replace('src="../','src="../../')
@@ -105,9 +135,12 @@ def main(path):
             f'<details><summary>{esc(q["q"])}</summary><p>{esc(q["a"])}</p></details>' for q in faq) + "</section>"
     hero_img = ""
     if a.get("image"):
-        hero_img = (f'<figure class="gwc-article-figure"><img src="{esc(image)}" alt="{esc(a.get("image_alt",a["title"]))}" '
-                    f'loading="eager" decoding="async"/>'
-                    + (f'<figcaption>{a["image_credit"]}</figcaption>' if a.get("image_credit") else "")
+        cap = a.get("image_credit")
+        port = is_portrait(image)
+        hero_img = (f'<figure class="gwc-article-figure{" is-portrait" if port else ""}" style="--gwc-bg:url({esc(image)})">'
+                    f'<a class="gwc-article-zoom" href="{esc(image)}" data-gwc-lightbox aria-label="Bild vergrößern">'
+                    f'<img src="{esc(image)}" alt="{esc(a.get("image_alt",a["title"]))}" loading="eager" decoding="async"/></a>'
+                    + (f'<figcaption>{cap}</figcaption>' if cap else "")
                     + '</figure>')
     cta = ('<aside class="gwc-article-cta"><p>Sie planen ein Projekt in München, Heidelberg oder Umgebung?</p>'
            '<a class="gwc-article-btn" href="/leistungen/#kontakt">Unverbindlich anfragen</a></aside>')
@@ -118,10 +151,14 @@ def main(path):
       f'<h1 class="gwc-article-title">{esc(a["title"])}</h1>'
       f'<p class="gwc-post-meta gwc-article-meta"><time datetime="{a["date"]}">{de_date(a["date"])}</time> · {esc(a["category"])} · Jan Neumeyer</p>'
       f'<p class="gwc-blog-lead">{esc(a["lead"])}</p></div></section>'
-      '<section class="gwc-blog-list"><div class="gwc-blog-inner gwc-article-body">'
-      f'{hero_img}{a["body_html"]}{faq_html}{cta}'
+      '<section class="gwc-blog-list">'
+      + (f'<div class="gwc-blog-inner gwc-article-hero">{hero_img}</div>' if hero_img else '')
+      + '<div class="gwc-blog-inner gwc-article-body">'
+      f'{a["body_html"]}{faq_html}{cta}'
       '<p class="gwc-article-back"><a href="/aktuelles/">Alle Beiträge</a></p>'
       '</div></section></div></main>')
+    if "gwc-lightbox.js" not in post_main:
+        post_main = post_main.replace("</body>", '<script defer src="../../assets/js/gwc-lightbox.js?v=2026-11-08"></script></body>', 1)
     out = head + "</head>" + pre_main + main_html + post_main
     d = ROOT/"aktuelles"/slug; d.mkdir(parents=True, exist_ok=True)
     (d/"index.html").write_text(out, encoding="utf-8")
@@ -130,7 +167,7 @@ def main(path):
     marker_s, marker_e = f"<!--gwc-teaser:{slug}-->", f"<!--/gwc-teaser:{slug}-->"
     src = re.sub(re.escape(marker_s)+r".*?"+re.escape(marker_e), "", src, flags=re.S)
     v_src, v_size = vorschau(slug, image)
-    teaser = (f'{marker_s}<article class="gwc-post gwc-post-teaser gwc-card" id="{slug}">{teaser_media(v_src, v_size)}<header class="gwc-post-header"><div>'
+    teaser = (f'{marker_s}<article class="gwc-post gwc-post-teaser gwc-card" id="{slug}">{teaser_media(v_src, v_size, image, a['title'])}<header class="gwc-post-header"><div>'
               f'<p class="gwc-post-meta"><time datetime="{a["date"]}">{de_date(a["date"])}</time> · {esc(a["category"])}</p>'
               f'<h2 class="gwc-post-title"><a href="/aktuelles/{slug}/">{esc(a["title"])}</a></h2></div>'
               f'<p class="gwc-post-text">{esc(a["meta_description"])} <a class="gwc-post-more" href="/aktuelles/{slug}/">Weiterlesen</a></p>'
@@ -147,6 +184,7 @@ def main(path):
             m = re.search(r'datetime="([^"]+)"', t)
             return m.group(1) if m else ""
         src = src[:start] + "".join(sorted(full, key=datum, reverse=True)) + src[end:]
+    src = retrofit_cards(src)
     # JSON-LD der Uebersicht
     m = re.search(r'<script type="application/ld\+json">(.*?)</script>', src, flags=re.S)
     data = json.loads(m.group(1))

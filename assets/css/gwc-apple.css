@@ -202,3 +202,11 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   .gwc-blog-list .gwc-card:first-child { display: flex; }
 }
 @media (prefers-reduced-motion: reduce) { .gwc-card-media img { transition: none; transform: none !important; } }
+
+/* Aktuelles: Kartenbild oeffnet die Grossansicht (Lightbox), Titel und Text fuehren zum Beitrag */
+.gwc-card-zoom { position: absolute; inset: 0; z-index: 3; display: block; cursor: zoom-in; }
+.gwc-card-zoom img { width: 100%; height: 100%; object-fit: cover; }
+.gwc-card-zoom::before { content: ""; position: absolute; right: 14px; bottom: 14px; z-index: 2; width: 38px; height: 38px; border-radius: 999px; background: rgba(10, 10, 10, .62) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f1ece6' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7'/%3E%3C/svg%3E") center / 18px no-repeat; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); opacity: 0; transform: scale(.9); transition: opacity 200ms var(--a-ease-out), transform 200ms var(--a-ease-out); pointer-events: none; }
+.gwc-card-zoom:focus-visible { outline: 2px solid var(--a-accent-light, #e8b04a); outline-offset: -2px; }
+@media (hover: hover) { .gwc-card:hover .gwc-card-zoom::before, .gwc-card-zoom:focus-visible::before { opacity: 1; transform: scale(1); } }
+@media (hover: none) { .gwc-card-zoom::before { opacity: 1; transform: none; } }

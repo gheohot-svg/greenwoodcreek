@@ -8,7 +8,15 @@
 .gwc-article-body p,.gwc-article-body ul,.gwc-article-body ol{margin:0 0 20px}
 .gwc-article-body li{margin-bottom:8px}
 .gwc-article-body a{color:var(--gwc-accent);text-underline-offset:3px}
-.gwc-article-figure{margin:0 0 40px}.gwc-article-figure img{width:100%;height:auto;border-radius:16px;display:block}
+.gwc-article-figure{margin:0 0 40px;position:relative}
+.gwc-article-zoom{position:relative;display:block;aspect-ratio:3/2;overflow:hidden;border-radius:16px;background:#0b0b0b;cursor:zoom-in;isolation:isolate}
+.gwc-article-zoom img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;border-radius:0}
+.gwc-article-figure.is-portrait .gwc-article-zoom::before{content:"";position:absolute;inset:-10%;z-index:-1;background:var(--gwc-bg) center/cover no-repeat;filter:blur(30px) brightness(.5) saturate(1.2)}
+.gwc-article-figure.is-portrait .gwc-article-zoom img{object-fit:contain}
+.gwc-article-zoom::after{content:"";position:absolute;right:16px;bottom:16px;width:40px;height:40px;border-radius:999px;background:rgba(10,10,10,.62) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f1ece6' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7'/%3E%3C/svg%3E") center/19px no-repeat;pointer-events:none}
+.gwc-article-zoom:focus-visible{outline:2px solid var(--gwc-accent);outline-offset:3px}
+.gwc-article-figure figcaption{margin-top:10px;font-size:.85rem;color:var(--alt-text-muted,rgba(241,236,230,.6))}
+.gwc-article-figure figcaption a{color:inherit}
 .gwc-article-faq{margin-top:56px}.gwc-article-faq details{border-top:1px solid var(--_color-schemes---color-scheme-5--border);padding:16px 0}
 .gwc-article-faq summary{cursor:pointer;font-weight:600;color:var(--gwc-ivory)}.gwc-article-faq p{margin:12px 0 0}
 .gwc-article-cta{margin:56px 0 0;padding:32px;border-radius:16px;background:var(--alt-surface-2,#141414);border:1px solid var(--alt-line,rgba(241,236,230,.14));color:var(--gwc-ivory)}
@@ -19,3 +27,8 @@
 .gwc-post-teaser .gwc-post-header{margin-bottom:0}
 @media (max-width:767px){.gwc-article-cta{padding:24px}}
 .gwc-article-body strong{color:var(--gwc-ivory)}
+
+/* Artikelseiten: kein 2-Spalten-Raster der Uebersicht, Titelbild gross ueber dem Text */
+.gwc-blog-list .gwc-blog-inner.gwc-article-body{display:block;grid-template-columns:none}
+.gwc-blog-list .gwc-blog-inner.gwc-article-hero{display:block;grid-template-columns:none;max-width:1120px;margin-bottom:8px}
+@media (max-width:767px){.gwc-article-zoom{border-radius:12px}.gwc-article-figure{margin-bottom:28px}}
