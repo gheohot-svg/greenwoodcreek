@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://greenwoodcreek.de/aktuelles/</loc>
-    <lastmod>2026-11-07</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -56,7 +56,7 @@
   </url>
   <url>
     <loc>https://greenwoodcreek.de/portraitfotograf-muenchen/</loc>
-    <lastmod>2026-11-07</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -74,7 +74,7 @@
   </url>
   <url>
     <loc>https://greenwoodcreek.de/fotograf-heidelberg/</loc>
-    <lastmod>2026-11-07</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -211,26 +211,32 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://greenwoodcreek.de/aktuelles/bokeh-portraet-nacht/</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://greenwoodcreek.de/aktuelles/sonnenuntergang-fotografieren-moment-geniessen/</loc>
     <lastmod>2026-11-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://greenwoodcreek.de/aktuelles/portraet-bei-nacht-lichtspuren/</loc>
-    <lastmod>2026-11-06</lastmod>
+    <loc>https://greenwoodcreek.de/aktuelles/imagefilm-kosten/</loc>
+    <lastmod>2026-11-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://greenwoodcreek.de/aktuelles/imagefilm-kosten/</loc>
-    <lastmod>2026-11-07</lastmod>
+    <loc>https://greenwoodcreek.de/aktuelles/produktfotos-onlineshop-checkliste/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://greenwoodcreek.de/aktuelles/bokeh-portraet-nacht/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://greenwoodcreek.de/aktuelles/portraet-bei-nacht-lichtspuren/</loc>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
