@@ -10,7 +10,14 @@ def main():
     jsons = sorted(V.glob("*.json"))
     if not jsons:
         print("VORRAT LEER"); sys.exit(3)
-    jp = jsons[0]
+    # Optional: bestimmten Artikel freischalten (Teil des Dateinamens, z. B. "gruppenfoto")
+    if len(sys.argv) > 1:
+        wanted = [j for j in jsons if sys.argv[1] in j.name]
+        if not wanted:
+            print(f"FEHLER: kein Vorrat-Artikel passt zu '{sys.argv[1]}'"); sys.exit(1)
+        jp = wanted[0]
+    else:
+        jp = jsons[0]
     a = json.load(open(jp, encoding="utf-8"))
     slug = a["slug"]
     img = jp.with_suffix(".webp")
