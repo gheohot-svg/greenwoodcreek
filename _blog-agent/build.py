@@ -125,7 +125,7 @@ def main(path):
             {"@type":"Question","name":q["q"],"acceptedAnswer":{"@type":"Answer","text":q["a"]}} for q in faq]})
     ld = json.dumps({"@context":"https://schema.org","@graph":graph}, ensure_ascii=False)
     head += f'<script type="application/ld+json">{ld}</script>'
-    head += '<link href="../../assets/css/gwc-article.css?v=3" rel="stylesheet" type="text/css"/>'
+    head += '<link href="../../assets/css/gwc-article.css?v=4" rel="stylesheet" type="text/css"/>'
 
     # ---- Body ----------------------------------------------------------
     pre_main = src[body_open:main_start].replace('href="../','href="../../').replace('src="../','src="../../')

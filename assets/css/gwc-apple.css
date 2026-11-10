@@ -199,7 +199,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .gwc-blog-list .gwc-card:first-child .gwc-post-title { font-size: clamp(2rem, 2.6vw + 1rem, 3.4rem); line-height: 1.04; }
 @media (max-width: 767px) {
   .gwc-blog-list .gwc-blog-inner { grid-template-columns: minmax(0, 1fr); }
-  .gwc-blog-list .gwc-card:first-child { display: flex; }
+  .gwc-blog-list .gwc-card:first-child { display: flex; align-items: stretch; }
+  .gwc-blog-list .gwc-card:first-child .gwc-card-media { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { .gwc-card-media img { transition: none; transform: none !important; } }
 
