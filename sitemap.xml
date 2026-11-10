@@ -13,6 +13,12 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://greenwoodcreek.de/preise/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://greenwoodcreek.de/portfolio/</loc>
     <lastmod>2026-11-07</lastmod>
     <changefreq>monthly</changefreq>
