@@ -1,4 +1,31 @@
 /* GREENWOODCREEK – Preise-Seite (/preise/). Nutzt die Tokens aus gwc-apple.css. */
+
+/* Header mit Foto */
+.gwc-blog-hero.gwc-hero--photo {
+  isolation: isolate; overflow: hidden;
+  display: flex; align-items: flex-start;
+  min-height: clamp(680px, 88vh, 900px);
+}
+.gwc-hero--photo .gwc-blog-inner { position: relative; }
+.gwc-hero-photo {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%; object-fit: cover; object-position: center 100%;
+}
+.gwc-blog-hero.gwc-hero--photo::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, 0) 60%),
+    linear-gradient(180deg, rgba(0, 0, 0, .8) 0%, rgba(0, 0, 0, .58) 36%, rgba(0, 0, 0, .06) 64%, rgba(0, 0, 0, .3) 100%);
+}
+.gwc-hero--photo .gwc-blog-lead { color: rgba(241, 236, 230, .9); text-shadow: 0 1px 14px rgba(0, 0, 0, .55); }
+.gwc-hero--photo .gwc-svc-link { color: var(--a-text, #f1ece6) !important; text-shadow: 0 1px 12px rgba(0, 0, 0, .7); }
+@media (max-width: 600px) {
+  .gwc-blog-hero.gwc-hero--photo { min-height: 900px; }
+  .gwc-hero-photo { object-position: 34% 100%; }
+  .gwc-blog-hero.gwc-hero--photo::before {
+    background: linear-gradient(180deg, rgba(0, 0, 0, .82) 0%, rgba(0, 0, 0, .62) 42%, rgba(0, 0, 0, .06) 68%, rgba(0, 0, 0, .3) 100%);
+  }
+}
 .gwc-price-tabs {
   display: flex; flex-wrap: wrap; gap: 10px;
   margin: 0 0 clamp(28px, 4vw, 44px); padding: 0; list-style: none;
