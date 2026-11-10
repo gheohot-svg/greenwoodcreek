@@ -78,7 +78,48 @@
   color: var(--a-muted, rgba(241, 236, 230, .68)); max-width: 46em;
 }
 
+/* Merkmal-Listen (Häkchen) */
+.gwc-price-list { margin: 4px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.gwc-price-list li {
+  position: relative; padding-left: 26px; font-size: .9375rem; line-height: 1.5;
+  color: var(--a-muted, rgba(241, 236, 230, .78));
+}
+.gwc-price-list li strong { color: var(--a-text, #f1ece6); font-weight: 600; }
+.gwc-price-list li::before {
+  content: ""; position: absolute; left: 1px; top: .5em; width: 11px; height: 6px;
+  border-left: 2px solid var(--a-accent-light, #e4442a); border-bottom: 2px solid var(--a-accent-light, #e4442a);
+  transform: rotate(-45deg);
+}
+
+/* Geldzurückgarantie */
+.gwc-price-guarantee {
+  display: flex; align-items: center; gap: 22px; margin-top: 18px;
+  padding: 22px 28px; border-radius: var(--a-r-lg, 22px);
+  border: 1px solid var(--a-accent-light, #e4442a);
+  background: radial-gradient(120% 160% at 0% 0%, rgba(165, 34, 15, .22), transparent 60%), var(--a-surface-2, #141414);
+}
+.gwc-price-guarantee strong {
+  font: 400 clamp(2.4rem, 3.2vw + 1.2rem, 3.4rem)/1 "Anton", "Instrument Sans", system-ui, sans-serif;
+  color: var(--a-accent-light, #e4442a); letter-spacing: .005em; flex: none;
+}
+.gwc-price-guarantee p { margin: 0; font-size: 1.0625rem; line-height: 1.4; color: var(--a-muted, rgba(241, 236, 230, .78)); }
+.gwc-price-guarantee p b { display: block; font: 600 1.25rem/1.2 "Instrument Sans", system-ui, sans-serif; color: var(--a-text, #f1ece6); }
+
+/* Revisionen und Anfahrt */
+.gwc-info-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.gwc-info-card {
+  background: linear-gradient(180deg, var(--a-surface-2, #141414), var(--a-surface, #0b0b0b));
+  border: 1px solid var(--a-hair, rgba(241, 236, 230, .08)); border-radius: var(--a-r-lg, 22px);
+  padding: 28px 28px 30px;
+}
+.gwc-info-title {
+  margin: 0 0 18px; font: 400 clamp(1.6rem, 1.6vw + 1rem, 2.1rem)/1.05 "Anton", "Instrument Sans", system-ui, sans-serif;
+  letter-spacing: .005em; color: var(--a-text, #f1ece6);
+}
+
 @media (max-width: 600px) {
+  .gwc-price-guarantee { flex-direction: column; align-items: flex-start; gap: 8px; padding: 20px; }
+  .gwc-info-card { padding: 22px 20px 24px; }
   .gwc-price-tabs { flex-wrap: nowrap; overflow-x: auto; margin-inline: -5vw; padding: 0 5vw 6px; scrollbar-width: none; }
   .gwc-price-tab { flex: none; }
   .gwc-price-card { padding: 22px 20px 24px; }
