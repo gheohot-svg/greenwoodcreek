@@ -1,0 +1,34 @@
+{
+  "foto": "A73090163.jpg",
+  "title": "Film-Look für Fotos: So bearbeiten Sie Bilder wie ein Kinostill",
+  "slug": "film-look-fotos-bearbeiten",
+  "date": "2026-11-10",
+  "category": "Fototipps",
+  "meta_title": "Film-Look für Fotos bearbeiten | GREENWOODCREEK",
+  "meta_description": "Film-Look für Fotos: Mit Color Grading, weichen Kontrasten, Vignette und passendem Licht wirken Ihre Bilder wie ein Standbild aus einem Kinofilm.",
+  "keywords": [
+    "film look fotos",
+    "color grading foto",
+    "teal orange look",
+    "cinematic look lightroom",
+    "fotos filmisch bearbeiten"
+  ],
+  "lead": "Ein Film-Look für Fotos entsteht zu einem Teil in der Kamera und zum anderen Teil in der Bearbeitung. Wir zeigen an einem Porträt zwischen Palmen, welche Schritte ein Bild wie ein Standbild aus einem Kinofilm wirken lassen.",
+  "image": "/assets/images/blog/artikel/film-look-fotos-bearbeiten.webp",
+  "image_alt": "Frau mit Sonnenbrille und dunklem Blumenkleid steht zwischen Palmen im Abendlicht und zeigt mit beiden Händen zur Seite, der Himmel ist türkis getönt",
+  "body_html": "<p>Auf unserem Foto steht eine Frau zwischen Palmen. Sie trägt eine Sonnenbrille und ein dunkles Kleid mit gelben Blüten, beide Arme zeigen zur Seite, als würde sie gerade den Weg erklären. Das letzte Sonnenlicht färbt Haare, Haut und Palmblätter warm. Der Himmel dahinter ist kühl und türkis, die Ecken sind dunkel. Das Bild sieht aus wie ein Standbild aus einem Film. Wir haben es am Abend mit 40 mm, Blende f/4, 1/2500 Sekunde und ISO 12800 fotografiert und danach bearbeitet. Hier erfahren Sie, wie ein Film-Look für Fotos entsteht.</p>\n<h2>Was einen Film-Look für Fotos ausmacht</h2>\n<p>Kinobilder folgen ein paar wiederkehrenden Mustern. Wer diese kennt, kann sie auf Fotos übertragen:</p>\n<ul>\n<li><strong>Farbtrennung:</strong> Warme Hauttöne vor kühlem Hintergrund. Der bekannte Teal-Orange-Look setzt Orange gegen Blaugrün, weil Haut fast immer im orangen Bereich liegt.</li>\n<li><strong>Weiche Lichter und Schatten:</strong> Die hellsten Stellen brennen nicht aus, die dunkelsten werden nicht ganz schwarz. Die Tonkurve sieht oft aus wie ein flaches S mit angehobenem Schwarzpunkt.</li>\n<li><strong>Gerichtetes Licht:</strong> Licht kommt von einer Seite oder von hinten. Flaches Licht von vorne wirkt selten filmisch.</li>\n<li><strong>Ein Moment mitten in einer Handlung:</strong> Die Person tut etwas. Sie schaut nicht brav in die Kamera.</li>\n</ul>\n<h2>Schritt 1: Licht und Moment bei der Aufnahme</h2>\n<p>Kein Preset rettet ein Bild mit flachem Mittagslicht. Fotografieren Sie in der Stunde vor Sonnenuntergang, wenn die Sonne tief steht und Haare und Kanten von hinten oder der Seite beleuchtet. Auf unserem Bild trifft das Licht die Palmen und die Haare von rechts. Die Geste mit beiden Armen wirkt wie mitten aus einer Erklärung. Solche Momente bekommen Sie, wenn Sie der Person eine kleine Aufgabe geben, etwa einen Weg zu beschreiben, und während des Erzählens auslösen.</p>\n<h3>Bildformat und Perspektive</h3>\n<p>Viele Filme laufen in Breitbildformaten. Ein Zuschnitt auf 16:9 oder noch breiter verstärkt die Wirkung. Ein tiefer Kamerastandpunkt, wie bei unserem Bild, lässt die Person größer wirken und bringt mehr Himmel und Baumkronen in den Rahmen.</p>\n<h2>Schritt 2: Grundbearbeitung im RAW</h2>\n<p>Fotografieren Sie im RAW-Format. Nur dann haben Sie genug Spielraum für starke Farbverschiebungen. Stellen Sie zuerst Belichtung und Weißabgleich so ein, dass die Haut natürlich aussieht. Holen Sie Lichter zurück, bis der Himmel Zeichnung hat, und hellen Sie die Schatten etwas auf. Erst danach beginnt die eigentliche Farbarbeit.</p>\n<h2>Schritt 3: Color Grading</h2>\n<p>In Lightroom und Camera Raw heißt das Werkzeug Color Grading, in anderen Programmen Farbräder oder Split Toning. So gehen Sie vor:</p>\n<ol>\n<li><strong>Schatten kühl:</strong> Schieben Sie den Farbton der Schatten Richtung Blaugrün, mit geringer Sättigung.</li>\n<li><strong>Lichter warm:</strong> Färben Sie die Lichter leicht Richtung Orange oder Gelb.</li>\n<li><strong>Haut schützen:</strong> Kontrollieren Sie im HSL-Bereich Orange und Rot. Die Haut darf warm sein, aber nicht rot oder gelb.</li>\n<li><strong>Störfarben bändigen:</strong> Grelles Grün von Wiesen oder Blättern ziehen Sie in der Sättigung herunter oder schieben es Richtung Gelb. Auf unserem Bild wirken die Palmblätter golden statt grün.</li>\n</ol>\n<p>Bleiben Sie zurückhaltend. Ein Grading, das man sofort als Filter erkennt, wirkt schnell billig. Vergleichen Sie zwischendurch mit dem Original.</p>\n<h2>Schritt 4: Kontrast, Vignette, Korn</h2>\n<p>Heben Sie in der Gradationskurve den untersten Punkt leicht an. Die Schatten werden dadurch matt, wie bei vielen Kinofilmen. Eine dunkle Vignette lenkt den Blick zur Person, auf unserem Foto sehen Sie sie in allen vier Ecken. Leichtes Korn erinnert an analoges Filmmaterial. Bei hohen ISO-Werten bringt die Kamera bereits etwas Rauschen mit. Unser Bild entstand mit ISO 12800. In solchen Fällen prüfen Sie erst das vorhandene Rauschen, bevor Sie Korn hinzufügen.</p>\n<h2>Presets und LUTs</h2>\n<p>Presets für Lightroom und LUTs für Video sparen Zeit, wenn viele Bilder einheitlich aussehen sollen. Sie funktionieren aber nur gut, wenn Belichtung und Weißabgleich vorher stimmen. Legen Sie sich nach den ersten Bildern ein eigenes Preset an und passen Sie es pro Bild leicht an. So bleibt Ihr Instagram-Feed oder Ihre Website einheitlich, ohne dass jedes Foto gleich aussieht.</p>\n<h2>Von Foto zu Film und zurück</h2>\n<p>Wir arbeiten als Fotografen und Filmemacher. Die Farbsprache eines Imagefilms übertragen wir oft auf die Fotos derselben Produktion, damit Website, Social Media und Film zusammenpassen. Wie wir Filme umsetzen, zeigt die Seite <a href=\"/imagefilm-muenchen/\">Imagefilm München</a>. Wenn Sie Inhalte für Ihre Kanäle mit einheitlichem Look brauchen, lesen Sie mehr über unsere <a href=\"/social-media-betreuung-muenchen/\">Social-Media-Betreuung</a>. Für Fragen zu einem Projekt nutzen Sie die <a href=\"/leistungen/#kontakt\">Kontaktseite</a>.</p>",
+  "faq": [
+    {
+      "q": "Was ist der Teal-Orange-Look?",
+      "a": "Eine Farbgebung aus vielen Kinofilmen: Hauttöne bleiben warm und orange, Schatten und Hintergründe werden blaugrün. Die beiden Farben liegen sich im Farbkreis gegenüber und trennen die Person dadurch vom Hintergrund."
+    },
+    {
+      "q": "Brauche ich für den Film-Look RAW-Dateien?",
+      "a": "Es geht auch mit JPEGs, aber RAW-Dateien vertragen starke Farbverschiebungen deutlich besser. Bei JPEGs entstehen schneller Farbstreifen und unschöne Hauttöne."
+    },
+    {
+      "q": "Welches Licht eignet sich für filmische Porträts?",
+      "a": "Tief stehende Sonne von der Seite oder von hinten, etwa in der Stunde vor Sonnenuntergang. Flaches Licht direkt von vorne wirkt selten filmisch."
+    }
+  ]
+}
