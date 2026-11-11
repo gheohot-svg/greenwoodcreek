@@ -37,3 +37,4 @@
 - [x] 2026-10-29 /aktuelles/seelandschaft-gegenlicht-vordergrund/ Seelandschaft bei Gegenlicht: Wolken, Felsen und ein starker Vordergrund (aus Foto)
 - [x] 2026-10-06 /aktuelles/paarfoto-von-hinten-herbstlicht/ Paarfoto von hinten: Nähe zeigen, ohne Gesichter zu sehen (aus Foto)
 - [x] 2026-11-09 /aktuelles/gruppenfoto-nachts-lebendig/ Gruppenfoto bei Nacht: So gelingt ein lebendiges Gruppenporträt (aus Foto)
+- [x] 2026-11-11 /aktuelles/gasse-nachts-fotografieren-farbakzente/ Gasse bei Nacht fotografieren: Warmes Licht und Farbakzente nutzen (aus Foto)

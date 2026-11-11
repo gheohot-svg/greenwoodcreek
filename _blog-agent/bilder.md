@@ -18,3 +18,4 @@
 - 2026-11-08 Blog-Foto -> /aktuelles/seelandschaft-gegenlicht-vordergrund/
 - 2026-11-08 pärchen2.jpg -> /aktuelles/paarfoto-von-hinten-herbstlicht/
 - 2026-11-09 fuertestrand-3.jpg (statt grouppotraitbarcelona.jpg) -> /aktuelles/gruppenfoto-nachts-lebendig/
+- 2026-11-11 Colourstreet.jpg -> /aktuelles/gasse-nachts-fotografieren-farbakzente/
