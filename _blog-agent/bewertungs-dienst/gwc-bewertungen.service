@@ -1,0 +1,16 @@
+[Unit]
+Description=GREENWOODCREEK Bewertungs-Dienst
+After=network.target
+
+[Service]
+User=jan
+ExecStart=/usr/bin/python3 /home/jan/greenwoodcreek-repo/_blog-agent/bewertungs-dienst/bewertungen_dienst.py
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/srv/greenwoodcreek/www/assets/data/live /home/jan
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

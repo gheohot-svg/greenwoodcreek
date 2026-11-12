@@ -28,3 +28,15 @@
 
 .gwc-bw-consent { display: flex; gap: 10px; align-items: flex-start; font-size: .9rem; line-height: 1.5; margin: 0 0 16px; }
 .gwc-bw-consent input { margin-top: 4px; flex: none; }
+
+/* Kleine Gesamtwertung (Durchschnitt + Anzahl) */
+.gwc-bw-summary {
+  display: inline-block;
+  margin: 8px 0 20px;
+  font-size: .95rem;
+  letter-spacing: .02em;
+  color: var(--alt-accent-light, #e4442a);
+  text-decoration: none;
+}
+.gwc-bw-summary[hidden] { display: none; }
+a.gwc-bw-summary:hover { text-decoration: underline; }
