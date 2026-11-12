@@ -12,8 +12,12 @@ Automatik:
 - Rate-Limit pro Absender (nur im Arbeitsspeicher, IPs werden nie gespeichert).
 """
 import json, os, re, sys, tempfile, threading, time
+from http.cookies import SimpleCookie
 from datetime import date
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import konto
 
 PORT = int(os.environ.get("GWC_BW_PORT", "8081"))
 LIVE_FILE = os.environ.get("GWC_BW_LIVE", "/srv/greenwoodcreek/www/assets/data/live/bewertungen.json")
@@ -73,19 +77,49 @@ def rate_ok(ip):
 class Handler(BaseHTTPRequestHandler):
     server_version = "gwc-bw"
 
-    def log_message(self, fmt, *args):   # keine IPs ins Log
-        sys.stderr.write("%s %s\n" % (time.strftime("%F %T"), fmt % args[:0] if False else self.requestline.split(" ")[0] + " " + self.path))
+    def log_message(self, fmt, *args):   # keine IPs, keine Query-Strings ins Log
+        sys.stderr.write("%s %s %s\n" % (time.strftime("%F %T"), self.command, self.path.split("?")[0]))
 
-    def _json(self, code, obj):
+    def _json(self, code, obj, cookie=None):
         body = json.dumps(obj, ensure_ascii=False).encode()
         self.send_response(code)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
+        if cookie:
+            self.send_header("Set-Cookie", cookie)
         self.end_headers()
         self.wfile.write(body)
 
+
+    def _ip(self):
+        return self.headers.get("X-Real-IP") or self.client_address[0]
+
+    def _token(self):
+        c = SimpleCookie(self.headers.get("Cookie", ""))
+        return c[konto.COOKIE].value if konto.COOKIE in c else ""
+
+    def _konto(self, data):
+        code, obj, cookie = konto.handle(self.path.split("?")[0], data, self._ip(), self._token())
+        self._json(code, obj, cookie)
+
     def do_POST(self):
+        if self.path.split("?")[0].startswith("/api/konto/"):
+            if self.headers.get("X-GWC") != "1":          # CSRF-Schutz: Cross-Site-Formulare koennen den Header nicht setzen
+                return self._json(403, {"ok": False})
+            try:
+                n = int(self.headers.get("Content-Length", "0"))
+                if n > 5000:
+                    return self._json(413, {"ok": False})
+                data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
+                if not isinstance(data, dict):
+                    raise ValueError
+            except (ValueError, UnicodeDecodeError):
+                return self._json(400, {"ok": False})
+            return self._konto(data)
+        return self._bewertung()
+
+    def _bewertung(self):
         if self.path.split("?")[0] != "/api/bewertung":
             return self._json(404, {"ok": False})
         try:
@@ -99,11 +133,12 @@ class Handler(BaseHTTPRequestHandler):
         if d.get("website"):                       # Honeypot: stillschweigend "ok"
             return self._json(200, {"ok": True, "status": "veroeffentlicht"})
 
-        ip = (self.headers.get("X-Real-IP") or self.client_address[0])
+        ip = self._ip()
         if not rate_ok(ip):
             return self._json(429, {"ok": False, "fehler": "Zu viele Bewertungen. Bitte später erneut versuchen."})
 
-        name = clean(d.get("name"), 80)
+        acc = konto.user_from_token(self._token())
+        name = clean(d.get("name"), 80) or (acc["name"] if acc else "")
         text = clean(d.get("text"), 1500)
         try:
             sterne = int(d.get("sterne"))
@@ -128,10 +163,16 @@ class Handler(BaseHTTPRequestHandler):
         return self._json(200, {"ok": True, "status": "veroeffentlicht"})
 
     def do_GET(self):
-        self._json(200, {"ok": True}) if self.path == "/api/health" else self._json(404, {"ok": False})
+        path = self.path.split("?")[0]
+        if path == "/api/health":
+            return self._json(200, {"ok": True})
+        if path == "/api/konto/ich":
+            return self._konto({})
+        self._json(404, {"ok": False})
 
 
 if __name__ == "__main__":
+    konto.init_db()
     if not os.path.exists(LIVE_FILE):
         save_atomic(LIVE_FILE, {"bewertungen": []})
     ThreadingHTTPServer(("127.0.0.1", PORT), Handler).serve_forever()

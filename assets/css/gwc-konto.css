@@ -1,0 +1,17 @@
+/* Kundenkonto */
+.gwc-k-wrap { max-width: 520px; margin: 0 auto; }
+.gwc-k-tabs { display: flex; gap: 8px; margin: 0 0 24px; }
+.gwc-k-tab { flex: 1; padding: 12px 14px; background: transparent; color: inherit; border: 1px solid var(--alt-line, rgba(241,236,230,.14)); border-radius: 3px; font: inherit; font-weight: 700; cursor: pointer; }
+.gwc-k-tab[aria-selected="true"] { background: var(--alt-surface-2, #141414); border-color: var(--alt-accent-light, #e4442a); }
+.gwc-k-form .gwc-form-row { margin-bottom: 16px; }
+.gwc-k-link { background: none; border: 0; padding: 0; margin: 14px 0 0; font: inherit; font-size: .9rem; color: inherit; opacity: .8; text-decoration: underline; cursor: pointer; display: block; }
+.gwc-k-link:hover { opacity: 1; color: var(--alt-accent-light, #e4442a); }
+.gwc-k-panel { background: var(--alt-surface-2, #141414); border: 1px solid var(--alt-line, rgba(241,236,230,.14)); border-radius: 3px; padding: 22px; margin: 0 0 20px; }
+.gwc-k-panel h2 { margin: 0 0 6px; }
+.gwc-k-panel p { margin: 0 0 14px; opacity: .85; }
+.gwc-k-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.gwc-k-secondary { background: transparent; color: inherit; border: 1px solid var(--alt-line, rgba(241,236,230,.3)); border-radius: 3px; padding: 12px 18px; font: inherit; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block; }
+.gwc-k-secondary:hover { border-color: var(--alt-accent-light, #e4442a); }
+.gwc-k-danger summary { cursor: pointer; opacity: .8; font-size: .9rem; }
+.gwc-k-danger form { margin-top: 12px; }
+[hidden] { display: none !important; }

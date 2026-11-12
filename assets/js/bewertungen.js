@@ -172,8 +172,18 @@
     });
   }
 
+  function prefillName() {
+    var field = document.getElementById("gwc-bw-name");
+    if (!field) return;
+    fetch("/api/konto/ich", { credentials: "same-origin", headers: { "X-GWC": "1", Accept: "application/json" } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { if (d && d.ok && d.name && !field.value) field.value = d.name; })
+      .catch(function () {});
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     refresh();
     initForm();
+    prefillName();
   });
 })();
