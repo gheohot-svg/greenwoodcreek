@@ -1,0 +1,30 @@
+/* Bewertungsseite: Liste freigegebener Bewertungen + Formular */
+.gwc-bw-wrap { max-width: 760px; margin: 0 auto; }
+.gwc-bw-lead { color: var(--alt-text-muted, rgba(241, 236, 230, .72)); line-height: 1.6; margin: 0 0 32px; }
+
+.gwc-bw-list { list-style: none; margin: 0 0 56px; padding: 0; display: grid; gap: 16px; }
+.gwc-bw-item {
+  background: var(--alt-surface-2, #141414);
+  border: 1px solid var(--alt-line, rgba(241, 236, 230, .14));
+  border-radius: 3px;
+  padding: 20px 22px;
+}
+.gwc-bw-stars { color: var(--alt-accent-light, #e4442a); letter-spacing: .12em; font-size: 1.1rem; margin: 0 0 8px; }
+.gwc-bw-text { margin: 0 0 12px; line-height: 1.6; white-space: pre-line; }
+.gwc-bw-meta { margin: 0; font-size: .85rem; opacity: .72; }
+.gwc-bw-empty { margin: 0 0 56px; opacity: .72; }
+
+.gwc-bw-form-title { margin: 0 0 8px; }
+.gwc-bw-form .gwc-form-row { margin-bottom: 16px; }
+.gwc-bw-rating { border: 0; margin: 0 0 16px; padding: 0; }
+.gwc-bw-rating legend { padding: 0; }
+.gwc-bw-stars-input { display: inline-flex; flex-direction: row-reverse; justify-content: flex-end; gap: 4px; }
+.gwc-bw-stars-input input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.gwc-bw-stars-input label { font-size: 2rem; line-height: 1; cursor: pointer; color: rgba(241, 236, 230, .3); transition: color .15s ease; }
+.gwc-bw-stars-input label:hover,
+.gwc-bw-stars-input label:hover ~ label,
+.gwc-bw-stars-input input:checked ~ label { color: var(--alt-accent-light, #e4442a); }
+.gwc-bw-stars-input input:focus-visible + label { outline: 2px solid var(--alt-accent-light, #e4442a); outline-offset: 3px; }
+
+.gwc-bw-consent { display: flex; gap: 10px; align-items: flex-start; font-size: .9rem; line-height: 1.5; margin: 0 0 16px; }
+.gwc-bw-consent input { margin-top: 4px; flex: none; }
