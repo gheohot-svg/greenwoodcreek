@@ -186,7 +186,7 @@ class Handler(BaseHTTPRequestHandler):
             query = self.path.split("?", 1)[1] if "?" in self.path else ""
             code, loc, cookies = konto.google_callback(query, self._cookie_value(konto.OAUTH_COOKIE))
             return self._redirect(loc, cookies)
-        if path in ("/api/konto/ich", "/api/konto/optionen"):
+        if path in ("/api/konto/ich", "/api/konto/optionen", "/api/konto/buchungen"):
             return self._konto({})
         self._json(404, {"ok": False})
 

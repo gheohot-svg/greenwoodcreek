@@ -65,6 +65,9 @@ def init_db():
             if name not in cols:
                 con.execute("ALTER TABLE users ADD COLUMN %s %s" % (name, ddl))
         con.execute("CREATE UNIQUE INDEX IF NOT EXISTS ux_google ON users(google_sub)")
+        con.execute("""CREATE TABLE IF NOT EXISTS buchungen(
+          nr TEXT PRIMARY KEY, user_id INTEGER, paket TEXT NOT NULL, kategorie TEXT, preis TEXT,
+          daten TEXT NOT NULL, erstellt TEXT NOT NULL)""")
 
 
 def _h(t):
@@ -236,6 +239,7 @@ def handle(path, data, ip, token):
         if not row or not verify_pw(str(data.get("passwort", ""))[:200], row["pw"]):
             return 403, {"ok": False, "fehler": "Das Passwort stimmt nicht."}, None
         with _lock, _db() as con:
+            con.execute("UPDATE buchungen SET user_id=NULL WHERE user_id=?", (u["id"],))
             for tbl in ("sessions", "tokens"):
                 con.execute("DELETE FROM %s WHERE user_id=?" % tbl, (u["id"],))
             con.execute("DELETE FROM users WHERE id=?", (u["id"],))
@@ -268,6 +272,46 @@ def handle(path, data, ip, token):
             con.execute("DELETE FROM sessions WHERE user_id=?", (r["user_id"],))
             con.execute("DELETE FROM tokens WHERE user_id=?", (r["user_id"],))
         return 200, {"ok": True}, None
+
+    if p.endswith("/buchungen"):
+        u = user_from_token(token)
+        if not u:
+            return 401, {"ok": False}, None
+        with _lock, _db() as con:
+            rows = con.execute("SELECT nr,paket,kategorie,preis,daten,erstellt FROM buchungen WHERE user_id=? "
+                               "ORDER BY erstellt DESC LIMIT 50", (u["id"],)).fetchall()
+        out = []
+        for r in rows:
+            d = json.loads(r["daten"])
+            out.append({"nr": r["nr"], "paket": r["paket"], "kategorie": r["kategorie"], "preis": r["preis"],
+                        "erstellt": r["erstellt"], "wunschtermin": d.get("wunschtermin", ""), "adresse": d.get("adresse", {})})
+        return 200, {"ok": True, "buchungen": out}, None
+
+    if p.endswith("/buchen"):
+        u = user_from_token(token)
+        if not u:
+            return 401, {"ok": False, "fehler": "Bitte melden Sie sich an, um ein Paket zu buchen."}, None
+        if limited("buchen:%s" % u["id"], 10, 3600):
+            return 429, {"ok": False, "fehler": "Zu viele Buchungen in kurzer Zeit. Bitte schreiben Sie uns direkt."}, None
+        c = lambda k, n: re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]", "", str(data.get(k, "") or "")).strip()[:n]
+        paket, kategorie, preis = c("paket", 80), c("kategorie", 80), c("preis", 60)
+        adresse = {"name": c("name", 100), "firma": c("firma", 120), "strasse": c("strasse", 120),
+                   "plz": c("plz", 10), "ort": c("ort", 80), "telefon": c("telefon", 40)}
+        if not paket or not adresse["name"] or not adresse["strasse"] or not re.match(r"^\d{4,5}$", adresse["plz"]) \
+                or not adresse["ort"] or len(re.sub(r"\D", "", adresse["telefon"])) < 6:
+            return 400, {"ok": False, "fehler": "Bitte Paket, Name, Adresse (Straße, PLZ, Ort) und Telefonnummer angeben."}, None
+        if data.get("agb") is not True:
+            return 400, {"ok": False, "fehler": "Bitte bestätigen Sie die AGB und die Datenschutzerklärung."}, None
+        termin = c("wunschtermin", 10)
+        if termin and not re.match(r"^\d{4}-\d{2}-\d{2}$", termin):
+            termin = ""
+        daten = {"adresse": adresse, "email": u["email"], "wunschtermin": termin, "einsatzort": c("einsatzort", 200),
+                 "nachricht": c("nachricht", 2000), "vorgespraech": data.get("vorgespraech") is True}
+        nr = "GWC-%s-%s" % (time.strftime("%y%m%d"), secrets.token_hex(2).upper())
+        with _lock, _db() as con:
+            con.execute("INSERT INTO buchungen VALUES(?,?,?,?,?,?,?)",
+                        (nr, u["id"], paket, kategorie, preis, json.dumps(daten, ensure_ascii=False), time.strftime("%Y-%m-%d %H:%M:%S")))
+        return 200, {"ok": True, "nr": nr}, None
 
     if p.endswith("/newsletter"):
         u = user_from_token(token)

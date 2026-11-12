@@ -144,6 +144,23 @@
 #geld-zurueck { margin: 28px 0 8px; }
 #geld-zurueck p { max-width: 62ch; }
 
+/* Direktbuchung */
+.gwc-price-card { display: flex; flex-direction: column; }
+.gwc-price-book {
+  margin-top: auto; align-self: flex-start; display: inline-block; margin-block-start: 18px;
+  padding: 11px 20px; border-radius: 999px; border: 1px solid var(--a-accent-light, #e4442a);
+  color: var(--a-text, #f1ece6); font-weight: 600; font-size: .95rem; text-decoration: none;
+  transition: background .2s ease, color .2s ease;
+}
+.gwc-price-book:hover, .gwc-price-book:focus-visible { background: var(--a-accent-light, #e4442a); color: #fff; }
+.gwc-price-card.is-featured .gwc-price-book { background: var(--a-accent, #a5220f); border-color: var(--a-accent, #a5220f); }
+.gwc-price-bookhint {
+  max-width: 62ch; margin: 18px 0 0; padding: 14px 18px; border-left: 3px solid var(--a-accent-light, #e4442a);
+  background: rgba(20, 20, 20, .72); border-radius: 0 12px 12px 0; font-size: .975rem; line-height: 1.5;
+  color: var(--a-muted, rgba(241, 236, 230, .85));
+}
+.gwc-price-bookhint b { color: var(--a-text, #f1ece6); }
+
 /* Revisionen und Anfahrt */
 .gwc-info-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 .gwc-info-card {

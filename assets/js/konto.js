@@ -49,12 +49,29 @@
     });
   }
 
+  function loadBookings() {
+    api("buchungen", "GET").then(function (res) {
+      var list = $("k-buchungen"), items = (res.data && res.data.buchungen) || [];
+      list.textContent = "";
+      if (!items.length) { $("k-buchungen-leer").hidden = false; return; }
+      items.forEach(function (b) {
+        var li = document.createElement("li");
+        var t = document.createElement("strong"); t.textContent = b.paket;
+        var m = document.createElement("span");
+        var d = (b.erstellt || "").slice(0, 10).split("-").reverse().join(".");
+        m.textContent = " · " + b.nr + " · gebucht am " + d + (b.wunschtermin ? " · Wunschtermin " + b.wunschtermin.split("-").reverse().join(".") : "");
+        li.appendChild(t); li.appendChild(m); list.appendChild(li);
+      });
+    }).catch(function () {});
+  }
+
   function loadMe() {
     return api("ich", "GET").then(function (res) {
       if (res.status === 200 && res.data.ok) {
         $("k-name").textContent = res.data.name;
         $("k-mail").textContent = res.data.email;
         $("k-news").checked = !!res.data.newsletter;
+        loadBookings();
         show("k-ein");
       } else if (res.status === 401) {
         show("k-aus");
@@ -73,7 +90,10 @@
 
     wire("k-form-anmelden", "anmelden",
       function (f) { return { email: f.elements.email.value, passwort: f.elements.passwort.value }; },
-      function () { window.location.reload(); });
+      function () {
+        var w = new URLSearchParams(window.location.search).get("weiter") || "";
+        if (/^\/[a-z]/.test(w) && w.indexOf("//") === -1) { window.location.href = w; } else { window.location.reload(); }
+      });
 
     wire("k-form-registrieren", "registrieren",
       function (f) {
@@ -128,6 +148,9 @@
     }).catch(function () {});
 
     var q = new URLSearchParams(window.location.search);
+    if (q.get("weiter") && q.get("weiter").indexOf("/buchen/") === 0) {
+      say($("k-meldung"), "Bitte melden Sie sich an oder legen Sie ein Konto an. Danach geht es direkt weiter zu Ihrer Buchung.", "");
+    }
     var abbestellen = q.get("abbestellen");
     if (q.get("fehler") === "google") {
       say($("k-meldung"), "Die Anmeldung mit Google hat nicht geklappt. Bitte erneut versuchen.", "is-error");
@@ -140,7 +163,9 @@
     }
     var verify = q.get("bestaetigen");
     var reset = q.get("zuruecksetzen");
-    if (verify || reset || abbestellen || q.get("fehler")) { window.history.replaceState(null, "", window.location.pathname); }
+    if (verify || reset || abbestellen || q.get("fehler")) {
+      window.history.replaceState(null, "", window.location.pathname + (q.get("weiter") ? "?weiter=" + encodeURIComponent(q.get("weiter")) : ""));
+    }
 
     if (reset) {
       resetToken = reset;
