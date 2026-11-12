@@ -15,3 +15,7 @@
 .gwc-k-danger summary { cursor: pointer; opacity: .8; font-size: .9rem; }
 .gwc-k-danger form { margin-top: 12px; }
 [hidden] { display: none !important; }
+
+.gwc-k-google { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; padding: 13px 16px; background: #fff; color: #1f1f1f; border-radius: 3px; font-weight: 700; text-decoration: none; }
+.gwc-k-google:hover { background: #f1f1f1; color: #1f1f1f; }
+.gwc-k-or { text-align: center; margin: 18px 0; font-size: .85rem; opacity: .7; }

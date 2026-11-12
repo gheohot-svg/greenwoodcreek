@@ -7,7 +7,8 @@
 - Datenbank liegt ausserhalb des Webroots (GWC_DB, Standard ~/gwc-konten.sqlite3, Rechte 600).
 - IP-Adressen werden nur fuer das Rate-Limit im Arbeitsspeicher gehalten.
 """
-import hashlib, hmac, os, re, secrets, smtplib, sqlite3, threading, time
+import base64, hashlib, hmac, json, os, re, secrets, smtplib, sqlite3, threading, time
+import urllib.parse, urllib.request
 from email.message import EmailMessage
 
 DB_PATH = os.environ.get("GWC_DB", os.path.expanduser("~/gwc-konten.sqlite3"))
@@ -17,12 +18,21 @@ SMTP_PORT = int(os.environ.get("GWC_SMTP_PORT", "587"))
 SMTP_USER = os.environ.get("GWC_SMTP_USER", "")
 SMTP_PASS = os.environ.get("GWC_SMTP_PASS", "")
 SMTP_FROM = os.environ.get("GWC_SMTP_FROM", "")
+SMTP_TLS = os.environ.get("GWC_SMTP_TLS", "1") != "0"
+GOOGLE_ID = os.environ.get("GWC_GOOGLE_CLIENT_ID", "")
+GOOGLE_SECRET = os.environ.get("GWC_GOOGLE_CLIENT_SECRET", "")
+GOOGLE_AUTH_URL = os.environ.get("GWC_GOOGLE_AUTH_URL", "https://accounts.google.com/o/oauth2/v2/auth")
+GOOGLE_TOKEN_URL = os.environ.get("GWC_GOOGLE_TOKEN_URL", "https://oauth2.googleapis.com/token")
 SESSION_DAYS = 30
 COOKIE = "gwc_session"
 EMAIL_RE = re.compile(r"^[^@\s]{1,64}@[^@\s]{1,190}\.[A-Za-z]{2,}$")
 
 _lock = threading.Lock()
 _limits = {}
+
+
+def google_enabled():
+    return bool(GOOGLE_ID and GOOGLE_SECRET)
 
 
 def smtp_enabled():
@@ -49,6 +59,12 @@ def init_db():
         CREATE TABLE IF NOT EXISTS tokens(
           h TEXT PRIMARY KEY, user_id INTEGER NOT NULL, kind TEXT NOT NULL, expires INTEGER NOT NULL);
         """)
+        cols = {r[1] for r in con.execute("PRAGMA table_info(users)")}
+        for name, ddl in (("google_sub", "TEXT"), ("newsletter", "INTEGER NOT NULL DEFAULT 0"),
+                          ("newsletter_seit", "TEXT"), ("abmelde_token", "TEXT")):
+            if name not in cols:
+                con.execute("ALTER TABLE users ADD COLUMN %s %s" % (name, ddl))
+        con.execute("CREATE UNIQUE INDEX IF NOT EXISTS ux_google ON users(google_sub)")
 
 
 def _h(t):
@@ -102,7 +118,8 @@ def _send(to, subject, body):
             m["From"], m["To"], m["Subject"] = SMTP_FROM, to, subject
             m.set_content(body)
             with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=20) as s:
-                s.starttls()
+                if SMTP_TLS:
+                    s.starttls()
                 if SMTP_USER:
                     s.login(SMTP_USER, SMTP_PASS)
                 s.send_message(m)
@@ -125,7 +142,7 @@ def user_from_token(token):
     if not token:
         return None
     with _lock, _db() as con:
-        r = con.execute("SELECT u.id,u.name,u.email FROM sessions s JOIN users u ON u.id=s.user_id "
+        r = con.execute("SELECT u.id,u.name,u.email,u.newsletter FROM sessions s JOIN users u ON u.id=s.user_id "
                         "WHERE s.h=? AND s.expires>?", (_h(token), int(time.time()))).fetchone()
         return dict(r) if r else None
 
@@ -139,7 +156,10 @@ def handle(path, data, ip, token):
     p = path.rstrip("/")
     if p.endswith("/ich"):
         u = user_from_token(token)
-        return (200, {"ok": True, "name": u["name"], "email": u["email"]}, None) if u else (401, {"ok": False}, None)
+        return (200, {"ok": True, "name": u["name"], "email": u["email"], "newsletter": bool(u["newsletter"])}, None) if u else (401, {"ok": False}, None)
+
+    if p.endswith("/optionen"):
+        return 200, {"ok": True, "google": google_enabled()}, None
 
     if p.endswith("/registrieren"):
         if limited("reg:" + ip, 5, 3600):
@@ -157,8 +177,11 @@ def handle(path, data, ip, token):
         with _lock, _db() as con:
             if con.execute("SELECT 1 FROM users WHERE email=?", (email,)).fetchone():
                 return 409, {"ok": False, "fehler": "Diese E-Mail-Adresse ist bereits registriert."}, None
-            cur = con.execute("INSERT INTO users(email,name,pw,verified,created) VALUES(?,?,?,?,date('now'))",
-                              (email, name, hash_pw(pw), verified))
+            news = 1 if data.get("newsletter") is True else 0
+            cur = con.execute("INSERT INTO users(email,name,pw,verified,created,newsletter,newsletter_seit,abmelde_token) "
+                              "VALUES(?,?,?,?,date('now'),?,?,?)",
+                              (email, name, hash_pw(pw), verified, news, time.strftime("%Y-%m-%d %H:%M:%S") if news else None,
+                               secrets.token_urlsafe(24)))
             if not verified:
                 t = _new_token(con, cur.lastrowid, "verify", 48)
                 _send(email, "Bitte bestätigen Sie Ihr Kundenkonto bei GREENWOODCREEK",
@@ -246,4 +269,104 @@ def handle(path, data, ip, token):
             con.execute("DELETE FROM tokens WHERE user_id=?", (r["user_id"],))
         return 200, {"ok": True}, None
 
+    if p.endswith("/newsletter"):
+        u = user_from_token(token)
+        if not u:
+            return 401, {"ok": False}, None
+        an = 1 if data.get("an") is True else 0
+        with _lock, _db() as con:
+            con.execute("UPDATE users SET newsletter=?, newsletter_seit=? WHERE id=?",
+                        (an, time.strftime("%Y-%m-%d %H:%M:%S") if an else None, u["id"]))
+        return 200, {"ok": True, "newsletter": bool(an)}, None
+
+    if p.endswith("/newsletter-abbestellen"):
+        t = str(data.get("token", ""))[:100]
+        with _lock, _db() as con:
+            cur = con.execute("UPDATE users SET newsletter=0, newsletter_seit=NULL WHERE abmelde_token=? AND ?!=''", (t, t))
+        return (200, {"ok": True}, None) if cur.rowcount else (400, {"ok": False, "fehler": "Der Abmelde-Link ist ungültig."}, None)
+
     return 404, {"ok": False}, None
+
+
+# ---------------------------------------------------------------- Google-Anmeldung (OpenID Connect, Code-Flow mit PKCE)
+_oauth = {}
+OAUTH_COOKIE = "gwc_oauth"
+
+
+def _redirect_uri():
+    return BASE_URL + "/api/konto/google/callback"
+
+
+def _b64(b):
+    return base64.urlsafe_b64encode(b).rstrip(b"=").decode()
+
+
+def google_start():
+    """-> (302, Ziel-URL, [Cookies])"""
+    if not google_enabled():
+        return 302, "/konto/?fehler=google", []
+    state, verifier = secrets.token_urlsafe(24), secrets.token_urlsafe(48)
+    now = time.time()
+    with _lock:
+        for k in [k for k, v in _oauth.items() if v[1] < now]:
+            del _oauth[k]
+        _oauth[state] = (verifier, now + 600)
+    q = urllib.parse.urlencode({
+        "client_id": GOOGLE_ID, "redirect_uri": _redirect_uri(), "response_type": "code",
+        "scope": "openid email profile", "state": state, "prompt": "select_account",
+        "code_challenge": _b64(hashlib.sha256(verifier.encode()).digest()), "code_challenge_method": "S256"})
+    cookie = "%s=%s; Path=/api/konto/google; Max-Age=600; HttpOnly; Secure; SameSite=Lax" % (OAUTH_COOKIE, state)
+    return 302, GOOGLE_AUTH_URL + "?" + q, [cookie]
+
+
+def _fail():
+    return 302, "/konto/?fehler=google", ["%s=; Path=/api/konto/google; Max-Age=0; HttpOnly; Secure; SameSite=Lax" % OAUTH_COOKIE]
+
+
+def google_callback(query, oauth_cookie):
+    """-> (302, Ziel-URL, [Cookies])"""
+    q = urllib.parse.parse_qs(query)
+    state, code = (q.get("state") or [""])[0], (q.get("code") or [""])[0]
+    with _lock:
+        entry = _oauth.pop(state, None)
+    if not google_enabled() or not code or not entry or entry[1] < time.time() or not oauth_cookie \
+            or not hmac.compare_digest(oauth_cookie, state):
+        return _fail()
+    try:
+        body = urllib.parse.urlencode({
+            "code": code, "client_id": GOOGLE_ID, "client_secret": GOOGLE_SECRET, "redirect_uri": _redirect_uri(),
+            "grant_type": "authorization_code", "code_verifier": entry[0]}).encode()
+        req = urllib.request.Request(GOOGLE_TOKEN_URL, data=body, method="POST",
+                                     headers={"Content-Type": "application/x-www-form-urlencoded"})
+        with urllib.request.urlopen(req, timeout=15) as r:
+            tok = json.loads(r.read().decode())
+        payload = tok["id_token"].split(".")[1]
+        claims = json.loads(base64.urlsafe_b64decode(payload + "=" * (-len(payload) % 4)))
+    except Exception:
+        return _fail()
+    # id_token kommt direkt vom Token-Endpunkt ueber TLS; Pflichtfelder trotzdem pruefen
+    if claims.get("iss") not in ("accounts.google.com", "https://accounts.google.com") or claims.get("aud") != GOOGLE_ID \
+            or int(claims.get("exp", 0)) < time.time() or claims.get("email_verified") not in (True, "true") \
+            or not claims.get("sub") or not EMAIL_RE.match(str(claims.get("email", ""))):
+        return _fail()
+    email = str(claims["email"]).lower()
+    name = re.sub(r"\s+", " ", str(claims.get("name") or email.split("@")[0])).strip()[:80]
+    with _lock, _db() as con:
+        u = con.execute("SELECT * FROM users WHERE google_sub=?", (claims["sub"],)).fetchone()
+        if not u:
+            u = con.execute("SELECT * FROM users WHERE email=?", (email,)).fetchone()
+            if u:   # bestehendes Konto verknuepfen; war es unbestaetigt, wird das Passwort gesperrt
+                con.execute("UPDATE users SET google_sub=?, verified=1, pw=CASE WHEN verified=0 THEN '' ELSE pw END WHERE id=?",
+                            (claims["sub"], u["id"]))
+                uid = u["id"]
+            else:
+                uid = con.execute("INSERT INTO users(email,name,pw,verified,created,google_sub,abmelde_token) "
+                                  "VALUES(?,?,?,1,date('now'),?,?)",
+                                  (email, name, "", claims["sub"], secrets.token_urlsafe(24))).lastrowid
+        else:
+            uid = u["id"]
+        t = secrets.token_urlsafe(32)
+        con.execute("DELETE FROM sessions WHERE expires<?", (int(time.time()),))
+        con.execute("INSERT INTO sessions VALUES(?,?,?)", (_h(t), uid, int(time.time() + SESSION_DAYS * 86400)))
+    return 302, "/konto/", [_cookie(t, SESSION_DAYS * 86400),
+                            "%s=; Path=/api/konto/google; Max-Age=0; HttpOnly; Secure; SameSite=Lax" % OAUTH_COOKIE]

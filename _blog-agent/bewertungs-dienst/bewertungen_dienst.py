@@ -86,11 +86,24 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
-        if cookie:
-            self.send_header("Set-Cookie", cookie)
+        for c in ([cookie] if isinstance(cookie, str) else (cookie or [])):
+            self.send_header("Set-Cookie", c)
         self.end_headers()
         self.wfile.write(body)
 
+
+    def _redirect(self, location, cookies):
+        self.send_response(302)
+        self.send_header("Location", location)
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("Content-Length", "0")
+        for c in cookies:
+            self.send_header("Set-Cookie", c)
+        self.end_headers()
+
+    def _cookie_value(self, name):
+        c = SimpleCookie(self.headers.get("Cookie", ""))
+        return c[name].value if name in c else ""
 
     def _ip(self):
         return self.headers.get("X-Real-IP") or self.client_address[0]
@@ -166,7 +179,14 @@ class Handler(BaseHTTPRequestHandler):
         path = self.path.split("?")[0]
         if path == "/api/health":
             return self._json(200, {"ok": True})
-        if path == "/api/konto/ich":
+        if path == "/api/konto/google/start":
+            code, loc, cookies = konto.google_start()
+            return self._redirect(loc, cookies)
+        if path == "/api/konto/google/callback":
+            query = self.path.split("?", 1)[1] if "?" in self.path else ""
+            code, loc, cookies = konto.google_callback(query, self._cookie_value(konto.OAUTH_COOKIE))
+            return self._redirect(loc, cookies)
+        if path in ("/api/konto/ich", "/api/konto/optionen"):
             return self._konto({})
         self._json(404, {"ok": False})
 

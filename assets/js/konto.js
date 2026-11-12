@@ -54,6 +54,7 @@
       if (res.status === 200 && res.data.ok) {
         $("k-name").textContent = res.data.name;
         $("k-mail").textContent = res.data.email;
+        $("k-news").checked = !!res.data.newsletter;
         show("k-ein");
       } else if (res.status === 401) {
         show("k-aus");
@@ -77,7 +78,8 @@
     wire("k-form-registrieren", "registrieren",
       function (f) {
         return { name: f.elements.name.value, email: f.elements.email.value,
-                 passwort: f.elements.passwort.value, einwilligung: f.elements.einwilligung.checked === true };
+                 passwort: f.elements.passwort.value, einwilligung: f.elements.einwilligung.checked === true,
+                 newsletter: f.elements.newsletter.checked === true };
       },
       function (d, f, st) {
         f.reset();
@@ -107,10 +109,38 @@
       function (f) { return { passwort: f.elements.passwort.value }; },
       function () { window.location.href = "/"; });
 
+    $("k-news").addEventListener("change", function () {
+      var box = this, st = $("k-news-status");
+      box.disabled = true;
+      api("newsletter", "POST", { an: box.checked }).then(function (res) {
+        if (res.data && res.data.ok) {
+          say(st, res.data.newsletter ? "Newsletter ist aktiviert." : "Newsletter ist abbestellt.", "is-success");
+        } else {
+          box.checked = !box.checked;
+          say(st, "Das hat nicht geklappt. Bitte erneut versuchen.", "is-error");
+        }
+      }).catch(function () { box.checked = !box.checked; say(st, "Der Dienst ist gerade nicht erreichbar.", "is-error"); })
+        .finally(function () { box.disabled = false; });
+    });
+
+    api("optionen", "GET").then(function (res) {
+      if (res.data && res.data.google) { $("k-google").hidden = false; }
+    }).catch(function () {});
+
     var q = new URLSearchParams(window.location.search);
+    var abbestellen = q.get("abbestellen");
+    if (q.get("fehler") === "google") {
+      say($("k-meldung"), "Die Anmeldung mit Google hat nicht geklappt. Bitte erneut versuchen.", "is-error");
+    }
+    if (abbestellen) {
+      api("newsletter-abbestellen", "POST", { token: abbestellen }).then(function (res) {
+        say($("k-meldung"), res.data && res.data.ok ? "Sie haben den Newsletter abbestellt. Sie erhalten keine weiteren Mails."
+                                                    : "Der Abmelde-Link ist ungültig.", res.data && res.data.ok ? "is-success" : "is-error");
+      }).catch(function () { say($("k-meldung"), "Der Dienst ist gerade nicht erreichbar.", "is-error"); });
+    }
     var verify = q.get("bestaetigen");
     var reset = q.get("zuruecksetzen");
-    if (verify || reset) { window.history.replaceState(null, "", window.location.pathname); }
+    if (verify || reset || abbestellen || q.get("fehler")) { window.history.replaceState(null, "", window.location.pathname); }
 
     if (reset) {
       resetToken = reset;
