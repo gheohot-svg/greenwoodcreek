@@ -23,3 +23,19 @@
 .gwc-k-buchungen { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .gwc-k-buchungen li { padding: 12px 0; border-top: 1px solid var(--alt-line, rgba(241,236,230,.14)); line-height: 1.5; }
 .gwc-k-buchungen span { opacity: .75; font-size: .9rem; }
+
+/* Warenkorb auf der Buchungsseite */
+.gwc-cart { margin: 0 0 24px; }
+.gwc-cart-lines { list-style: none; margin: 0 0 16px; padding: 0; }
+.gwc-cart-lines li { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--alt-line, rgba(241, 236, 230, .14)); }
+.gwc-cart-lines li span:last-child { white-space: nowrap; }
+.gwc-cart-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 0 0 16px; }
+.gwc-cart-note { margin: 4px 0 0; font-size: .85rem; opacity: .72; line-height: 1.5; }
+.gwc-stepper { display: inline-flex; align-items: center; gap: 4px; flex: none; }
+.gwc-stepper button { width: 44px; height: 44px; font-size: 1.3rem; line-height: 1; border: 1px solid var(--alt-line, rgba(241, 236, 230, .3)); background: transparent; color: inherit; border-radius: 3px; cursor: pointer; }
+.gwc-stepper button:disabled { opacity: .35; cursor: default; }
+.gwc-stepper output { min-width: 2.5rem; text-align: center; font-size: 1.1rem; }
+.gwc-cart-sum { margin: 8px 0 0; }
+.gwc-cart-sum div { display: flex; justify-content: space-between; padding: 4px 0; }
+.gwc-cart-sum dt, .gwc-cart-sum dd { margin: 0; }
+.gwc-cart-total { font-weight: 700; border-top: 1px solid var(--alt-line, rgba(241, 236, 230, .3)); margin-top: 4px; padding-top: 8px !important; }

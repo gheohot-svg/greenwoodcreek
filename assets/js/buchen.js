@@ -6,6 +6,69 @@
   var kategorie = (q.get("kategorie") || "").slice(0, 80);
   var preis = (q.get("preis") || "").slice(0, 60);
   var offline = false;
+  var cfg = null, stunden = 0;
+  var eur = function (n) { return n.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €"; };
+
+  function basePrice() {
+    var m = /(\d{1,3}(?:\.\d{3})*|\d+)(?:,(\d{1,2}))?\s*€/.exec(preis);
+    if (!m) return null;
+    return parseFloat(m[1].replace(/\./g, "") + (m[2] ? "." + m[2] : ""));
+  }
+
+  function zusatzArt() {
+    if (!cfg || /\/\s*Monat/i.test(preis) || (cfg.ohne_zusatz || []).indexOf(paket) >= 0) return null;
+    return cfg.kategorien[kategorie] || null;
+  }
+
+  function renderCart() {
+    var art = zusatzArt(), f = $("b-form"), li = [], extra = 0;
+    var base = basePrice(), ab = /^\s*ab\b/i.test(preis);
+    li.push([paket, preis || "Preis auf Anfrage"]);
+    if (art) {
+      var satz = cfg.stundensatz[art];
+      if (stunden) { li.push([stunden + " zusätzliche Stunde" + (stunden > 1 ? "n" : "") + " vor Ort (" + eur(satz) + " je Std.)", eur(stunden * satz)]); extra += stunden * satz; }
+      if ($("b-drohne").checked) { li.push(["Drohne", eur(cfg.drohne)]); extra += cfg.drohne; }
+      if ($("b-wunsch").value.trim()) li.push(["Wunschoption", "Preis auf Anfrage"]);
+    }
+    var ul = $("b-cart-lines"); ul.textContent = "";
+    li.forEach(function (r) {
+      var e = document.createElement("li"), a = document.createElement("span"), b = document.createElement("span");
+      a.textContent = r[0]; b.textContent = r[1]; e.appendChild(a); e.appendChild(b); ul.appendChild(e);
+    });
+    $("b-std").textContent = stunden;
+    $("b-std-minus").disabled = stunden <= 0;
+    $("b-std-plus").disabled = !cfg || stunden >= cfg.max_stunden;
+    var sum = $("b-sum");
+    if (base === null) { sum.hidden = true; $("b-sum-note").textContent = ""; return; }
+    var netto = base + extra, ust = netto * cfg_ust();
+    sum.hidden = false;
+    $("b-netto").textContent = (ab ? "ab " : "") + eur(netto);
+    $("b-ust").textContent = (ab ? "ab " : "") + eur(ust);
+    $("b-brutto").textContent = (ab ? "ab " : "") + eur(netto + ust);
+    $("b-sum-note").textContent = (ab ? "Bei „ab“-Preisen nennen wir Ihnen den genauen Preis vor der Bestätigung. " : "") + "Bezahlung vor Ort. Zusätzliche Stunden werden nur in vollen Stunden gebucht.";
+  }
+
+  function cfg_ust() { return ((cfg && cfg.ust) || 19) / 100; }
+
+  function initCart() {
+    fetch("/assets/data/zusatz.json?v=2026-11-12", { cache: "no-cache" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; })
+      .then(function (c) {
+        cfg = c;
+        var art = zusatzArt();
+        if (art) {
+          $("b-extras").hidden = false;
+          $("b-std-note").textContent = "Nur ganze Stunden, mindestens 1 Stunde, wenn Sie Zeit hinzubuchen (bis " + cfg.max_stunden + "). " + eur(cfg.stundensatz[art]) + " netto je Stunde, ohne weitere Anfahrt.";
+          $("b-drohne-preis").textContent = "+ " + eur(cfg.drohne) + " netto pro Einsatz";
+        }
+        renderCart();
+      });
+    $("b-std-minus").addEventListener("click", function () { if (stunden > 0) { stunden--; renderCart(); } });
+    $("b-std-plus").addEventListener("click", function () { if (cfg && stunden < cfg.max_stunden) { stunden++; renderCart(); } });
+    $("b-drohne").addEventListener("change", renderCart);
+    $("b-wunsch").addEventListener("input", renderCart);
+  }
 
   function api(path, method, body) {
     return fetch("/api/konto/" + path, {
@@ -49,6 +112,10 @@
     d.vorgespraech = f.elements.vorgespraech.checked;
     d.agb = f.elements.agb.checked;
     d.paket = paket; d.kategorie = kategorie; d.preis = preis;
+    var art = zusatzArt();
+    d.stunden = art ? stunden : 0;
+    d.drohne = art ? $("b-drohne").checked : false;
+    d.wunschoption = art ? $("b-wunsch").value.trim() : "";
     return d;
   }
 
@@ -71,6 +138,8 @@
     fd.append("adresse", d.strasse + ", " + d.plz + " " + d.ort); fd.append("telefon", d.telefon);
     fd.append("wunschtermin", d.wunschtermin || "-"); fd.append("einsatzort", d.einsatzort || "-");
     fd.append("vorgespraech", d.vorgespraech ? "Ja, Vorgespräch gewünscht" : "Nein, direkt so buchen");
+    fd.append("zusatzstunden", d.stunden ? d.stunden + " Std. (volle Stunden)" : "keine");
+    fd.append("drohne", d.drohne ? "Ja" : "Nein"); fd.append("wunschoption", d.wunschoption || "-");
     fd.append("nachricht", d.nachricht || "-"); fd.append("bezahlung", "vor Ort");
     return fetch(FORMSPREE, { method: "POST", body: fd, headers: { Accept: "application/json" } })
       .then(function (r) { if (!r.ok) throw new Error("mail"); });
@@ -88,6 +157,7 @@
       $("b-laden").textContent = "Bitte wählen Sie zuerst ein Paket auf der Preisseite.";
       return;
     }
+    initCart();
     $("b-kat").textContent = kategorie;
     $("b-paket").textContent = paket;
     $("b-preis").textContent = preis ? "Ihr Preis: " + preis + " · Bezahlung vor Ort" : "Bezahlung vor Ort";

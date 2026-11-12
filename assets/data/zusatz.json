@@ -1,0 +1,15 @@
+{
+  "stundensatz": { "foto": 150, "video": 190 },
+  "drohne": 190,
+  "max_stunden": 10,
+  "ust": 19,
+  "kategorien": {
+    "Produktfoto": "foto",
+    "Unternehmensfotos": "foto",
+    "Hochzeit & Geburtstag": "foto",
+    "Influencer": "foto",
+    "Imagefilm": "video",
+    "Social & Reels": "video"
+  },
+  "ohne_zusatz": ["Konzeptpaket"]
+}

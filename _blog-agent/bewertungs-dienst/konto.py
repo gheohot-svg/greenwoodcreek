@@ -154,6 +154,41 @@ def _pw_ok(pw):
     return isinstance(pw, str) and 10 <= len(pw) <= 200
 
 
+ZUSATZ_FILE = os.environ.get("GWC_ZUSATZ", os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "assets", "data", "zusatz.json"))
+
+
+def zusatz_config():
+    try:
+        with open(ZUSATZ_FILE, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {"stundensatz": {"foto": 150, "video": 190}, "drohne": 190, "max_stunden": 10, "kategorien": {}, "ohne_zusatz": []}
+
+
+def zusatz_berechnen(kategorie, paket, preis, stunden, drohne):
+    """Preise fuer Zusatzoptionen stets serverseitig aus der Konfiguration. None = fuer dieses Paket nicht buchbar."""
+    cfg = zusatz_config()
+    art = cfg.get("kategorien", {}).get(kategorie)
+    if not art or paket in cfg.get("ohne_zusatz", []) or "/Monat" in preis:
+        return None
+    satz = int(cfg["stundensatz"][art])
+    summe = stunden * satz + (int(cfg["drohne"]) if drohne else 0)
+    return {"stunden": stunden, "satz": satz, "drohne": bool(drohne), "drohne_preis": int(cfg["drohne"]) if drohne else 0,
+            "summe_netto": summe}
+
+
+def zusatz_text(d):
+    z = d.get("zusatz") or {}
+    teile = []
+    if z.get("stunden"):
+        teile.append("%d Std. zusätzlich" % z["stunden"])
+    if z.get("drohne"):
+        teile.append("Drohne")
+    if d.get("wunschoption"):
+        teile.append("Wunschoption")
+    return ", ".join(teile)
+
+
 def handle(path, data, ip, token):
     """-> (status, objekt, set_cookie_oder_None)"""
     p = path.rstrip("/")
@@ -284,7 +319,8 @@ def handle(path, data, ip, token):
         for r in rows:
             d = json.loads(r["daten"])
             out.append({"nr": r["nr"], "paket": r["paket"], "kategorie": r["kategorie"], "preis": r["preis"],
-                        "erstellt": r["erstellt"], "wunschtermin": d.get("wunschtermin", ""), "adresse": d.get("adresse", {})})
+                        "erstellt": r["erstellt"], "wunschtermin": d.get("wunschtermin", ""), "adresse": d.get("adresse", {}),
+                        "zusatz": zusatz_text(d)})
         return 200, {"ok": True, "buchungen": out}, None
 
     if p.endswith("/buchen"):
@@ -305,13 +341,23 @@ def handle(path, data, ip, token):
         termin = c("wunschtermin", 10)
         if termin and not re.match(r"^\d{4}-\d{2}-\d{2}$", termin):
             termin = ""
+        try:
+            stunden = int(data.get("stunden") or 0)
+        except (TypeError, ValueError):
+            stunden = -1
+        maxh = int(zusatz_config().get("max_stunden", 10))
+        if not 0 <= stunden <= maxh:
+            return 400, {"ok": False, "fehler": "Zusatzstunden werden in vollen Stunden gebucht (1 bis %d)." % maxh}, None
+        zusatz = zusatz_berechnen(kategorie, paket, preis, stunden, data.get("drohne") is True)
+        wunsch = c("wunschoption", 500) if zusatz is not None else ""
         daten = {"adresse": adresse, "email": u["email"], "wunschtermin": termin, "einsatzort": c("einsatzort", 200),
-                 "nachricht": c("nachricht", 2000), "vorgespraech": data.get("vorgespraech") is True}
+                 "nachricht": c("nachricht", 2000), "vorgespraech": data.get("vorgespraech") is True,
+                 "zusatz": zusatz, "wunschoption": wunsch}
         nr = "GWC-%s-%s" % (time.strftime("%y%m%d"), secrets.token_hex(2).upper())
         with _lock, _db() as con:
             con.execute("INSERT INTO buchungen VALUES(?,?,?,?,?,?,?)",
                         (nr, u["id"], paket, kategorie, preis, json.dumps(daten, ensure_ascii=False), time.strftime("%Y-%m-%d %H:%M:%S")))
-        return 200, {"ok": True, "nr": nr}, None
+        return 200, {"ok": True, "nr": nr, "zusatz_netto": (zusatz or {}).get("summe_netto", 0)}, None
 
     if p.endswith("/newsletter"):
         u = user_from_token(token)
