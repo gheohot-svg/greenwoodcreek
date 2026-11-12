@@ -132,6 +132,18 @@
 .gwc-price-guarantee p { margin: 0; font-size: 1.0625rem; line-height: 1.4; color: var(--a-muted, rgba(241, 236, 230, .78)); }
 .gwc-price-guarantee p b { display: block; font: 600 1.25rem/1.2 "Instrument Sans", system-ui, sans-serif; color: var(--a-text, #f1ece6); }
 
+/* Tiefpreisgarantie unter jeder Kategorie */
+.gwc-price-lowprice {
+  margin: 16px 0 0; padding: 14px 18px; border-left: 3px solid var(--a-accent-light, #e4442a);
+  background: var(--a-surface-2, #141414); border-radius: 0 12px 12px 0;
+  font-size: .975rem; line-height: 1.5; color: var(--a-muted, rgba(241, 236, 230, .78));
+}
+.gwc-price-lowprice b { color: var(--a-text, #f1ece6); }
+.gwc-price-lowprice a { color: var(--a-text, #f1ece6); text-decoration: underline; text-underline-offset: 3px; }
+.gwc-price-lowprice a:hover { color: var(--a-accent-light, #e4442a); }
+#geld-zurueck { margin: 28px 0 8px; }
+#geld-zurueck p { max-width: 62ch; }
+
 /* Revisionen und Anfahrt */
 .gwc-info-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 .gwc-info-card {
