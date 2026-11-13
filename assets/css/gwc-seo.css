@@ -341,6 +341,9 @@
 .gwc-web-card--wide { grid-column: span 7; }
 .gwc-web-card--narrow { grid-column: span 5; }
 .gwc-web-card--third { grid-column: span 4; }
+.gwc-web-card--full { grid-column: span 12; }
+.gwc-web-card--full .gwc-web-link img { aspect-ratio: 21 / 9; }
+.gwc-web-card--full figcaption { text-align: left; }
 .gwc-web-link {
   display: block;
   overflow: hidden;
@@ -403,7 +406,7 @@
 }
 @media (max-width: 991px) {
   .gwc-web-head { grid-template-columns: minmax(0, 1fr); align-items: start; }
-  .gwc-web-card--wide, .gwc-web-card--narrow { grid-column: span 12; }
+  .gwc-web-card--wide, .gwc-web-card--narrow, .gwc-web-card--full { grid-column: span 12; }
   .gwc-web-card--third { grid-column: span 6; }
 }
 @media (max-width: 600px) {
