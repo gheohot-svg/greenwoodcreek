@@ -32,7 +32,7 @@
   </url>
   <url>
     <loc>https://greenwoodcreek.de/aktuelles/</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -263,5 +263,11 @@
     <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://greenwoodcreek.de/aktuelles/strassenportraet-nachts-nasser-asphalt/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

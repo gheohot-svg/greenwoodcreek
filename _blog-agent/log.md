@@ -23,3 +23,4 @@
 - 2026-11-09: /aktuelles/produktfotos-onlineshop-checkliste/ veröffentlicht (Hauptkeyword: produktfotos onlineshop, vorhandenes Bild produkt-stiefel.webp, auf Jans Wunsch); Bokeh- und Lichtspuren-Artikel gegeneinander abgegrenzt und verlinkt
 - 2026-11-09: /aktuelles/gruppenfoto-nachts-lebendig/ aus dem Vorrat veröffentlicht (Hauptkeyword: gruppenfoto nachts, Foto: grouppotraitbarcelona.jpg)
 - 2026-11-11: /aktuelles/gasse-nachts-fotografieren-farbakzente/ aus dem Vorrat veröffentlicht (Hauptkeyword: gasse bei nacht fotografieren, Foto: Colourstreet.jpg)
+- 2026-11-13: /aktuelles/strassenportraet-nachts-nasser-asphalt/ aus dem Vorrat veröffentlicht (Hauptkeyword: straßenporträt nacht, Foto: nightcrawler.jpg)
