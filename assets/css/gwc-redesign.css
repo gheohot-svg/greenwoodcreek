@@ -449,41 +449,39 @@ body::after {
   cursor: pointer;
 }
 
-/* Portfolio "Nachtleben": six single photos instead of one collage image
-   with baked-in cream gutters. Same look and lightbox as the first photo
-   block (.gwc-pf-grid); on wide screens it keeps the collage layout
-   (column/row proportions measured from the old collage). */
+/* Portfolio "Nachtleben": three columns plus a full-width banner. Every
+   tile keeps its photo's own aspect ratio (--r = width / height, set inline)
+   so nothing gets squashed or cropped hard. Column widths are tuned so the
+   columns end at nearly the same height: column 1 sets the height with its
+   natural ratios, columns 2 and 3 share it out by each photo's height. */
 .gwc-night-grid {
+  --ng-gap: clamp(12px, 2vw, 32px);
   width: 100%;
   max-width: 1280px;
   display: grid;
-  grid-template-columns: 635fr 532fr 804fr;
-  grid-template-rows: 752fr 95fr 338fr 413fr;
-  aspect-ratio: 5 / 4;
-  gap: clamp(12px, 2vw, 32px);
+  grid-template-columns: 394fr 314fr 460fr;
+  align-items: stretch;
+  gap: var(--ng-gap);
 }
+.gwc-ng-col { display: flex; flex-direction: column; gap: var(--ng-gap); min-width: 0; min-height: 0; }
 .gwc-ng-item { margin: 0; min-width: 0; min-height: 0; }
-.gwc-ng-l1 { grid-column: 1; grid-row: 1 / 3; }
-.gwc-ng-l2 { grid-column: 1; grid-row: 3 / 5; }
-.gwc-ng-m  { grid-column: 2; grid-row: 1 / 5; }
-.gwc-ng-r1 { grid-column: 3; grid-row: 1 / 2; }
-.gwc-ng-r2 { grid-column: 3; grid-row: 2 / 4; }
-.gwc-ng-r3 { grid-column: 3; grid-row: 4 / 5; }
+.gwc-ng-col1 .gwc-ng-item,
+.gwc-ng-banner { aspect-ratio: var(--r); }
+.gwc-ng-col2 .gwc-ng-item,
+.gwc-ng-col3 .gwc-ng-item { flex: calc(1 / var(--r)) 1 0; }
+.gwc-ng-banner { grid-column: 1 / -1; }
 @media (max-width: 767px) {
-  .gwc-night-grid {
-    aspect-ratio: auto;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: none;
-    gap: 12px;
-  }
-  .gwc-ng-l1 { grid-column: 1; grid-row: 1; aspect-ratio: 4 / 5; }
-  .gwc-ng-r1 { grid-column: 2; grid-row: 1; aspect-ratio: 4 / 5; }
-  /* sized by the two tiles next to it, not by its tall picture */
-  .gwc-ng-m  { grid-column: 1; grid-row: 2 / 4; contain: size; }
-  .gwc-ng-l2 { grid-column: 2; grid-row: 2; aspect-ratio: 4 / 5; }
-  .gwc-ng-r3 { grid-column: 2; grid-row: 3; aspect-ratio: 4 / 5; }
-  .gwc-ng-r2 { grid-column: 1 / 3; grid-row: 4; aspect-ratio: 3 / 2; }
+  .gwc-night-grid { --ng-gap: 12px; grid-template-columns: 394fr 314fr; }
+  /* the third column becomes a justified row (heights match because each
+     tile's width follows its ratio) followed by the wide Siegestor shot */
+  .gwc-ng-col3 { grid-column: 1 / -1; flex-flow: row wrap; }
+  .gwc-ng-col3 .gwc-ng-item { flex: var(--r) 1 0; aspect-ratio: var(--r); }
+  .gwc-ng-col3 .gwc-ng-r2 { order: 2; flex-basis: 100%; }
 }
+
+/* Portfolio "Creative Collaborations": the Webflow header has a fixed
+   302px height with overflow hidden, which cut off the added note line. */
+.gwc-portfolio .header-44-2 { height: auto; min-height: 302px; overflow: visible; }
 
 .gwc-italy-video-frame {
   position: relative;
