@@ -21,3 +21,4 @@
 - 2026-11-11 Colourstreet.jpg -> /aktuelles/gasse-nachts-fotografieren-farbakzente/
 - 2026-11-13 nightcrawler.jpg -> /aktuelles/strassenportraet-nachts-nasser-asphalt/
 - 2026-11-15 A7308852.jpg -> /aktuelles/portraet-teleobjektiv-200mm/
+- 2026-11-17 A73090163.jpg -> /aktuelles/film-look-fotos-bearbeiten/

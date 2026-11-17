@@ -25,3 +25,4 @@
 - 2026-11-11: /aktuelles/gasse-nachts-fotografieren-farbakzente/ aus dem Vorrat veröffentlicht (Hauptkeyword: gasse bei nacht fotografieren, Foto: Colourstreet.jpg)
 - 2026-11-13: /aktuelles/strassenportraet-nachts-nasser-asphalt/ aus dem Vorrat veröffentlicht (Hauptkeyword: straßenporträt nacht, Foto: nightcrawler.jpg)
 - 2026-11-15: /aktuelles/portraet-teleobjektiv-200mm/ aus dem Vorrat veröffentlicht (Hauptkeyword: porträt teleobjektiv, Foto: A7308852.jpg)
+- 2026-11-17: /aktuelles/film-look-fotos-bearbeiten/ aus dem Vorrat veröffentlicht (Hauptkeyword: film look fotos, Foto: A73090163.jpg)
