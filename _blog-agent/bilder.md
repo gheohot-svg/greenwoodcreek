@@ -23,3 +23,4 @@
 - 2026-11-15 A7308852.jpg -> /aktuelles/portraet-teleobjektiv-200mm/
 - 2026-11-17 A73090163.jpg -> /aktuelles/film-look-fotos-bearbeiten/
 - 2026-11-19 A7309593.jpg -> /aktuelles/wolken-sonnenuntergang-fotografieren/
+- 2026-11-21 fuertestrand.jpg -> /aktuelles/ungestellte-fotos-tipps/

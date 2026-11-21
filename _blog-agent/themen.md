@@ -42,3 +42,4 @@
 - [x] 2026-11-15 /aktuelles/portraet-teleobjektiv-200mm/ Porträt mit Teleobjektiv: Warum 200 mm Gesichtern schmeicheln (aus Foto)
 - [x] 2026-11-17 /aktuelles/film-look-fotos-bearbeiten/ Film-Look für Fotos: So bearbeiten Sie Bilder wie ein Kinostill (aus Foto)
 - [x] 2026-11-19 /aktuelles/wolken-sonnenuntergang-fotografieren/ Wolken bei Sonnenuntergang fotografieren: Himmel richtig belichten (aus Foto)
+- [x] 2026-11-21 /aktuelles/ungestellte-fotos-tipps/ Ungestellte Fotos: So fangen Sie echte Momente ein (aus Foto)
