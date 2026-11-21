@@ -2,8 +2,7 @@
   var FORMSPREE = "https://formspree.io/f/mrenayyq";
   var API = "/api/bewertung";
   var SOURCES = [
-    "/assets/data/bewertungen.json?v=2026-11-12",
-    "/assets/data/live/bewertungen.json"
+    "/assets/data/bewertungen.json?v=2026-11-12"
   ];
 
   function stars(n) {
