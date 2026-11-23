@@ -1,0 +1,21 @@
+[Unit]
+Description=GREENWOODCREEK Kundenkonto (Code per Mail, Passwort, Google)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=jan
+Environment=GWC_PORT=8789
+# SMTP-Zugang teilt sich das Konto mit gwc-kontakt; Google-Zugang optional in /etc/gwc-konto.env
+EnvironmentFile=-/etc/gwc-kontakt.env
+EnvironmentFile=-/etc/gwc-konto.env
+ExecStart=/usr/bin/python3 /opt/gwc-konto/app.py
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/srv/greenwoodcreek/konto
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

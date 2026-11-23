@@ -39,3 +39,8 @@
 .gwc-cart-sum div { display: flex; justify-content: space-between; padding: 4px 0; }
 .gwc-cart-sum dt, .gwc-cart-sum dd { margin: 0; }
 .gwc-cart-total { font-weight: 700; border-top: 1px solid var(--alt-line, rgba(241, 236, 230, .3)); margin-top: 4px; padding-top: 8px !important; }
+
+/* Kundenkonto: Code-Eingabe, Honeypot, Hinweis */
+.gwc-k-code { font-size: 1.6rem; letter-spacing: .35em; text-align: center; font-variant-numeric: tabular-nums; }
+.gwc-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.gwc-k-soon { margin: 14px 0 18px; padding: 14px 16px; border-left: 3px solid var(--alt-accent-light, #e4442a); background: rgba(241,236,230,.04); }

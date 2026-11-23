@@ -1,0 +1,6 @@
+/* Kundenkonto-Eintrag in der Navigationsleiste: kleiner, zurückhaltender als der Kontakt-Button */
+.gwc-konto-link { display: inline-flex; align-items: center; gap: 7px; margin-right: 14px; padding: 7px 13px; border: 1px solid rgba(241,236,230,.28); border-radius: 999px; color: rgba(241,236,230,.82); font-size: .78rem; font-weight: 600; letter-spacing: .02em; line-height: 1; text-decoration: none; white-space: nowrap; transition: border-color .2s, color .2s, background-color .2s; }
+.gwc-konto-link svg { width: 14px; height: 14px; flex: none; }
+.gwc-konto-link:hover, .gwc-konto-link:focus-visible { color: #fff; border-color: var(--alt-accent-light, #e4442a); background: rgba(228,68,42,.12); }
+.gwc-konto-link[aria-current="page"] { color: #fff; border-color: var(--alt-accent-light, #e4442a); }
+@media (max-width: 991px) { .gwc-konto-link { margin: 0 0 12px; font-size: .85rem; padding: 9px 15px; } }
