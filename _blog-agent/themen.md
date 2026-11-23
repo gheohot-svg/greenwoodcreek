@@ -4,7 +4,7 @@
 - [x] 2026-11-07 /aktuelles/fotolocations-hochzeit-muenchen/ Die schönsten Fotolocations für Hochzeitsfotos in München
 - [x] 2026-11-07 /aktuelles/imagefilm-kosten/ Was kostet ein Imagefilm? Faktoren, die den Preis bestimmen
 - [x] 2026-11-09 /aktuelles/produktfotos-onlineshop-checkliste/ Produktfotos für den Onlineshop: Checkliste für bessere Verkaufsbilder
-- [ ] Eventfotografie: Wie Sie Ihre Firmenfeier richtig dokumentieren lassen
+- [x] 2026-11-23 /aktuelles/firmenfeier-fotografieren-lassen/ Eventfotografie: Wie Sie Ihre Firmenfeier richtig dokumentieren lassen
 - [ ] Hochzeitsfotos in Heidelberg: Schloss, Altstadt und Neckarwiese
 - [ ] Social-Media-Videos für Musiker: Was Künstler 2027 posten sollten
 - [ ] Imagefilm planen: Ablauf von der Idee bis zum fertigen Film

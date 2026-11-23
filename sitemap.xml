@@ -32,7 +32,7 @@
   </url>
   <url>
     <loc>https://greenwoodcreek.de/aktuelles/</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -291,6 +291,12 @@
   <url>
     <loc>https://greenwoodcreek.de/aktuelles/ungestellte-fotos-tipps/</loc>
     <lastmod>2026-11-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://greenwoodcreek.de/aktuelles/firmenfeier-fotografieren-lassen/</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>

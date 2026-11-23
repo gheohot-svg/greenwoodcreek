@@ -24,3 +24,4 @@
 - 2026-11-17 A73090163.jpg -> /aktuelles/film-look-fotos-bearbeiten/
 - 2026-11-19 A7309593.jpg -> /aktuelles/wolken-sonnenuntergang-fotografieren/
 - 2026-11-21 fuertestrand.jpg -> /aktuelles/ungestellte-fotos-tipps/
+- 2026-11-23 Website-Bild wiesn-2026-06.webp -> /aktuelles/firmenfeier-fotografieren-lassen/
