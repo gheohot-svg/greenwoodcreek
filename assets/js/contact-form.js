@@ -58,6 +58,22 @@
     panel.focus({ preventScroll: true });
   }
 
+  // Automatische Eingangsbestätigung (mit Rabattcode) über den eigenen Server.
+  // Fehler hier stören die eigentliche Anfrage nicht.
+  function sendAutoReply(form) {
+    var email = form.querySelector('[name="email"]');
+    var name = form.querySelector('[name="name"]');
+    if (!email || !email.value) return;
+    try {
+      fetch("/api/kontakt-antwort", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name ? name.value : "", email: email.value }),
+        keepalive: true,
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
   function handleSubmit(form) {
     form.setAttribute("action", FORMSPREE_ENDPOINT);
     form.addEventListener("submit", function (e) {
@@ -83,6 +99,7 @@
         .then(function (response) {
           if (response.ok) {
             status.textContent = "";
+            sendAutoReply(form);
             form.reset();
             showThanks(form);
           } else {
