@@ -43,3 +43,4 @@
 - [x] 2026-11-17 /aktuelles/film-look-fotos-bearbeiten/ Film-Look für Fotos: So bearbeiten Sie Bilder wie ein Kinostill (aus Foto)
 - [x] 2026-11-19 /aktuelles/wolken-sonnenuntergang-fotografieren/ Wolken bei Sonnenuntergang fotografieren: Himmel richtig belichten (aus Foto)
 - [x] 2026-11-21 /aktuelles/ungestellte-fotos-tipps/ Ungestellte Fotos: So fangen Sie echte Momente ein (aus Foto)
+- [x] 2026-11-23 /aktuelles/unternehmensfotos-bei-nacht/ Unternehmensfotos bei Nacht: Ihr Firmengebäude im besten Licht (aus Foto)

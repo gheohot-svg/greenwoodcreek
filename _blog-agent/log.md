@@ -29,3 +29,4 @@
 - 2026-11-19: /aktuelles/wolken-sonnenuntergang-fotografieren/ aus dem Vorrat veröffentlicht (Hauptkeyword: wolken fotografieren, Foto: A7309593.jpg)
 - 2026-11-21: /aktuelles/ungestellte-fotos-tipps/ aus dem Vorrat veröffentlicht (Hauptkeyword: ungestellte fotos, Foto: fuertestrand.jpg)
 - 2026-11-23: /aktuelles/firmenfeier-fotografieren-lassen/ aus dem Vorrat veröffentlicht (Hauptkeyword: firmenfeier fotografieren lassen, Foto: Website-Bild)
+- 2026-11-23: /aktuelles/unternehmensfotos-bei-nacht/ veröffentlicht (Hauptkeyword: unternehmensfotos nacht, Foto: Portfolio-Bild Siegestor mit Lichtspuren)
