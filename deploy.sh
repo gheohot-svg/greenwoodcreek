@@ -10,6 +10,7 @@ if [ -d .git ]; then
     exit 1
   fi
 fi
+python3 "$HOME/greenwoodcreek-www/_blog-agent/pruefe_uebersicht.py" || exit 1
 SRC="$HOME/greenwoodcreek-www/"
 SSH="ssh -p 2230"
 HOST="jan@152.53.94.158"
