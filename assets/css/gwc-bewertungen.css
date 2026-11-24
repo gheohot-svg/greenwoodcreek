@@ -41,9 +41,23 @@
 .gwc-bw-summary[hidden] { display: none; }
 a.gwc-bw-summary:hover { text-decoration: underline; }
 
-/* Startseite: Bewertungen unter dem Kontaktformular */
-.gwc-bw-home { padding: clamp(56px, 8vw, 110px) 0; }
+/* Startseite: Bewertungen unter dem Kontaktformular (Optik wie Leistungen/Aktuelles) */
+.gwc-bw-home {
+  width: 100%;
+  background-color: var(--gwc-ink);
+  color: var(--gwc-ivory);
+  padding: clamp(80px, 10vw, 128px) var(--_spacing-sizing---page-padding--padding-global, 64px);
+  border-top: 1px solid var(--gwc-border-dark);
+  position: relative; z-index: 1;
+}
 .gwc-bw-home .gwc-bw-summary { margin: 14px 0 0; }
-.gwc-bw-list--home { margin: 40px 0 0; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.gwc-bw-list--home { margin: 40px 0 0; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: clamp(16px, 2vw, 24px); }
+.gwc-bw-list--home .gwc-bw-item {
+  border: 1px solid var(--gwc-border-dark, rgba(236, 227, 205, .14));
+  border-radius: 16px;
+  background-color: rgba(236, 227, 205, .03);
+  padding: 24px 22px 22px;
+}
 .gwc-bw-home .gwc-bw-empty { margin: 32px 0 0; }
-.gwc-bw-home .gwc-bw-empty a { color: var(--alt-accent-light, #e4442a); }
+.gwc-bw-home .gwc-bw-empty a { color: var(--gwc-accent-soft, var(--gwc-accent)); }
+@media (max-width: 600px) { .gwc-bw-home { padding-left: 20px; padding-right: 20px; } }
