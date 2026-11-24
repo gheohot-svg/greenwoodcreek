@@ -1,4 +1,29 @@
 {
   "hinweis": "Nur freigegebene Bewertungen. Eintrag = veröffentlicht. Felder: name, sterne (1-5), text, datum (JJJJ-MM-TT).",
-  "bewertungen": []
+  "bewertungen": [
+    {
+      "name": "David Zöller",
+      "sterne": 5,
+      "datum": "2026-11-10",
+      "text": "Getreu dem Motto \"Klein gestartet, aber ganz groß in der Leistung!\", lässt sich sagen, dass hier Service und Ergebnis höchste Priorität haben.\nWir haben unsere Wünsche für den Raum Heidelberg kommuniziert und wurden vollends abgeholt.\n\nSuper Erfahrung - freue mich auf weitere Zusammenarbeit.\n\nLiebe Grüße"
+    },
+    {
+      "name": "Donny van Beek",
+      "sterne": 5,
+      "datum": "2026-11-03",
+      "text": "Anfangs war ich aufgrund der recht neuen Website etwas skeptisch, ob Jan der richtige Mann ist, um den Imagefilm für mein kleines Independent-Studioprojekt konzeptionell zu planen. Diese Sorgen verflüchtigten sich allerdings sofort bei einem ersten Ideenaustausch.\n\nFazit: Es kam etwas dabei heraus, was ich nicht erwartet hätte und das meine ich an dieser Stelle absolut positiv. Jan ist ein kreatives Powerhouse, das Endprodukt wirkt Null Komma Null wie von der Stange und auch die Künstler:innen (Musik) mit denen ich arbeite finden's gut - und das heißt schon was ;)\n\nDanke, Jan!\n\nGrüße"
+    },
+    {
+      "name": "Jan Dimitriadis",
+      "sterne": 5,
+      "datum": "2026-10-18",
+      "text": "Was soll ich sagen, ich habe einen guten Fotografen für eine Sache gesucht, die mir sehr am Herzen lag, und mit Jan genau den Richtigen gefunden! Er ist auf meine speziellen Wünsche eingegangen, hat keinen Cent mehr verlangt als ursprünglich abgemacht und sich trotzdem immer die Zeit genommen, wenn ich mal nicht zu 100 % zufrieden war. Das war mir persönlich extrem wichtig und ist heutzutage nicht selbstverständlich. Und das Ergebnis der Bilder spricht sowieso für sich!\nVielen Dank Jan!"
+    },
+    {
+      "name": "L. Fuchsenthaler",
+      "sterne": 5,
+      "datum": "2026-10-03",
+      "text": "Zuverlässigkeit und stetige Freundlichkeit,\nkreative Ideen und künstlerische Vision kombiniert in dir machen dich in jedem Foto/video Projekt zum ersten Ansprechpartner.\n\nDanke jan"
+    }
+  ]
 }
