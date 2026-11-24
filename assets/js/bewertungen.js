@@ -59,6 +59,8 @@
       return;
     }
     if (empty) empty.hidden = true;
+    var max = parseInt(list.getAttribute("data-limit"), 10);
+    if (max > 0) items = items.slice(0, max);
     items.forEach(function (b) {
       var li = document.createElement("li");
       li.className = "gwc-bw-item";
