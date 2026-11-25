@@ -143,20 +143,20 @@ def main(path):
                     f'<img src="{esc(image)}" alt="{esc(a.get("image_alt",a["title"]))}" loading="eager" decoding="async"/></a>'
                     + (f'<figcaption>{cap}</figcaption>' if cap else "")
                     + '</figure>')
-    cta = ('<aside class="gwc-article-cta"><p>Sie planen ein Projekt in München, Heidelberg oder Umgebung?</p>'
+    cta = ('<aside class="gwc-article-cta" data-pagefind-ignore><p>Sie planen ein Projekt in München, Heidelberg oder Umgebung?</p>'
            '<a class="gwc-article-btn" href="/leistungen/#kontakt">Unverbindlich anfragen</a></aside>')
     main_html = (
-      '<main class="gwc-main" id="main" tabindex="-1"><div class="gwc-blog-page gwc-article-page">'
+      '<main class="gwc-main" id="main" tabindex="-1" data-pagefind-body><div class="gwc-blog-page gwc-article-page">'
       '<section class="gwc-blog-hero"><div class="gwc-blog-inner">'
-      f'<p class="gwc-blog-kicker"><a href="/aktuelles/">Aktuelles</a></p>'
+      f'<p class="gwc-blog-kicker" data-pagefind-ignore><a href="/aktuelles/">Aktuelles</a></p>'
       f'<h1 class="gwc-article-title">{esc(a["title"])}</h1>'
-      f'<p class="gwc-post-meta gwc-article-meta"><time datetime="{a["date"]}">{de_date(a["date"])}</time> · {esc(a["category"])} · Jan Neumeyer</p>'
+      f'<p class="gwc-post-meta gwc-article-meta" data-pagefind-ignore><time datetime="{a["date"]}">{de_date(a["date"])}</time> · {esc(a["category"])} · Jan Neumeyer</p>'
       f'<p class="gwc-blog-lead">{esc(a["lead"])}</p></div></section>'
       '<section class="gwc-blog-list">'
       + (f'<div class="gwc-blog-inner gwc-article-hero">{hero_img}</div>' if hero_img else '')
       + '<div class="gwc-blog-inner gwc-article-body">'
       f'{a["body_html"]}{faq_html}{cta}'
-      '<p class="gwc-article-back"><a href="/aktuelles/">Alle Beiträge</a></p>'
+      '<p class="gwc-article-back" data-pagefind-ignore><a href="/aktuelles/">Alle Beiträge</a></p>'
       '</div></section></div></main>')
     if "gwc-lightbox.js" not in post_main:
         post_main = post_main.replace("</body>", '<script defer src="../../assets/js/gwc-lightbox.js?v=2026-11-08"></script></body>', 1)
@@ -211,7 +211,14 @@ def main(path):
     # Upload-Signal fuer den Mac
     (ROOT/"_blog-agent"/"PENDING_DEPLOY").write_text(f"{a['date']} {slug}\n", encoding="utf-8")
     update_home()
+    suchindex()
     print("OK:", url)
+
+def suchindex():
+    """Blog-Suche: Pagefind-Index neu bauen. Fehlt Pagefind, wird nur gewarnt,
+    damit die Veroeffentlichung nicht blockiert wird."""
+    import subprocess
+    subprocess.run([sys.executable, str(ROOT/"_blog-agent"/"suchindex.py")], cwd=ROOT)
 
 def update_home():
     """Startseite: Bereich 'Aktuelles' zeigt die neuesten Artikel mit Bild,
