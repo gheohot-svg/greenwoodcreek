@@ -32,7 +32,7 @@
   </url>
   <url>
     <loc>https://greenwoodcreek.de/aktuelles/</loc>
-    <lastmod>2026-11-23</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -303,6 +303,12 @@
   <url>
     <loc>https://greenwoodcreek.de/aktuelles/unternehmensfotos-bei-nacht/</loc>
     <lastmod>2026-11-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://greenwoodcreek.de/aktuelles/fenster-winter-handyfoto/</loc>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>

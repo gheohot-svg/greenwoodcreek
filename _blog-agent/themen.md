@@ -44,3 +44,4 @@
 - [x] 2026-11-19 /aktuelles/wolken-sonnenuntergang-fotografieren/ Wolken bei Sonnenuntergang fotografieren: Himmel richtig belichten (aus Foto)
 - [x] 2026-11-21 /aktuelles/ungestellte-fotos-tipps/ Ungestellte Fotos: So fangen Sie echte Momente ein (aus Foto)
 - [x] 2026-11-23 /aktuelles/unternehmensfotos-bei-nacht/ Unternehmensfotos bei Nacht: Ihr Firmengebäude im besten Licht (aus Foto)
+- [x] 2026-11-25 /aktuelles/fenster-winter-handyfoto/ Durch das Fenster fotografieren: Winterlandschaft mit dem Handy (aus Foto)

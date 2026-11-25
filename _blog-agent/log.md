@@ -30,3 +30,4 @@
 - 2026-11-21: /aktuelles/ungestellte-fotos-tipps/ aus dem Vorrat veröffentlicht (Hauptkeyword: ungestellte fotos, Foto: fuertestrand.jpg)
 - 2026-11-23: /aktuelles/firmenfeier-fotografieren-lassen/ aus dem Vorrat veröffentlicht (Hauptkeyword: firmenfeier fotografieren lassen, Foto: Website-Bild)
 - 2026-11-23: /aktuelles/unternehmensfotos-bei-nacht/ veröffentlicht (Hauptkeyword: unternehmensfotos nacht, Foto: Portfolio-Bild Siegestor mit Lichtspuren)
+- 2026-11-25: /aktuelles/fenster-winter-handyfoto/ aus dem Vorrat veröffentlicht (Hauptkeyword: durch das fenster fotografieren, Foto: Phonoeshot.jpg)

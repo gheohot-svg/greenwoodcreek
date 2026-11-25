@@ -26,3 +26,4 @@
 - 2026-11-21 fuertestrand.jpg -> /aktuelles/ungestellte-fotos-tipps/
 - 2026-11-23 Website-Bild wiesn-2026-06.webp -> /aktuelles/firmenfeier-fotografieren-lassen/
 - 2026-11-23 Portfolio-Bild portfolio-siegestor-lichtspuren.jpg -> /aktuelles/unternehmensfotos-bei-nacht/
+- 2026-11-25 Phonoeshot.jpg -> /aktuelles/fenster-winter-handyfoto/
