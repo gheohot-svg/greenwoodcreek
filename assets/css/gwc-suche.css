@@ -1,0 +1,33 @@
+/* GREENWOODCREEK – Blog-Suche (Pagefind UI) im Seitenstil */
+.gwc-blog-search{max-width:620px;margin:36px 0 0;min-height:64px}
+.gwc-blog-search{
+  --pagefind-ui-scale:.9;
+  --pagefind-ui-primary:#e4442a;
+  --pagefind-ui-text:#f1ece6;
+  --pagefind-ui-background:#0b0b0b;
+  --pagefind-ui-border:rgba(241,236,230,.22);
+  --pagefind-ui-tag:#1c1c1c;
+  --pagefind-ui-border-width:1px;
+  --pagefind-ui-border-radius:980px;
+  --pagefind-ui-image-border-radius:10px;
+  --pagefind-ui-image-box-ratio:3 / 2;
+  --pagefind-ui-font:inherit;
+}
+.gwc-blog-search .pagefind-ui__form::before{background-color:rgba(241,236,230,.7)}
+.gwc-blog-search .pagefind-ui__search-input{color:#f1ece6;font-weight:400;padding:0 80px 0 50px!important;height:56px;font-size:1rem;font-family:inherit;margin:0;box-shadow:none;text-overflow:ellipsis}
+.gwc-blog-search .pagefind-ui__form::before{left:20px;top:20px;opacity:.8}
+.gwc-blog-search .pagefind-ui__search-input::placeholder{color:rgba(241,236,230,.55);opacity:1}
+.gwc-blog-search .pagefind-ui__search-input:focus{outline:none;border-color:#e4442a}
+.gwc-blog-search .pagefind-ui__search-input:focus-visible{outline:2px solid #e4442a;outline-offset:3px}
+.gwc-blog-search .pagefind-ui__search-clear{top:10px;right:10px;height:36px;background:transparent;color:rgba(241,236,230,.8);border-radius:980px}
+.gwc-blog-search .pagefind-ui__drawer{margin-top:8px}
+.gwc-blog-search .pagefind-ui__message{color:rgba(241,236,230,.72);font-weight:500;font-size:.95rem;padding:12px 0 4px}
+.gwc-blog-search .pagefind-ui__result{border-top:1px solid rgba(241,236,230,.12);padding:20px 0}
+.gwc-blog-search .pagefind-ui__result-link{color:#f1ece6;text-decoration:none}
+.gwc-blog-search .pagefind-ui__result-link:hover{color:#e4442a}
+.gwc-blog-search .pagefind-ui__result-title{font-size:1.1rem;line-height:1.3}
+.gwc-blog-search .pagefind-ui__result-excerpt{color:rgba(241,236,230,.72);font-size:.95rem;line-height:1.5}
+.gwc-blog-search mark{background:transparent;color:#e4442a;font-weight:600}
+.gwc-blog-search .pagefind-ui__button{background:transparent;color:#f1ece6;border:1px solid rgba(241,236,230,.3);border-radius:980px}
+.gwc-blog-search .pagefind-ui__button:hover{border-color:#e4442a}
+@media (max-width:767px){.gwc-blog-search{margin-top:28px}}
