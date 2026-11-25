@@ -165,7 +165,7 @@
           });
         })
         .catch(function () {
-          setStatus(status, "Die Bewertung konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder schreiben Sie direkt an neumeyer.jan@web.de", "is-error");
+          setStatus(status, "Die Bewertung konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder schreiben Sie direkt an kontakt@greenwoodcreek.de", "is-error");
         })
         .finally(function () {
           button.disabled = false;
