@@ -19,7 +19,7 @@
         '<p class="gwc-thanks-urgent-label">In dringenden Fällen erreichen Sie uns direkt</p>' +
         '<p class="gwc-thanks-links">' +
         '<a href="tel:+4915155828308">+49 151 55828308</a>' +
-        '<a href="mailto:neumeyer.jan@web.de">neumeyer.jan@web.de</a></p></div>' +
+        '<a href="mailto:kontakt@greenwoodcreek.de">kontakt@greenwoodcreek.de</a></p></div>' +
         '<button type="button" class="gwc-thanks-again">Weitere Nachricht senden</button>';
       form.parentNode.insertBefore(panel, form.nextSibling);
       panel.querySelector(".gwc-thanks-again").addEventListener("click", function () {
@@ -113,7 +113,7 @@
         })
         .catch(function () {
           status.textContent =
-            "Die Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder schreiben Sie direkt an neumeyer.jan@web.de";
+            "Die Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder schreiben Sie direkt an kontakt@greenwoodcreek.de";
           status.classList.add("is-error");
         })
         .finally(function () {
