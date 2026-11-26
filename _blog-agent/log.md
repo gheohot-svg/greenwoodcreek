@@ -31,3 +31,6 @@
 - 2026-11-23: /aktuelles/firmenfeier-fotografieren-lassen/ aus dem Vorrat veröffentlicht (Hauptkeyword: firmenfeier fotografieren lassen, Foto: Website-Bild)
 - 2026-11-23: /aktuelles/unternehmensfotos-bei-nacht/ veröffentlicht (Hauptkeyword: unternehmensfotos nacht, Foto: Portfolio-Bild Siegestor mit Lichtspuren)
 - 2026-11-25: /aktuelles/fenster-winter-handyfoto/ aus dem Vorrat veröffentlicht (Hauptkeyword: durch das fenster fotografieren, Foto: Phonoeshot.jpg)
+- 2026-11-26: /aktuelles/hochzeitsfotograf-kosten-muenchen/ aus SEO-Vorschlag erstellt (Hauptkeyword: hochzeitsfotograf kosten münchen, Foto: Website-Bild hochzeit-ringe.webp)
+- 2026-11-26: /aktuelles/produktfotos-kosten/ aus SEO-Vorschlag erstellt (Hauptkeyword: produktfotos kosten, Foto: Website-Bild produkt-uhr.webp)
+- 2026-11-26: Titles mit Markenzusatz neu gebaut: /aktuelles/fenster-winter-handyfoto/, /aktuelles/sonnenuntergang-fotografieren-moment-geniessen/

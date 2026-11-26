@@ -74,7 +74,8 @@ def main(path):
     for k in ["title","slug","date","category","meta_title","meta_description","lead","body_html"]:
         if not a.get(k): fail(f"Feld '{k}' fehlt")
     if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", a["slug"]): fail("Slug nur a-z, 0-9, Bindestrich")
-    if len(a["meta_title"]) > 65: fail("meta_title > 65 Zeichen")
+    if len(a["meta_title"]) > 60: fail("meta_title > 60 Zeichen")
+    if not a["meta_title"].endswith(" | GREENWOODCREEK"): fail("meta_title muss auf ' | GREENWOODCREEK' enden")
     if not 110 <= len(a["meta_description"]) <= 160: fail("meta_description muss 110-160 Zeichen haben")
     if "—" in a["body_html"] + a["lead"]: fail("Gedankenstrich (—) im Text, bitte entfernen")
     slug, url = a["slug"], f"{BASE}/aktuelles/{a['slug']}/"
@@ -114,7 +115,7 @@ def main(path):
         {"@type":"ListItem","position":2,"name":"Aktuelles","item":BASE+"/aktuelles/"},
         {"@type":"ListItem","position":3,"name":a["title"],"item":url}]},
       {"@type":"BlogPosting","@id":url+"#artikel","headline":a["title"],"url":url,
-       "datePublished":a["date"],"dateModified":a["date"],"image":image_abs,
+       "datePublished":a["date"],"dateModified":a.get("modified", a["date"]),"image":image_abs,
        "description":a["meta_description"],"inLanguage":"de-DE",
        "keywords":", ".join(a.get("keywords",[])),
        "author":{"@id":BASE+"/uber-uns/#jan-neumeyer","@type":"Person","name":"Jan Neumeyer"},
@@ -203,10 +204,12 @@ def main(path):
     # ---- Sitemap -------------------------------------------------------
     sm_p = ROOT/"sitemap.xml"; sm = sm_p.read_text(encoding="utf-8")
     sm = re.sub(r"\s*<url>\s*<loc>"+re.escape(url)+r"</loc>.*?</url>", "", sm, flags=re.S)
-    entry = (f"  <url>\n    <loc>{url}</loc>\n    <lastmod>{a['date']}</lastmod>\n"
+    entry = (f"  <url>\n    <loc>{url}</loc>\n    <lastmod>{a.get('modified', a['date'])}</lastmod>\n"
              f"    <changefreq>yearly</changefreq>\n    <priority>0.6</priority>\n  </url>\n")
     sm = sm.replace("</urlset>", entry + "</urlset>")
-    sm = re.sub(r"(<loc>https://greenwoodcreek.de/aktuelles/</loc>\s*<lastmod>)[^<]*", rf"\g<1>{a['date']}", sm)
+    # /aktuelles/-lastmod nur nach vorne schieben (Neubau alter Artikel setzt ihn nicht zurueck)
+    sm = re.sub(r"(<loc>https://greenwoodcreek.de/aktuelles/</loc>\s*<lastmod>)([^<]*)",
+                lambda m: m.group(1) + max(m.group(2), a.get("modified", a["date"])), sm)
     sm_p.write_text(sm, encoding="utf-8")
     # Upload-Signal fuer den Mac
     (ROOT/"_blog-agent"/"PENDING_DEPLOY").write_text(f"{a['date']} {slug}\n", encoding="utf-8")

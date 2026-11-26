@@ -45,3 +45,5 @@
 - [x] 2026-11-21 /aktuelles/ungestellte-fotos-tipps/ Ungestellte Fotos: So fangen Sie echte Momente ein (aus Foto)
 - [x] 2026-11-23 /aktuelles/unternehmensfotos-bei-nacht/ Unternehmensfotos bei Nacht: Ihr Firmengebäude im besten Licht (aus Foto)
 - [x] 2026-11-25 /aktuelles/fenster-winter-handyfoto/ Durch das Fenster fotografieren: Winterlandschaft mit dem Handy (aus Foto)
+- [x] 2026-11-26 /aktuelles/hochzeitsfotograf-kosten-muenchen/ Was kostet ein Hochzeitsfotograf in München? Preise und Pakete (SEO-Vorschlag)
+- [x] 2026-11-26 /aktuelles/produktfotos-kosten/ Was kosten Produktfotos? Preise pro Bild und Paket erklärt (SEO-Vorschlag)

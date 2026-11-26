@@ -27,3 +27,5 @@
 - 2026-11-23 Website-Bild wiesn-2026-06.webp -> /aktuelles/firmenfeier-fotografieren-lassen/
 - 2026-11-23 Portfolio-Bild portfolio-siegestor-lichtspuren.jpg -> /aktuelles/unternehmensfotos-bei-nacht/
 - 2026-11-25 Phonoeshot.jpg -> /aktuelles/fenster-winter-handyfoto/
+- 2026-11-26 Website-Bild hochzeit-ringe.webp -> /aktuelles/hochzeitsfotograf-kosten-muenchen/
+- 2026-11-26 Website-Bild produkt-uhr.webp -> /aktuelles/produktfotos-kosten/
