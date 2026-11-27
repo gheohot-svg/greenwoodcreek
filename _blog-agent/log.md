@@ -34,3 +34,4 @@
 - 2026-11-26: /aktuelles/hochzeitsfotograf-kosten-muenchen/ aus SEO-Vorschlag erstellt (Hauptkeyword: hochzeitsfotograf kosten münchen, Foto: Website-Bild hochzeit-ringe.webp)
 - 2026-11-26: /aktuelles/produktfotos-kosten/ aus SEO-Vorschlag erstellt (Hauptkeyword: produktfotos kosten, Foto: Website-Bild produkt-uhr.webp)
 - 2026-11-26: Titles mit Markenzusatz neu gebaut: /aktuelles/fenster-winter-handyfoto/, /aktuelles/sonnenuntergang-fotografieren-moment-geniessen/
+- 2026-11-27: Ausbau nach Search Console (PR, nicht direkt live): /aktuelles/produktfotos-onlineshop-checkliste/ (Bildgröße, Packshot/Freisteller, Shotlist, Ablauf), /aktuelles/posing-tipps-fotoshooting/ (Fotoshooting-Tipps, Kleidung, Posen, Paare, Business), /aktuelles/blaue-stunde-fotografieren/ (Uhrzeiten München, Smartphone, Fotospots; Dauer-Aussage korrigiert). Interne Links aus Produkt-, Porträt-, Webdesign-, Hochzeits-, Heidelberg- und Imagefilm-Seite ergänzt.
