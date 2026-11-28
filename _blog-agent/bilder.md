@@ -29,3 +29,4 @@
 - 2026-11-25 Phonoeshot.jpg -> /aktuelles/fenster-winter-handyfoto/
 - 2026-11-26 Website-Bild hochzeit-ringe.webp -> /aktuelles/hochzeitsfotograf-kosten-muenchen/
 - 2026-11-26 Website-Bild produkt-uhr.webp -> /aktuelles/produktfotos-kosten/
+- 2026-11-28 fuertestrand-2.jpg -> /aktuelles/strand-daemmerung-nasser-sand/

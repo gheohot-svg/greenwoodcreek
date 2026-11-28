@@ -47,3 +47,4 @@
 - [x] 2026-11-25 /aktuelles/fenster-winter-handyfoto/ Durch das Fenster fotografieren: Winterlandschaft mit dem Handy (aus Foto)
 - [x] 2026-11-26 /aktuelles/hochzeitsfotograf-kosten-muenchen/ Was kostet ein Hochzeitsfotograf in München? Preise und Pakete (SEO-Vorschlag)
 - [x] 2026-11-26 /aktuelles/produktfotos-kosten/ Was kosten Produktfotos? Preise pro Bild und Paket erklärt (SEO-Vorschlag)
+- [x] 2026-11-28 /aktuelles/strand-daemmerung-nasser-sand/ Strand nach Sonnenuntergang fotografieren: Nasser Sand als Spiegel (aus Foto)
